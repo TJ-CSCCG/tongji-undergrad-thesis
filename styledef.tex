@@ -1,0 +1,165 @@
+\documentclass[UTF8,10.5pt,a4paper]{ctexart}
+
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{cases}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{algorithmic}
+\usepackage{extarrows}
+\usepackage{latexsym}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{etoolbox}
+\usepackage{amsfonts}
+\usepackage{caption2}     %修改图片表格名称字体字号的宏包
+\usepackage{float}        %自己设置图片插入位置
+\usepackage{fancyhdr}     %设置页眉页脚的宏包
+\usepackage{graphicx}     %插入图片
+\usepackage{lastpage}     %引用最后一页
+\usepackage{xcolor} 
+\usepackage[colorlinks,linkcolor=black, citecolor=black, unicode={true}]{hyperref}
+\graphicspath{{figures/}} %%图片路径
+\usepackage[top=3.2cm,bottom=3.8cm,left=3.3cm,right=1.8cm]{geometry}  %设置页边距
+\usepackage{fancybox}                      %画边界线
+\fancyput*(-0.8cm,-4.3cm){$|$}%
+\fancyput*(-0.8cm,-4.9cm){$|$}%
+\fancyput*(-0.8cm,-5.5cm){$|$}%
+\fancyput*(-0.8cm,-6.1cm){$|$}%
+\fancyput*(-0.8cm,-6.7cm){$|$}%
+\fancyput*(-0.8cm,-7.3cm){$|$}%
+\fancyput*(-0.8cm,-7.9cm){$|$}%
+\fancyput*(-0.8cm,-8.5cm){$|$}%
+\fancyput*(-0.8cm,-9.1cm){$|$}%
+\fancyput*(-0.8cm,-9.7cm){$|$}%
+\fancyput*(-1.0cm,-10.3cm){装}%
+\fancyput*(-0.8cm,-10.9cm){$|$}%
+\fancyput*(-0.8cm,-11.5cm){$|$}%
+\fancyput*(-0.8cm,-12.1cm){$|$}%
+\fancyput*(-0.8cm,-12.7cm){$|$}%
+\fancyput*(-0.8cm,-13.3cm){$|$}%
+\fancyput*(-1.0cm,-13.9cm){订}%
+\fancyput*(-0.8cm,-14.5cm){$|$}%
+\fancyput*(-0.8cm,-15.1cm){$|$}%
+\fancyput*(-0.8cm,-15.7cm){$|$}%
+\fancyput*(-0.8cm,-16.3cm){$|$}%
+\fancyput*(-0.8cm,-16.9cm){$|$}%
+\fancyput*(-1.0cm,-17.5cm){线}%
+\fancyput*(-0.8cm,-18.1cm){$|$}%
+\fancyput*(-0.8cm,-18.7cm){$|$}%
+\fancyput*(-0.8cm,-19.3cm){$|$}%
+\fancyput*(-0.8cm,-19.9cm){$|$}%
+\fancyput*(-0.8cm,-20.5cm){$|$}%
+\fancyput*(-0.8cm,-21.1cm){$|$}%
+\fancyput*(-0.8cm,-21.7cm){$|$}%
+\fancyput*(-0.8cm,-22.3cm){$|$}%
+\fancyput*(-0.8cm,-22.9cm){$|$}%
+\fancyput*(-0.8cm,-23.5cm){$|$}%
+
+%设置目录格式(引文部分）
+\usepackage[titles,subfigure]{tocloft}
+\newcounter{algoline}
+\newcommand\Numberline{\refstepcounter{algoline}\nlset{\thealgoline}}
+\AtBeginEnvironment{algorithm}{\setcounter{algoline}{0}}
+\makeatletter
+
+\@addtoreset{equation}{section}
+
+\makeatother
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\renewcommand{\cftdot}{$\cdot$}
+\renewcommand{\cftdotsep}{1}
+\setlength{\cftbeforesecskip}{10pt}
+\setlength{\cftbeforesubsecskip}{3pt}
+\setlength{\cftbeforesubsubsecskip}{0pt}
+\renewcommand{\cftsecfont}{\zihao{5}\heiti}
+\renewcommand{\cftsubsecfont}{\zihao{5}\heiti}
+\renewcommand{\cftsubsubsecfont}{\zihao{5}\heiti}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}
+\renewcommand{\cftsecdotsep}{\cftdotsep}
+\renewcommand{\cftsecpagefont}{\zihao{5}}
+\renewcommand{\cftsubsecpagefont}{\zihao{5}}
+\renewcommand{\cftsubsubsecpagefont}{\zihao{5}}
+
+%设置定理定义等的格式，如果某项的编号是跟着章节的，在后面加[section]
+\theoremstyle{definition}
+\newtheorem{thm}{定理\hspace{0.05pt}}[section]
+\newtheorem{cor}{推论\hspace{0.05pt}}[section]
+\newtheorem{lem}{引理\hspace{0.05pt}}[section]
+\newtheorem{prop}{命题\hspace{0.05pt}}[section]
+\newtheorem{conj}{猜想\hspace{0.05pt}}
+\newtheorem{assume}{假设\hspace{0.05pt}}
+
+\theoremstyle{definition}
+\newtheorem{dfn}{定义\hspace{0.05pt}}[section]
+\newtheorem{exmp}{例\hspace{0.05pt}}[section]
+\newtheorem{rem}{注\hspace{0.05pt}}
+\newtheorem*{pf}{证明}
+
+%设置图表编号和章节相关联，参见http://blog.sina.com.cn/s/blog_5e16f1770100h6ts.html
+\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%\usepackage[font=small,labelfont={bf,sf},tableposition=top]{caption}
+
+\makeatletter
+\renewcommand{\thefigure}{\ifnum \c@section>\z@ \thesection.\fi \@arabic\c@figure}
+\renewcommand{\thetable}{\ifnum \c@section>\z@ \thesection.\fi \@arabic\c@table}
+\makeatother
+
+\newcommand{\primal}{\mathrm{primal}}
+\newcommand{\dual}{\mathrm{dual}}
+\newcommand{\trace}{\mathrm{tr}}
+\newcommand{\vectorize}{\mathrm{vec}}
+\newcommand{\prox}{\mathrm{prox}}
+\newcommand{\mcL}{\mathcal{L}}
+\newcommand{\st}{\mathrm{s.t.}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\one}{\mathbf{1}}
+
+
+%\bibliographystyle{plainnat}
+%\begin{CJK*}{GBK}{song}
+%\title{}
+%\author{}
+% \date{}
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+%\CJKindent
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+	\begin{center}
+		\refstepcounter{algorithm}% New algorithm
+		\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+		\renewcommand{\caption}[2][\relax]{% Make a new \caption
+			{\raggedright\textbf{算法~\thealgorithm} ##2\par}%
+			\ifx\relax##1\relax % #1 is \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+			\else % #1 is not \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+			\fi
+			\kern2pt\hrule\kern2pt
+		}
+	}{% \end{breakablealgorithm}
+		\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+	\end{center}
+}
+\makeatother
+
+\renewcommand{\algorithmicrequire}{\textbf{输入: }}
+\renewcommand{\algorithmicensure}{\textbf{输出: }}
+
+
+%\bibliographystyle{plainnat}
+%\begin{CJK*}{GBK}{song}
+%\title{}
+%\author{}
+%\date{}

@@ -1,0 +1,24 @@
+\section{最优性条件}\label{optimality condition}
+下面我们推导问题\eqref{original problem matrix form}的KKT条件. 这对我们最终设置算法的停机准则会有帮助. 问题\eqref{original problem matrix form}的拉格朗日函数为
+\begin{equation*}\begin{aligned}
+&\mcL_0(X,Z,\lambda_1,\lambda_2,\mu,\Phi,\Omega)\\
+&=f(X,Z)-\langle\lambda_1,X\one-\rho\rangle-\langle\lambda_2,Z^T\one-\rho\rangle\\
+&-\mu\trace(X)-\langle\Omega,Z\rangle-\langle\Phi,X-Z\rangle,
+\end{aligned}
+\end{equation*}
+其中$\mu\in\mathbb{R},\lambda_1,\lambda_2\in\mathbb{R}^n,\Phi,\Omega\in\mathbb{R}^{n\times n}$为拉格朗日乘子. 
+根据文\cite{Nocedal2006Numerical}, 我们有问题\eqref{original problem matrix form}的KKT条件: 
+若$(X^*,Z^*)$为问题\eqref{original problem matrix form}的解, 则存在拉格朗日乘子$\mu^*,\lambda_1^*,\lambda_2^*,\Phi^*,0\le\Omega^*$, 使得
+\begin{equation}\left\{\begin{array}{ll}
+\left.\begin{array}{l}\nabla_X\mcL_0=2R+Z^*R-\lambda_1^*\one^T-\Phi^*-\mu I=0,\\\nabla_Z\mcL_0=X^*R-\one\left(\lambda_2^*\right)^T+\Phi-\Omega=0,\end{array}\right\} & \begin{array}{l}
+\makebox{稳定性条件}\\\makebox{或对偶可行性条件},
+\end{array}\\
+\left.\begin{array}{l}
+X^*\one=\rho,\trace(X^*)=0,\\
+\left(Z^*\right)^T\one=\rho,Z^*\ge0,\\
+\Omega^*\ge0,
+\end{array}\right\} & \makebox{原始可行性条件},\\
+\Omega^*\circ Z^*=0.& \makebox{互补松弛条件}.
+\end{array}\right.
+\label{KKT of penalty problem}
+\end{equation}

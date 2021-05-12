@@ -1,0 +1,175 @@
+\include{styledef}
+
+%\CJKindent
+\begin{document}
+\linespread{1.5}  %1.5倍行距
+\pagestyle{fancy} %页眉页脚设置
+\fancyhead{}      %清空默认页眉
+\fancyfoot{}      %清空默认页脚
+\fancyhead[L]{\qquad \includegraphics[height=1.34cm]{tongji.jpg}}   %页眉左侧插入同济大学logo
+\fancyhead[R]{\large 毕业设计（论文）报告纸~\\}
+\fancyfoot[LE,RO]{{\large 共\quad \pageref{LastPage}\quad 页\quad 第\quad \thepage \quad 页}} %偶数页左侧(LE)，奇数页右侧(RO)标页码，oneside打印只用写RO
+\renewcommand{\headrulewidth}{1.5pt}  %页眉横线
+\renewcommand{\footrulewidth}{1.5pt}
+%\newgeometry{} 单独调节某页边距
+%\maketitle
+\thispagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{sections/abstract}%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%以下为修改目录格式的正文内语句，正文内用@命令需用\makeatletter,\makeatother括起来
+\makeatletter
+\renewcommand{\numberline}[1]{%
+	\settowidth\@tempdimb{#1\hspace{0.5em}}%
+	\ifdim\@tempdima<\@tempdimb%
+	\@tempdima=\@tempdimb%
+	\fi%
+	\hb@xt@\@tempdima{\@cftbsnum #1\@cftasnum\hfil}\@cftasnumb}
+\makeatother
+
+\newpage
+\tableofcontents   %放置目录
+\newpage
+
+%以下两段修改章节标题格式，参数含义见博客http://blog.sina.com.cn/s/blog_5e16f1770100lqn7.html
+\makeatletter
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{2em}%
+	{2.3ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus.2ex}%
+	{\normalfont\normalsize\bfseries}}
+\makeatother
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{2}{0em}%
+	{2.3ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus.2ex}%
+	{\normalfont\normalsize\bfseries}}
+\makeatother
+
+
+\input{sections/introduction}
+\newpage
+\input{sections/preliminaries}
+\newpage
+\input{sections/opcond}
+\newpage
+\input{sections/algo}
+\newpage
+\input{sections/eval}
+\newpage
+\input{sections/conclusion}
+\newpage
+
+%下面修改参考文献格式
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\section*{\refname}%
+	\@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+	\list{\@biblabel{\@arabic\c@enumiv}}%
+	{\settowidth\labelwidth{\@biblabel{#1}}%
+		\leftmargin\labelwidth
+		\advance\leftmargin\labelsep
+		\advance\leftmargin by 0em%   %设置文本距离左边距距离
+		\itemindent 0em%    %设置编号后内容缩进
+		\@openbib@code
+		\usecounter{enumiv}%
+		\let\p@enumiv\@empty
+		\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+	\sloppy
+	\clubpenalty4000
+	\@clubpenalty \clubpenalty
+	\widowpenalty4000%
+	\sfcode`\.\@m}
+{\def\@noitemerr
+	{\@latex@warning{Empty `thebibliography' environment}}%
+	\endlist}
+\makeatother
+
+\addcontentsline{toc}{section}{参考文献}
+\begin{thebibliography}{MM}
+	\addtolength{\itemsep}{-0.5em}
+	\begin{small}
+		\bibitem{Alarie2001COncavity} Alarie S, Audet C, Jaumard B, et al. Concavity cuts for disjoint bilinear programming[J]. Mathematical Programming, 2001, 90(2): 373-398.
+		\bibitem{Altman1968bilinear} Altman M. Bilinear programming[J]. BULLETIN DE L ACADEMIE POLONAISE DES SCIENCES-SERIE DES SCIENCES MATHEMATIQUES ASTRONOMIQUES ET PHYSIQUES, 1968, 16(9): 741-746.
+		\bibitem{Audet1999} Audet C, Hansen P, Jaumard B, et al. A symmetrical linear maxmin approach to disjoint bilinear programming[J]. Mathematical Programming, 1999, 85(3): 573-592.
+		\bibitem{Balinski1961An} Balinski M L. An algorithm for finding all vertices of convex polyhedral sets[J]. Journal of the Society for Industrial and Applied Mathematics, 1961, 9(1): 72-88.
+		\bibitem{Bolte2014Proximal} Bolte J, Sabach S, Teboulle M. Proximal alternating linearized minimization for nonconvex and nonsmooth problems[J]. Mathematical Programming, 2014, 146(1-2): 459-494.
+		\bibitem{Boyd2011Distributed} Boyd S, Parikh N, Chu E, et al. Distributed optimization and statistical learning via the alternating direction method of multipliers[J]. Foundations and Trends® in Machine learning, 2011, 3(1): 1-122.
+		\bibitem{Cai2017On} Cai X, Han D, Yuan X. On the convergence of the direct extension of ADMM for three-block separable convex minimization models with one strongly convex function[J]. Computational Optimization and Applications, 2017, 66(1): 39-73.
+		\bibitem{Chen2016The} Chen C, He B, Ye Y, et al. The direct extension of ADMM for multi-block convex minimization problems is not necessarily convergent[J]. Mathematical Programming, 2016, 155(1-2): 57-79.
+		\bibitem{Chen2019Extended} Chen C, Li M, Liu X, et al. Extended ADMM and BCD for nonseparable convex minimization models with quadratic coupling terms: convergence analysis and insights[J]. Mathematical Programming, 2019, 173(1-2): 37-77.
+		\bibitem{Chen2013On} Chen C, Shen Y, You Y. On the convergence analysis of the alternating direction method of multipliers with three blocks[C]//Abstract and Applied Analysis. Hindawi, 2013, 2013.
+		\bibitem{Cui2016On} Cui Y, Li X, Sun D, et al. On the convergence properties of a majorized alternating direction method of multipliers for linearly constrained convex optimization problems with coupled objective functions[J]. Journal of Optimization Theory and Applications, 2016, 169(3): 1013-1041.
+		\bibitem{Davis2014COnvergence} Davis D, Yin W. Convergence rate analysis of several splitting schemes[M]//Splitting methods in communication, imaging, science, and engineering. Springer, Cham, 2016: 115-163.
+		\bibitem{Deng2012On} Deng W, Yin W. On the global linear convergence of alternating direction methods[J]. Preprint, 2012.
+		\bibitem{Ding2007} Ding X, Al-Khayyal F. Accelerating convergence of cutting plane algorithms for disjoint bilinear programming[J]. Journal of Global Optimization, 2007, 38(3): 421-436.
+		\bibitem{Falk1973} Falk J E. A linear max—min problem[J]. Mathematical Programming, 1973, 5(1): 169-188.
+		\bibitem{Forero2011Distributed} Forero P A, Cano A, Giannakis G B. Distributed clustering using wireless sensor networks[J]. IEEE Journal of Selected Topics in Signal Processing, 2011, 5(4): 707-724.
+		\bibitem{Frieze1974A} Frieze A M. A bilinear programming formulation of the 3-dimensional assignment problem[J]. Mathematical Programming, 1974, 7(1): 376-379.
+		\bibitem{Gabay1976A} Gabay D, Mercier B. A dual algorithm for the solution of nonlinear variational problems via finite element approximation[J]. Computers \& Mathematics with Applications, 1976, 2(1): 17-40.
+		\bibitem{Gallo1977} Gallo G, Ülkücü A. Bilinear programming: an exact algorithm[J]. Mathematical Programming, 1977, 12(1): 173-194.
+		\bibitem{Gao2017First} Gao X, Zhang S Z. First-order algorithms for convex optimization with nonseparable objective and coupled constraints[J]. Journal of the Operations Research Society of China, 2017, 5(2): 131-159.
+		\bibitem{Ghadimi2015Accelerated} Ghadimi S, Lan G. Accelerated gradient methods for nonconvex nonlinear and stochastic programming[J]. Mathematical Programming, 2016, 156(1-2): 59-99.
+		\bibitem{Ghadimi2014Mini} Ghadimi S, Lan G, Zhang H. Mini-batch stochastic approximation methods for nonconvex stochastic composite optimization[J]. Mathematical Programming, 2016, 155(1-2): 267-305.
+		\bibitem{Glowinski1975Sur} Glowinski R, Marroco A. Sur l'approximation, par éléments finis d'ordre un, et la résolution, par pénalisation-dualité d'une classe de problèmes de Dirichlet non linéaires[J]. ESAIM: Mathematical Modelling and Numerical Analysis-Modélisation Mathématique et Analyse Numérique, 1975, 9(R2): 41-76.
+		\bibitem{Goldfarb2012Fast} Goldfarb D, Ma S, Scheinberg K. Fast alternating linearization methods for minimizing the sum of two convex functions[J]. Mathematical Programming, 2013, 141(1-2): 349-382.
+		\bibitem{Goldstein2014Fast} Goldstein T, O'Donoghue B, Setzer S, et al. Fast alternating direction optimization methods[J]. SIAM Journal on Imaging Sciences, 2014, 7(3): 1588-1623.
+		\bibitem{Han2013An} Han D, Yuan X, Zhang W, et al. An ADM-based splitting method for separable convex programming[J]. Computational Optimization and Applications, 2013, 54(2): 343-369.
+		\bibitem{He2015A}
+		He B, Tao M, Yuan X. A splitting method for separable convex programming[J]. IMA Journal of Numerical Analysis, 2014, 35(1): 394-426.
+		\bibitem{He2012Alternating} He B, Tao M, Yuan X. Alternating direction method with Gaussian back substitution for separable convex programming[J]. SIAM Journal on Optimization, 2012, 22(2): 313-340.
+		\bibitem{He2012On} He B , Yuan X . On the $O(1/n)$ Convergence Rate of the Douglas–Rachford Alternating Direction Method[J]. SIAM Journal on Numerical Analysis, 2012, 50(2):700-709.
+		\bibitem{Hong2014A} Hong M, Chang T H, Wang X, et al. A block successive upper bound minimization method of multipliers for linearly constrained convex optimization[J]. arXiv preprint arXiv:1401.7079, 2014.
+		\bibitem{Hong2017On} Hong M, Luo Z Q. On the linear convergence of the alternating direction method of multipliers[J]. Mathematical Programming, 2017, 162(1-2): 165-199.
+		\bibitem{Hong2016COnvergence} Hong M, Luo Z Q, Razaviyayn M. Convergence analysis of alternating direction method of multipliers for a family of nonconvex problems[J]. SIAM Journal on Optimization, 2016, 26(1): 337-364.
+		\bibitem{Ibaraki1971Complementary} Ibaraki T. Complementary programming[J]. Operations Research, 1971, 19(6): 1523-1529.
+		\bibitem{Jiang2013Alternating} Jiang B, Ma S, Zhang S. Alternating direction method of multipliers for real and complex polynomial optimization models[J]. Optimization, 2014, 63(6): 883-898.
+		\bibitem{Konno1976ACP} Konno H. A cutting plane algorithm for solving bilinear programs[J]. Mathematical Programming, 1976, 11(1): 14-27.
+		\bibitem{Konno1971Bilinear} Konno H. Bilinear Programming: Part II. Application of Bilinear Programming[R]. STANFORD UNIV CALIF DEPT OF OPERATIONS RESEARCH, 1971.
+		\bibitem{Konno1976Maximization} Konno H. Maximization of a convex quadratic function under linear constraints[J]. Mathematical programming, 1976, 11(1): 117-127.
+		\bibitem{Li2015A} Li M, Sun D, Toh K C. A convergent 3-block semi-proximal ADMM for convex minimization problems with one strongly convex block[J]. Asia-Pacific Journal of Operational Research, 2015, 32(04): 1550024.
+		\bibitem{Liavas2013Parallel} Liavas A P, Sidiropoulos N D. Parallel algorithms for constrained tensor factorization via alternating direction method of multipliers[J]. IEEE Transactions on Signal Processing, 2015, 63(20): 5450-5463.
+		\bibitem{Lin2016Iteration} Lin T, Ma S, Zhang S. Iteration complexity analysis of multi-block ADMM for a family of convex minimization without strong convexity[J]. Journal of Scientific Computing, 2016, 69(1): 52-81.
+		\bibitem{Lin2015Onthe} Lin T, Ma S, Zhang S. On the global linear convergence of the admm with multiblock variables[J]. SIAM Journal on Optimization, 2015, 25(3): 1478-1497.
+		\bibitem{Lin2015On} Lin T Y, Ma S Q, Zhang S Z. On the sublinear convergence rate of multi-block ADMM[J]. Journal of the Operations Research Society of China, 2015, 3(3): 251-274.
+		\bibitem{O1964Equilibrium} Mangasarian O L. Equilibrium points of bimatrix games[J]. Journal of the Society for Industrial and Applied Mathematics, 1964, 12(4): 778-780.
+		\bibitem{MANGASARIAN1964348} Mangasarian O L, Stone H. Two-person nonzero-sum games and quadratic programming[J]. Journal of Mathematical Analysis and applications, 1964, 9(3): 348-355.
+		\bibitem{Mills1960Equilibrium} Mills H. Equilibrium points in finite games[J]. Journal of the Society for Industrial and Applied Mathematics, 1960, 8(2): 397-402.
+		\bibitem{Monteiro2013Iteration} Monteiro R D C, Svaiter B F. Iteration-complexity of block-decomposition algorithms and the alternating direction method of multipliers[J]. SIAM Journal on Optimization, 2013, 23(1): 475-507.
+		\bibitem{Nocedal2006Numerical} Nocedal J, Wright S. Numerical optimization[M]. Springer Science \& Business Media, 2006.
+		\bibitem{Pardalos1991Quadratic} Pardalos P M, Vavasis S A. Quadratic programming with one negative eigenvalue is NP-hard[J]. Journal of Global Optimization, 1991, 1(1): 15-22.
+		\bibitem{Peyre2019Computational} Peyré G, Cuturi M. Computational optimal transport[J]. Foundations and Trends® in Machine Learning, 2019, 11(5-6): 355-607.
+		\bibitem{Razaviyayn2013A} Razaviyayn M, Hong M, Luo Z Q. A unified convergence analysis of block successive minimization methods for nonsmooth optimization[J]. SIAM Journal on Optimization, 2013, 23(2): 1126-1153.
+		\bibitem{Ritter1966} Ritter K. A method for solving maximum-problems with a nonconcave quadratic objective function[J]. Probability Theory and Related Fields, 1966, 4(4): 340-351.
+		\bibitem{Rockafellar2015Convex} Rockafellar R T. Convex analysis[M]. Princeton university press, 2015.
+		\bibitem{Rosen1960The} Rosen J B. The gradient projection method for nonlinear programming. Part I. Linear constraints[J]. Journal of the society for industrial and applied mathematics, 1960, 8(1): 181-217.
+		\bibitem{Santambrogio2015Optimal} Santambrogio F. Optimal transport for applied mathematicians[J]. Birkäuser, NY, 2015, 55: 58-63.
+		\bibitem{Scutari2014Decomposition} Scutari G, Facchinei F, Song P, et al. Decomposition by partial linearization: Parallel optimization of multi-agent systems[J]. IEEE Transactions on Signal Processing, 2014, 62(3): 641-656.
+		\bibitem{Shen2014Augmented} Shen Y, Wen Z, Zhang Y. Augmented Lagrangian alternating direction method for matrix separation based on low-rank factorization[J]. Optimization Methods and Software, 2014, 29(2): 239-263.
+		\bibitem{Sherali1980} Sherali H D, Shetty C M. A finitely convergent algorithm for bilinear programming problems using polar cuts and disjunctive face cuts[J]. Mathematical Programming, 1980, 19(1): 14-31.
+		\bibitem{Sherali1977The} Sherali A D, Shetty C M. The rectilinear distance location-allocation problem[J]. AIIE Transactions, 1977, 9(2): 136-143.
+		\bibitem{Sun2014Alternating} Sun D L, Fevotte C. Alternating direction method of multipliers for non-negative matrix factorization with the beta-divergence[C]//2014 IEEE international conference on acoustics, speech and signal processing (ICASSP). IEEE, 2014: 6201-6205.
+		\bibitem{Sun2015On} Sun R, Luo Z Q, Ye Y. On the expected convergence of randomly permuted ADMM[J]. arXiv preprint arXiv:1503.06387, 2015.
+		\bibitem{Tuy1964Concave} Tuy H. Concave programming under linear constraints[C]//Soviet Mathematics Doklady. 1964, 5: 1437-1440.
+		\bibitem{Vaish1974Nonconvex} Vaish H. Nonconvex programming with applications to production and location problems[D]. Georgia Institute of Technology, 1974.
+		\bibitem{Vaish1977A} Vaish H, Shetty C M. A cutting plane algorithm for the bilinear programming problem[J]. Naval Research Logistics Quarterly, 1977, 24(1): 83-94.
+		\bibitem{Vaish1976The} Vaish H, Shetty C M. The bilinear programming problem[J]. Naval Research Logistics Quarterly, 1976, 23(2): 303-309.
+		\bibitem{Villani2008Optimal} Villani C. Optimal transport: old and new[M]. Springer Science \& Business Media, 2008.
+		\bibitem{Villani2003Topics} Villani C. Topics in optimal transportation[M]. American Mathematical Soc., 2003.
+		\bibitem{Wen2012Block} Wen Z, Goldfarb D, Scheinberg K. Block coordinate descent methods for semidefinite programming[M]//Handbook on semidefinite, conic and polynomial optimization. Springer, Boston, MA, 2012: 533-564.
+		\bibitem{Wen2013Asset} Wen Z, Peng X, Liu X, et al. Asset allocation under the basel accord risk measures[J]. arXiv preprint arXiv:1308.1321, 2013.
+		\bibitem{Xu2011An} Xu Y, Yin W, Wen Z, et al. An alternating direction algorithm for matrix completion with nonnegative factors[J]. Frontiers of Mathematics in China, 2012, 7(2): 365-384.
+		\bibitem{Zhang2014Asynchronous} Zhang R, Kwok J. Asynchronous distributed ADMM for consensus optimization[C]//International Conference on Machine Learning. 2014: 1701-1709.
+		\bibitem{Zhang2010An} Zhang Y. An Alternating Direction Algorithm for Nonnegative Matrix Factorization[J]. 2010.
+		\bibitem{Zhang2010Convergence} Zhang Y. Convergence of a Class of Stationary Iterative Methods for Saddle Point Problems[J]. 2010.
+		\bibitem{Zwart1973Nonlinear} Zwart P B. Nonlinear programming: counterexamples to two global optimization algorithms[J]. Operations Research, 1973, 21(6): 1260-1266.
+		\bibitem{Gu2017} 顾险峰. 最优传输理论在机器学习中的应用[J]. 中国人工智能学会通讯, 2017, 7(5): 1-13.
+	\end{small}
+\end{thebibliography}
+
+\newpage
+\input{sections/thanks}
+
+\end{document}
