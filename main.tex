@@ -3,18 +3,8 @@
 %\CJKindent
 \begin{document}
 \linespread{1.5}  %1.5倍行距
-\pagestyle{fancy} %页眉页脚设置
-\fancyhead{}      %清空默认页眉
-\fancyfoot{}      %清空默认页脚
-\fancyhead[L]{\qquad \includegraphics[height=1.34cm]{tongji.jpg}}   %页眉左侧插入同济大学logo
-\fancyhead[R]{\large 毕业设计（论文）报告纸~\\}
-\fancyfoot[LE,RO]{{\large 共\quad \pageref{LastPage}\quad 页\quad 第\quad \thepage \quad 页}} %偶数页左侧(LE)，奇数页右侧(RO)标页码，oneside打印只用写RO
-\renewcommand{\headrulewidth}{1.5pt}  %页眉横线
-\renewcommand{\footrulewidth}{1.5pt}
-%\newgeometry{} 单独调节某页边距
-%\maketitle
-\thispagestyle{fancy}
 
+\pagestyle{firststyle}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{sections/abstract}%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +26,7 @@
 
 %以下两段修改章节标题格式，参数含义见博客http://blog.sina.com.cn/s/blog_5e16f1770100lqn7.html
 \makeatletter
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{2em}%
+\renewcommand\subsubsection{\@startsection{subsubsection}{2}{0em}%
 	{2.3ex \@plus -1ex \@minus -.2ex}%
 	{2.3ex \@plus.2ex}%
 	{\normalfont\normalsize\bfseries}}
@@ -49,6 +39,7 @@
 \makeatother
 
 
+\pagestyle{mainstyle}
 \input{sections/introduction}
 \newpage
 \input{sections/preliminaries}

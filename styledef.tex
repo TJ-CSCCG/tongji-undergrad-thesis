@@ -1,5 +1,6 @@
-\documentclass[UTF8,10.5pt,a4paper]{ctexart}
+\documentclass[UTF8,a4paper]{ctexart}
 
+\usepackage{mathptmx}
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage{multirow}
 \usepackage{algorithm}
@@ -12,11 +13,9 @@
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{color}
-\usepackage{amsmath}
-\usepackage{amsthm}
 \usepackage{etoolbox}
 \usepackage{amsfonts}
-\usepackage{caption2}     %修改图片表格名称字体字号的宏包
+\usepackage{caption}     %修改图片表格名称字体字号的宏包
 \usepackage{float}        %自己设置图片插入位置
 \usepackage{fancyhdr}     %设置页眉页脚的宏包
 \usepackage{graphicx}     %插入图片
@@ -24,7 +23,10 @@
 \usepackage{xcolor} 
 \usepackage[colorlinks,linkcolor=black, citecolor=black, unicode={true}]{hyperref}
 \graphicspath{{figures/}} %%图片路径
-\usepackage[top=3.2cm,bottom=3.8cm,left=3.3cm,right=1.8cm]{geometry}  %设置页边距
+\usepackage[a4paper,top=3.2cm,bottom=3.8cm,left=3.3cm,right=1.8cm]{geometry}  %设置页边距
+\setlength{\headsep}{16mm}
+\setlength{\footskip}{38pt}
+
 \usepackage{fancybox}                      %画边界线
 \fancyput*(-0.8cm,-4.3cm){$|$}%
 \fancyput*(-0.8cm,-4.9cm){$|$}%
@@ -122,17 +124,9 @@
 \newcommand{\diag}{\mathrm{diag}}
 \newcommand{\one}{\mathbf{1}}
 
-
-%\bibliographystyle{plainnat}
-%\begin{CJK*}{GBK}{song}
-%\title{}
-%\author{}
-% \date{}
 \sloppy
 \definecolor{lightgray}{gray}{0.5}
-\setlength{\parindent}{0pt}
 
-%\CJKindent
 \makeatletter
 \newenvironment{breakablealgorithm}
 {% \begin{breakablealgorithm}
@@ -157,9 +151,24 @@
 \renewcommand{\algorithmicrequire}{\textbf{输入: }}
 \renewcommand{\algorithmicensure}{\textbf{输出: }}
 
+\fancypagestyle{mainstyle}
+{
+   \fancyhf{}
+   \pagenumbering{arabic}
+   \fancyhead[L]{\qquad \includegraphics[height=1.34cm]{tongji.jpg}}   %页眉左侧插入同济大学logo
+   \fancyhead[R]{\large 毕业设计（论文）报告纸~\\}
+   \fancyfoot[R]{{\large 共\quad \pageref{LastPage}\quad 页\quad 第\quad \thepage \quad 页}} %偶数页左侧(LE)，奇数页右侧(RO)标页码，oneside打印只用写RO
+   \renewcommand{\headrulewidth}{1.5pt}  %页眉横线
+   \renewcommand{\footrulewidth}{1.5pt}
+}
 
-%\bibliographystyle{plainnat}
-%\begin{CJK*}{GBK}{song}
-%\title{}
-%\author{}
-%\date{}
+\fancypagestyle{firststyle}
+{
+   \fancyhf{}
+   \pagenumbering{Roman}
+   \fancyhead[L]{\qquad \includegraphics[height=1.34cm]{tongji.jpg}}   %页眉左侧插入同济大学logo
+   \fancyhead[R]{\large 毕业设计（论文）报告纸~\\}
+   \fancyfoot[C]{\large \thepage}
+   \renewcommand{\headrulewidth}{1.5pt}  %页眉横线
+   \renewcommand{\footrulewidth}{0pt}
+}
