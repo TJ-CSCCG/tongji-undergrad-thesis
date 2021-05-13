@@ -18,6 +18,7 @@
 \usepackage{caption}     %修改图片表格名称字体字号的宏包
 \usepackage{float}        %自己设置图片插入位置
 \usepackage{fancyhdr}     %设置页眉页脚的宏包
+\setlength{\headheight}{43pt}
 \usepackage{graphicx}     %插入图片
 \usepackage{lastpage}     %引用最后一页
 \usepackage{xcolor} 
@@ -26,11 +27,6 @@
 \usepackage[a4paper,top=3.2cm,bottom=3.8cm,left=3.3cm,right=1.8cm]{geometry}  %设置页边距
 
 
-\usepackage{ifplatform}
-\ifmacosx % Mac OS X only
-\setlength{\headsep}{16mm}
-\setlength{\footskip}{35pt}
-\fi
 
 \usepackage{fancybox}                      %画边界线
 \fancyput*(-0.8cm,-4.3cm){$|$}%
