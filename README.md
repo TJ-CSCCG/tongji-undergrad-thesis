@@ -33,6 +33,7 @@ sudo  tlmgr install subfigure
 sudo  tlmgr install cases 
 sudo  tlmgr install algorithms 
 sudo  tlmgr install multirow
+sudo  tlmgr install catchfile
 
 sudo tlmgr update --self --all
 ```

@@ -24,8 +24,13 @@
 \usepackage[colorlinks,linkcolor=black, citecolor=black, unicode={true}]{hyperref}
 \graphicspath{{figures/}} %%图片路径
 \usepackage[a4paper,top=3.2cm,bottom=3.8cm,left=3.3cm,right=1.8cm]{geometry}  %设置页边距
+
+
+\usepackage{ifplatform}
+\ifmacosx % Mac OS X only
 \setlength{\headsep}{16mm}
-\setlength{\footskip}{38pt}
+\setlength{\footskip}{35pt}
+\fi
 
 \usepackage{fancybox}                      %画边界线
 \fancyput*(-0.8cm,-4.3cm){$|$}%
