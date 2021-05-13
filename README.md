@@ -52,6 +52,7 @@ Add the following attribute to your `setting.json`:
             "-synctex=1",
             "-interaction=nonstopmode",
             "-file-line-error",
+            "-shell-escape",
             "%DOC%"
         ]
     }
