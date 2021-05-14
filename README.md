@@ -4,7 +4,10 @@
 
 Ganler only made little effort to make it compatible with latest XeLatex (May, 2021) environment on Overleaf.
 
-**NOTE: Please select `main.tex` as the main file and compile it with `XeLaTeX` or `LuaLaTex`.**
+**NOTE**
+
+* Please select `main.tex` as the main file and compile it with `XeLaTeX` or `LuaLaTex`.
+* Till May 15th, 2021, our "great"🙄 `1.tongji.edu` is not able to support uploading `.pdf` files (but only MS Word files). 
 
 ## Compile it locally on Mac (on LaTeX-Workshop)
 
