@@ -108,10 +108,8 @@
 %\usepackage[utf8]{inputenc}
 %\usepackage[font=small,labelfont={bf,sf},tableposition=top]{caption}
 
-\makeatletter
-\renewcommand{\thefigure}{\ifnum \c@section>\z@ \thesection.\fi \@arabic\c@figure}
-\renewcommand{\thetable}{\ifnum \c@section>\z@ \thesection.\fi \@arabic\c@table}
-\makeatother
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
 
 \newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}
 
