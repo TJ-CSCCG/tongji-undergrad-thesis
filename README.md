@@ -5,7 +5,13 @@
 * Please select `main.tex` as the main file and compile it with `XeLaTeX` (suggested) or `LuaLaTex`.
 * Till May 26th, 2021, our "great"🙄 `1.tongji.edu` is not able to support uploading `.pdf` files (but only MS Word files). 
 
-## Compile it locally on Mac (on LaTeX-Workshop)
+## Use it on Overleaf
+
+- Download this repo `Code | Download ZIP`;
+- Open [Overleaf](https://www.overleaf.com/); 
+- Click upload project and drag the `.zip` file into Overleaf panel;
+
+## Compile it locally on Mac/Linux
 
 ```shell
 # Install BasicTex: https://mirrors.chevalier.io/CTAN/systems/mac/mactex/mactex-basictex-20210325.pkg
@@ -26,6 +32,7 @@ sudo tlmgr install xcolor
 sudo tlmgr install trimspaces
 sudo tlmgr install zhnumber
 sudo tlmgr install ctex
+sudo tlmgr install texcount
 sudo tlmgr install needspace
 sudo tlmgr install xecjk
 sudo  tlmgr install subfigure 
@@ -36,7 +43,18 @@ sudo  tlmgr install multirow
 sudo tlmgr update --self --all
 ```
 
-### XeLaTeX
+### Makefile
+
+Credit: https://github.com/sjtug/SJTUThesis
+
+```shell
+make all                      # compile main.pdf
+make clean                    # rm intermediate files
+make cleanall                 # rm all intermediate files (including .pdf)
+make wordcount                # wordcount
+```
+
+### LaTeXMK + XeLaTeX on LaTeX-Workshop
 
 Add the following attribute to your `setting.json`:
 
