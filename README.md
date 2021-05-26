@@ -1,13 +1,9 @@
 # Overleaf-Compatible Undergraduate Thesis Template (Tongji Univ.)
 
-**Main Credit: Yukuan HU (Department of Mathematic, class of 2015)**
-
-Ganler only made little effort to make it compatible with latest XeLatex (May, 2021) environment on Overleaf.
-
 **NOTE**
 
-* Please select `main.tex` as the main file and compile it with `XeLaTeX` or `LuaLaTex`.
-* Till May 15th, 2021, our "great"🙄 `1.tongji.edu` is not able to support uploading `.pdf` files (but only MS Word files). 
+* Please select `main.tex` as the main file and compile it with `XeLaTeX` (suggested) or `LuaLaTex`.
+* Till May 26th, 2021, our "great"🙄 `1.tongji.edu` is not able to support uploading `.pdf` files (but only MS Word files). 
 
 ## Compile it locally on Mac (on LaTeX-Workshop)
 
@@ -71,42 +67,16 @@ Add the following attribute to your `setting.json`:
 ]
 ```
 
-### LuaLaTeX
+## Call for contribution
 
-```shell
-# This important for 10.15+ Mac
-sudo tlmgr conf texmf OSFONTDIR /System/Library/AssetsV2/com_apple_MobileAsset_Font6/
-luaotfload-tool -vvv --update --force
-```
-
-`setting.json`
-
-```json
-"latex-workshop.latex.recipe.default": "lualatex-mac",
-    "latex-workshop.latex.tools": [
-        {
-            "name": "lualatex",
-            "command": "lualatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-shell-escape",
-                "-pdf",
-                "%DOC%"
-            ]
-        },
-    ],
-    "latex-workshop.latex.recipes": [
-        {
-            "name": "lualatex-mac",
-            "tools": [
-                "lualatex",
-            ]
-        }
-    ],
-```
+- Create a `.sty` file regarding the project.
 
 ---
 
-all rights reserved by Yukuan HU.
+## LICENSE
+
+We follow WTFPLv3.1 as our license. 
+
+## Credit
+
+Initial template provided by Yukuan HU, maintained/promoted by Ganler.
