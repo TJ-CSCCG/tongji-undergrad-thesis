@@ -5,6 +5,7 @@
 \usepackage{multirow}
 \usepackage{algorithm}
 \usepackage{cases}
+\usepackage{gbt7714}
 \usepackage{subfigure}
 \usepackage{enumerate}
 \usepackage{setspace}
@@ -112,6 +113,8 @@
 \renewcommand{\thetable}{\ifnum \c@section>\z@ \thesection.\fi \@arabic\c@table}
 \makeatother
 
+\newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}
+
 \newcommand{\primal}{\mathrm{primal}}
 \newcommand{\dual}{\mathrm{dual}}
 \newcommand{\trace}{\mathrm{tr}}
@@ -171,3 +174,60 @@
    \renewcommand{\headrulewidth}{1.5pt}  %页眉横线
    \renewcommand{\footrulewidth}{0pt}
 }
+
+
+%以下为修改目录格式的正文内语句，正文内用@命令需用\makeatletter,\makeatother括起来
+\makeatletter
+\renewcommand{\numberline}[1]{%
+	\settowidth\@tempdimb{#1\hspace{0.5em}}%
+	\ifdim\@tempdima<\@tempdimb%
+	\@tempdima=\@tempdimb%
+	\fi%
+	\hb@xt@\@tempdima{\@cftbsnum #1\@cftasnum\hfil}\@cftasnumb}
+\makeatother
+
+
+%以下两段修改章节标题格式，参数含义见博客http://blog.sina.com.cn/s/blog_5e16f1770100lqn7.html
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+	{-3.5ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus.2ex}%
+	{\centering\heiti\zihao{4}}}
+\makeatother
+\makeatletter
+\renewcommand\subsubsection{\@startsection{subsubsection}{2}{2.5em}%
+	{2.3ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus.2ex}%
+	{\heiti\zihao{5}}}
+\makeatother
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{2}{0em}%
+	{2.3ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus.2ex}%
+	{\heiti\zihao{5}}}
+\makeatother
+
+%下面修改参考文献格式
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\section*{\refname}%
+	\@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+	\list{\@biblabel{\@arabic\c@enumiv}}%
+	{\settowidth\labelwidth{\@biblabel{#1}}%
+		\leftmargin\labelwidth
+		\advance\leftmargin\labelsep
+		\advance\leftmargin by 0em%   %设置文本距离左边距距离
+		\itemindent 0em%    %设置编号后内容缩进
+		\@openbib@code
+		\usecounter{enumiv}%
+		\let\p@enumiv\@empty
+		\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+	\sloppy
+	\clubpenalty4000
+	\@clubpenalty \clubpenalty
+	\widowpenalty4000%
+	\sfcode`\.\@m}
+{\def\@noitemerr
+	{\@latex@warning{Empty `thebibliography' environment}}%
+	\endlist}
+\makeatother
