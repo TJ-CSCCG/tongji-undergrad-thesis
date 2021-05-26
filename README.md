@@ -110,3 +110,11 @@ Initial template provided by Yukuan HU, maintained/promoted by Ganler.
 We learned a lot from the leading university open-source repositories:
 
 - https://github.com/sjtug/SJTUThesis (makefile)
+
+## Contact
+
+```python
+# Python
+f'jiawei#@$.edu'.replace('#', '6').replace('$', 'illinois')
+```
+
