@@ -1,0 +1,51 @@
+\usepackage{mathptmx}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{cases}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{setspace}
+\usepackage{algorithmic}
+\usepackage{extarrows}
+\usepackage{latexsym}
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{etoolbox}
+\usepackage{caption}     %修改图片表格名称字体字号的宏包
+\DeclareCaptionLabelSeparator{twospace}{\ ~}
+\captionsetup{labelsep=twospace}
+\usepackage{float}        %自己设置图片插入位置
+\usepackage{fancyhdr}     %设置页眉页脚的宏包
+%\setlength{\headheight}{43pt}
+\usepackage{graphicx}     %插入图片
+\usepackage{lastpage}     %引用最后一页
+\usepackage{xcolor}
+
+\floatstyle{plaintop}
+\restylefloat{table}
+
+\usepackage{listing}
+\floatstyle{plain}
+\restylefloat{listing}
+
+
+\setlength{\baselineskip}{18pt}
+
+%\newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+
+%以下为修改目录格式的正文内语句，正文内用@命令需用\makeatletter,\makeatother括起来
+\makeatletter
+\renewcommand{\numberline}[1]{%
+	\settowidth\@tempdimb{#1\hspace{0.5em}}%
+	\ifdim\@tempdima<\@tempdimb%
+	\@tempdima=\@tempdimb%
+	\fi%
+	\hb@xt@\@tempdima{\@cftbsnum #1\@cftasnum\hfil}\@cftasnumb}
+\makeatother
+
+
+\usepackage[colorlinks,linkcolor=black, citecolor=black, unicode={true}]{hyperref}
