@@ -96,8 +96,9 @@
 
 % 设置浮动体的 caption 位置
 \RequirePackage{float}
-\floatstyle{plaintop}       % 表格的 caption 在表格上方
+\floatstyle{plaintop}       % 表格的 caption 在表格上方，这里仅设置了 table 环境，longtable 环境默认 plaintop
 \restylefloat{table}
+\RequirePackage{algorithm}	% 引入 listing
 \floatstyle{plain}
 \restylefloat{listing}      % listing 环境默认为 ruled，修改为 plain，将 caption 放在下方
 \sloppy
