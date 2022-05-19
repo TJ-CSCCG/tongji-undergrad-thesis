@@ -86,10 +86,11 @@ Add the following attribute to your `settings.json`:
         "command": "latexmk",
         "args": [
             "-xelatex",
-            "-aux-directory=_out",
             "-synctex=1",
+            "-quiet",
             "-interaction=nonstopmode",
             "-file-line-error",
+            "-halt-on-error",
             "-shell-escape",
             "%DOC%"
         ]

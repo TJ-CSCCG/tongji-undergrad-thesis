@@ -1,5 +1,6 @@
 {
-    //"latex-workshop.intellisense.unimathsymbols.enabled": true,
+    "latex-workshop.intellisense.unimathsymbols.enabled": true,
+    "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.latex.recipes": [
         {
@@ -15,11 +16,12 @@
             "command": "latexmk",
             "args": [
                 "-xelatex",
-                "-shell-escape",
+                "-synctex=1",
                 "-quiet",
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-halt-on-error",
+                "-shell-escape",
                 "%DOC%"
             ]
         }
