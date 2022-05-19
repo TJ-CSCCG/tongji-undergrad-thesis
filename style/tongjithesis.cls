@@ -109,6 +109,9 @@
 % 小四 = 12.0 pt
 % 四号 = 14.0 pt
 % 字号对应单倍行距大小 = 字号磅数 * 1.3（如小四对应单倍行距为 15.6 pt）
+% 提供 spacing 环境以灵活改变环境内行间距，同时提供一系列有关 space 的指令
+% see https://github.com/rf-latex/setspace/blob/main/setspace.sty
+\RequirePackage{setspace}						% 此处未用到，后面定义正文页模板时使用
 \RequirePackage[T1]{fontenc}					% 使得 ctexart 可对英文加粗
 \newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}
 % 表格内所有字体均为小五：\zihao{-5}
@@ -240,6 +243,7 @@
 \newcommand{\major}[1]{\def\tongjimajor{#1}}
 \newcommand{\student}[2]{\def\tongjiauthornumber{#1}\def\tongjiauthor{#2}}
 \newcommand{\thesistitle}[2]{\def\tongjithesistitle{#1}\def\tongjithesissubtitle{#2}}
+\newcommand{\thesistitleeng}[2]{\def\tongjithesistitleeng{#1}\def\tongjithesissubtitleeng{#2}}
 \newcommand{\thesisadvisor}[1]{\def\tongjithesisadvisor{#1}}
 \newcommand{\thesisdate}[3]{\def\tongjithesisyear{#1}\def\tongjithesismonth{#2}\def\tongjithesisday{#3}}
 \newcommand{\MakeFrontCover}{
@@ -272,6 +276,56 @@
 			\vspace*{\fill}
 		\end{center}
 	\end{titlepage}
+}
+
+
+% 设置中文摘要页
+\newcommand{\MakeAbstract}[2]{
+	\begin{center}\bf\heiti\xiaoer
+		\ \\
+		\tongjithesistitle
+	\end{center}
+	\vspace{1pt}
+	\begin{center}\heiti\zihao{4}
+		摘要
+	\end{center}
+	\vspace{-0.5em}
+
+	\begin{spacing}{1.5}
+		\heiti\songti{#1}
+		\par
+	\end{spacing}
+
+	\vskip 5mm
+	\noindent{\songti\zihao{5}{
+		\textbf{关键词：}#2
+	}}~\\
+}
+
+
+% 设置英文摘要页
+\newcommand{\MakeAbstractEng}[2]{
+	\newpage
+	\begin{center}\heiti\xiaoer
+		\ \\
+		\textbf{\tongjithesistitleeng}
+	\end{center}
+	\vspace{1pt}
+	\begin{center}\heiti\zihao{4}
+		\textbf{ABSTRACT}
+	\end{center}
+	\vspace{0mm}
+
+	\begin{spacing}{1.5}
+		#1
+		\par
+	\end{spacing}
+
+	\vskip 13.65pt % 小五字体单倍行距 13.65pt
+	\noindent{\heiti\zihao{5}
+		\textbf{Key words:\quad}#2
+	}
+	\par
 }
 
 
