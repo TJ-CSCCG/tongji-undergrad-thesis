@@ -12,7 +12,7 @@
 
 % 设置页边距
 \setlength{\headheight}{43pt}
-\RequirePackage[a4paper,top=4cm,bottom=3cm,left=3.3cm,right=1.8cm]{geometry}
+\RequirePackage[a4paper,top=4.2cm,bottom=2.7cm,left=3.3cm,right=1.8cm]{geometry}
 
 
 % 画边界线
@@ -111,7 +111,8 @@
 % 字号对应单倍行距大小 = 字号磅数 * 1.3（如小四对应单倍行距为 15.6 pt）
 % 提供 spacing 环境以灵活改变环境内行间距，同时提供一系列有关 space 的指令
 % see https://github.com/rf-latex/setspace/blob/main/setspace.sty
-\RequirePackage{setspace}						% 此处未用到，后面定义正文页模板时使用
+\RequirePackage{setspace}
+\setstretch{1.5}                                % 设置全文行距为 1.5
 \RequirePackage[T1]{fontenc}					% 使得 ctexart 可对英文加粗
 \newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}
 % 表格内所有字体均为小五：\zihao{-5}
@@ -130,7 +131,7 @@
    \fancyhead[L]{\qquad \includegraphics[height=1.14cm]{figures/tongji.pdf}}   %页眉左侧插入同济大学logo
    \fancyhead[R]{\large 毕业设计（论文）~\\}
    \fancyfoot[C]{\large \thepage}
-   \renewcommand{\headrulewidth}{1.5pt}     	% 页眉横线
+   \renewcommand{\headrulewidth}{1.8pt}     	% 页眉横线
    \renewcommand{\footrulewidth}{0pt}
 }
 
@@ -143,8 +144,8 @@
    \fancyhead[L]{\qquad \includegraphics[height=1.14cm]{figures/tongji.pdf}}   %页眉左侧插入同济大学logo
    \fancyhead[R]{\large 毕业设计（论文）~\\}
    \fancyfoot[R]{{\large 共\quad \pageref{LastPage}\quad 页\quad 第\quad \thepage \quad 页}} %偶数页左侧(LE)，奇数页右侧(RO)标页码，oneside打印只用写RO
-   \renewcommand{\headrulewidth}{1.5pt}     	% 页眉横线
-   \renewcommand{\footrulewidth}{1.5pt}     	% 页脚横线
+   \renewcommand{\headrulewidth}{1.8pt}     	% 页眉横线
+   \renewcommand{\footrulewidth}{1.8pt}     	% 页脚横线
 }
 
 
@@ -192,7 +193,7 @@
 	\setbox2\hbox{\@biblabel{#1}}
 	\@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
 	\begin{enumerate}[
-		itemindent=18pt, % 为满足参考文献顶格书写的要求
+		itemindent=0pt, % 为满足参考文献顶格书写的要求
 		leftmargin=0pt,
 		label={
 			\@biblabel{\@arabic\c@enumiv} % 使用阿拉伯数字自然编号
