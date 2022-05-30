@@ -2,9 +2,7 @@
 
 中文 | [English](README-EN.md)
 
-**注意**：
-
-* 直到 2021 年 5 月 26 日，我们伟大的 1 系统仍然无法支持上传 `.pdf` 格式文件。但是你可以通过一些 `pdf` 转 `docx` 工具，比如：[pdf2go.pdf-to-word](https://www.pdf2go.com/pdf-to-word))。
+> **注意**：使用该模板你会获得 **pdf** 文件作为输出。但在毕业设计过程中可能存在需要提交 docx 等格式文件的场合，这时你可以使用一些 **pdf 转 docx 工具**，比如：[pdf2go.pdf-to-word](https://www.pdf2go.com/pdf-to-word))。
 
 ## 使用方法
 
@@ -101,7 +99,7 @@ make wordcount                # wordcount
 
 在插件市场中安装 LaTeX Workshop 插件，此后下载该项目，并在该项目根目录打开。（LaTeX Workshop 只是一个插件，仍需要下载对应平台下的 `TeXLive`）
 
-**注意**：下列配置已被项目中 `.vscode/settings.json` 包含。正常情况下，启动 LaTeX Workshop 插件时会自动装载配置。（`.vscode/settings.json` 中的配置会覆盖全局配置文件 `settings.json` 中对应选项，因此不必修改全局配置文件）
+> **注意**：下列配置已被项目中 `.vscode/settings.json` 包含。正常情况下，启动 LaTeX Workshop 插件时会自动装载配置。（`.vscode/settings.json` 中的配置会覆盖全局配置文件 `settings.json` 中对应选项，因此不必修改全局配置文件）
 
 ```json
 "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
@@ -170,7 +168,7 @@ by Sam Hocevar <sam@hocevar.net>
 
 我们从顶尖高校的优秀开源项目中学到了很多：
 
-* https://github.com/sjtug/SJTUThesis (makefile & batchfile)
+* [sjtug/SJTUThesis](https://github.com/sjtug/SJTUThesis): makefile & batchfile
 
 ## 联系方式
 

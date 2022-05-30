@@ -315,7 +315,7 @@
 	\begin{center}\heiti\zihao{4}
 		\textbf{ABSTRACT}
 	\end{center}
-	\vspace{0mm}
+	\vspace{-0.5em}
 
 	\begin{spacing}{1.5}
 		#1
