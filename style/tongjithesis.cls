@@ -260,7 +260,7 @@
 
 			% 符合毕业设计模板（理工类），标题使用黑体小初
 			\zihao{-0}\heiti{毕业设计（论文）}
-			\vskip 80pt
+			\vskip 60pt
 
 			% 符合毕业设计模板（理工类），此处使用黑体小二
 			\begin{information}{M{5em}M{22em}}

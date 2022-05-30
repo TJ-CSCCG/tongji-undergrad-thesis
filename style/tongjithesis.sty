@@ -37,6 +37,7 @@
 \makeatletter
 \renewenvironment{algorithm}
 {
+    \vskip 20pt
     \refstepcounter{algorithm}% New algorithm
     \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
     \renewcommand{\caption}[2][\relax]{% 使用中文 caption
@@ -48,7 +49,10 @@
         \fi
         \kern2pt\hrule\kern2pt
     }
-}{\kern2pt\hrule\relax}% \@fs@post for \@fs@ruled
+}{
+    \kern2pt\hrule\relax
+    \vskip 20pt
+}% \@fs@post for \@fs@ruled
 \makeatother
 
 
