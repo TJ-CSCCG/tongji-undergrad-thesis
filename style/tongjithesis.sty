@@ -98,5 +98,9 @@
 % 提供 longtable 环境，允许使用跨页长表格
 \usepackage{longtable}
 \AtBeginEnvironment{longtable}{\zihao{-5}}
+% 提供画图宏包
+\usepackage{tikz}
+% 提供 verbatim 环境，minted 中不支持纯文本，可以使用该环境创建无格式文本块
+\usepackage{verbatim}
 % 使得可以跳转
 \usepackage[colorlinks,linkcolor=black, citecolor=black, unicode={true}]{hyperref}
