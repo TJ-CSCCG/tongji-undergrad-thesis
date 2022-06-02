@@ -20,9 +20,15 @@ labels: 'type/bug'
 
 <!--在下方贴出编译时输出的错误日志-->
 
-```log
+<details><summary><b>报错内容</b> <i>[点击打开]</i></summary>
+<div>
 
+```log
+# Paste your log here:
 ```
+
+</div>
+</details>
 
 ### 文件结构
 
