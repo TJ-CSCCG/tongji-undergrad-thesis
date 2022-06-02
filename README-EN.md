@@ -113,9 +113,7 @@ Add the following attribute to your `settings.json`:
 
 ## Call for contribution
 
-* First, read [this(CONTRIBUTING)](CONTRIBUTING.md) to know how to cooperate with git and GitHub.
-* Then, read [this(ROADMAP)](ROADMAP.md) to know our "wishlist".
-* Finally, fork [this repository](https://github.com/TJ-CSCCG/tongji-undergrad-thesis) and begin your contribution.
+Please read [How to pull request](CONTRIBUTING.md#how-to-pull-request).
 
 ## LICENSE
 

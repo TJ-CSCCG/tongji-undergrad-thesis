@@ -136,9 +136,7 @@ make wordcount                # wordcount
 
 ## 如何为该项目贡献代码？
 
-* 首先，还请查看 [项目贡献指南](CONTRIBUTING.md) 了解该项目如何使用 `git` 与 `GitHub` 协作。
-* 此后，还请查看 [项目期望](ROADMAP.md) 了解该项目希望完成的工作。
-* 最后，fork [该仓库](https://github.com/TJ-CSCCG/tongji-undergrad-thesis) 到你所属的账户之下，开始你的贡献。
+还请查看 [How to pull request](CONTRIBUTING.md/#how-to-pull-request)。
 
 ## 开源协议
 
