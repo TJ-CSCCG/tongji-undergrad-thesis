@@ -11,7 +11,10 @@ name: test
 
 jobs:
   build-xelatex:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -19,6 +22,24 @@ jobs:
         uses: xu-cheng/texlive-action/full@v1
         with:
           run: "latexmk -xelatex -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape main"
+      - name: upload pdf
+        uses: actions/upload-artifact@v2
+        with:
+          name: document output
+          path: main.pdf
+
+  build-lualatex:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: compile LaTeX document
+        uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: "latexmk -lualatex -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape main"
       - name: upload pdf
         uses: actions/upload-artifact@v2
         with:
