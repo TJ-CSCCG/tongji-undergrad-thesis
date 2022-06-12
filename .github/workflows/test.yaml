@@ -11,10 +11,7 @@ name: test
 
 jobs:
   build-xelatex:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -29,10 +26,7 @@ jobs:
           path: main.pdf
 
   build-lualatex:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
