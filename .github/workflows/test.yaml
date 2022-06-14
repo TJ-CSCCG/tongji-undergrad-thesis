@@ -99,6 +99,7 @@ jobs:
           tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
       - name: compile LaTeX document
         run: |
+          ${{ env.SET_PATH }}
           latexmk ${{ matrix.compiler }} -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape main
       - name: upload pdf
         uses: actions/upload-artifact@v2
