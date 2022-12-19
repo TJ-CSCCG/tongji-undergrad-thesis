@@ -5,7 +5,12 @@
 THESIS = main
 
 # Option for latexmk
-LATEXMK_OPT = -quiet -file-line-error -halt-on-error -interaction=nonstopmode
+# Check: Typesetting Engines
+ENGINES = -xelatex -lualatex
+ifeq ($(filter $(ENGINES), $(ENGINE)), )
+  $(error Expected $$ENGINE in {$(ENGINES)}, Got "$(ENGINE)")
+endif
+LATEXMK_OPT = -quiet -file-line-error -halt-on-error -interaction=nonstopmode -shell-escape $(ENGINE) main
 LATEXMK_OPT_PVC = $(LATEXMK_OPT) -pvc
 
 # make deletion work on Windows
