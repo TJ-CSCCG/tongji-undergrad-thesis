@@ -5,11 +5,15 @@
 THESIS = main
 
 # Option for latexmk
+
 # Check: Typesetting Engines
 ENGINES = -xelatex -lualatex
+ifneq ($(filter all pvc, $(MAKECMDGOALS)), )
 ifeq ($(filter $(ENGINES), $(ENGINE)), )
   $(error Expected $$ENGINE in {$(ENGINES)}, Got "$(ENGINE)")
 endif
+endif
+
 LATEXMK_OPT = -quiet -file-line-error -halt-on-error -interaction=nonstopmode -shell-escape $(ENGINE) main
 LATEXMK_OPT_PVC = $(LATEXMK_OPT) -pvc
 
