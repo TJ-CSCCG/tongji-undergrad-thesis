@@ -121,7 +121,7 @@ jobs:
       - name: compile LaTeX document
         run: |
           ${{ env.SET_PATH }}
-          latexmk ${{ matrix.compiler }} -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape -jobname=windows${{ matrix.compiler }} main
+          .\make.bat thesis ${{ matrix.compiler }}
       - name: upload pdf
         uses: actions/upload-artifact@v2
         with:
