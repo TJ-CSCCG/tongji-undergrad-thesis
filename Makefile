@@ -10,7 +10,9 @@ THESIS = main
 ENGINES = -xelatex -lualatex
 ifneq ($(filter all pvc, $(MAKECMDGOALS)), )
 ifeq ($(filter $(ENGINES), $(ENGINE)), )
-  $(error Expected $$ENGINE in {$(ENGINES)}, Got "$(ENGINE)")
+  $(info Expected $$ENGINE in {$(ENGINES)}, Got "$(ENGINE)")
+  $(info Set default $$ENGINE to "-xelatex")
+  ENGINE = -xelatex
 endif
 endif
 

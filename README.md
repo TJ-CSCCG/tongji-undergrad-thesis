@@ -52,6 +52,7 @@ sudo tlmgr update --self --all
 
 ```shell
 make all                      # compile main.pdf
+make ENGINE=$ENGINE all       # use $ENGINE(where $ENGINE=-xelatex or -lualatex) to compile main.pdf
 make clean                    # rm intermediate files
 make cleanall                 # rm all intermediate files (including .pdf)
 make wordcount                # wordcount
@@ -72,6 +73,7 @@ make wordcount                # wordcount
 ```bat
 .\make.bat                      # the same to "make.bat thesis"
 .\make.bat thesis               # compile main.pdf
+.\make.bat thesis $ENGINE       # use $ENGINE(where $ENGINE=-xelatex or -lualatex) to compile main.pdf
 .\make.bat clean                # clean all work files by latexmk -c
 .\make.bat cleanall             # clean all work files and main.pdf by latexmk -C
 .\make.bat wordcount            # wordcount

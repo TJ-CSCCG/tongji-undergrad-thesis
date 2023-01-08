@@ -10,6 +10,17 @@ if "%~1" == "" (
     set flag=%1
 )
 
+if not "%~2" == "-xelatex" (
+    if not "%~2" == "-lualatex" (
+        echo Expected ENGINE in {-xelatex, -lualatex}, Got "%~2"
+        Set default ENGINE to "-xelatex"
+    ) else (
+        set ENGINE=-lualatex
+    )
+) else (
+    set ENGINE=-xelatex
+)
+
 if %flag% == thesis (
 	call :cleanall
 	call :thesis
@@ -54,7 +65,7 @@ goto :EOF
 
 :thesis
 	echo Compile . . .
-	latexmk -xelatex -synctex=1 -quiet -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape %THESIS% 2>nul
+	latexmk %ENGINE% -synctex=1 -quiet -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape %THESIS% 2>nul
 goto :EOF
 
 :clean
