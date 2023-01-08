@@ -103,6 +103,7 @@ jobs:
         run: |
           ${{ env.SET_PATH }}
           .\make.bat thesis ${{ matrix.compiler }}
+          mv main.pdf windows${{ matrix.compiler }}.pdf
       - name: upload pdf
         uses: actions/upload-artifact@v2
         with:
