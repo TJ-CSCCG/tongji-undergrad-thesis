@@ -9,16 +9,16 @@
 数字可以使用 \verb|\num{}| 命令进行格式化，例如：
 
 \begin{itemize}
-\item \num{12345272.42146}：显示长数字。
-% \item \num{9+-3i}：显示复数。
-% \item \complexnum{1+-2i}：For TeXLive 2021, siunitx >= 3.0
-% \item \num{9.624 x 8.18 x 1.745}：显示乘积表达式。
-% \item \numproduct{1.654 x 2.34 x 3.430}：For TeXLive 2021, siunitx >= 3.0
-\item \num{1.234567e8}：以科学计数法显示数字。
-\item \num{-19.7}：显示负号。
-\item \num{3.2d-5}：显示数字和指数，使用小写的 d 来指示指数。
-\item \num{1.234(5)}：显示带有不确定度的数字。数字后的括号内的数字表示数字的不确定度，本例中为 5。
-\item \num[parse-numbers=false]{\$19,456.82}：显示一个货币金额，并将其解释为一个字符串，而不是数字。
+  \item \num{12345272.42146}：显示长数字。
+  % \item \num{9+-3i}：显示复数。
+  % \item \complexnum{1+-2i}  % For TeXLive 2021, siunitx >= 3.0
+  % \item \num{9.624 x 8.18 x 1.745}：显示乘积表达式。
+  % \item \numproduct{1.654 x 2.34 x 3.430}  % For TeXLive 2021, siunitx >= 3.0
+  \item \num{1.234567e8}：以科学计数法显示数字。
+  \item \num{-19.7}：显示负号。
+  \item \num{3.2d-5}：显示数字和指数，使用小写的 d 来指示指数。
+  \item \num{1.234(5)}：显示带有不确定度的数字。数字后的括号内的数字表示数字的不确定度，本例中为 5。
+  \item \num[parse-numbers=false]{\$19,456.82}：显示一个货币金额，并将其解释为一个字符串，而不是数字。
 \end{itemize}
 
 \subsubsection*{单位格式化}
@@ -26,14 +26,14 @@
 单位可以使用 \verb|\si{}| 命令进行格式化，例如：
 
 \begin{itemize}
-\item \si{kg.m.s^{-1}}：显示物理量的单位。
-\item \si{\pico\meter} $\si{\pico\meter}$：显示物理量的单位，可以添加前缀。
-\item \si{\tesla} $\si{\tesla}$：显示物理量的单位。
-\item \si{\ampere\per\meter\squared}：显示物理量的单位，并使用 \verb|\per| 命令来显示单位的分数形式。
-\item \si[per-mode=fraction]{\coulomb\per\mole}：显示物理量的单位，并使用分数形式显示单位，而不是使用倒数形式。
-\item \si{\kilo\hertz}：显示带有前缀的单位。
-\item \SI{2.5}{\kilo\volt\per\milli\meter}：显示物理量的值和单位，其中值为 2.5，单位为 \si{\kilo\volt\per\milli\meter}。
-\item \SI{12}{\degree}：显示一个角度值，单位为度。
+  \item \si{kg.m.s^{-1}}：显示物理量的单位。
+  \item \si{\pico\meter} $\si{\pico\meter}$：显示物理量的单位，可以添加前缀。
+  \item \si{\tesla} $\si{\tesla}$：显示物理量的单位。
+  \item \si{\ampere\per\meter\squared}：显示物理量的单位，并使用 \verb|\per| 命令来显示单位的分数形式。
+  \item \si[per-mode=fraction]{\coulomb\per\mole}：显示物理量的单位，并使用分数形式显示单位，而不是使用倒数形式。
+  \item \si{\kilo\hertz}：显示带有前缀的单位。
+  \item \SI{2.5}{\kilo\volt\per\milli\meter}：显示物理量的值和单位，其中值为 2.5，单位为 \si{\kilo\volt\per\milli\meter}。
+  \item \SI{12}{\degree}：显示一个角度值，单位为度。
 \end{itemize}
 
 \subsubsection*{数字和单位组合}
@@ -41,9 +41,9 @@
 数字和单位可以组合起来使用，例如：
 
 \begin{itemize}
-\item \SI{0.5}{\metre\cubed}：显示物理量的值和单位。
-\item \SI{5.5}{\micro\second}：显示物理量的值和单位。
-\item \SI{2.3}{\mega\joule\per\kelvin}：显示物理量的值和单位。
+  \item \SI{0.5}{\metre\cubed}：显示物理量的值和单位。
+  \item \SI{5.5}{\micro\second}：显示物理量的值和单位。
+  \item \SI{2.3}{\mega\joule\per\kelvin}：显示物理量的值和单位。
 \end{itemize}
 
 \subsubsection*{数字和单位列表}
@@ -51,9 +51,9 @@
 数字和单位列表可以使用以下命令进行格式化：
 
 \begin{itemize}
-\item \numlist{95;36}：显示数字列表，其中数字之间用分号隔开。
-\item \numlist{52;74;59}：显示数字列表，其中数字之间用分号隔开。
-\item \SIlist{0.53;0.74;0.99}{\milli\metre}：显示带有单位的数字列表，其中数字之间用分号隔开。
+  \item \numlist{95;36}：显示数字列表，其中数字之间用分号隔开。
+  \item \numlist{52;74;59}：显示数字列表，其中数字之间用分号隔开。
+  \item \SIlist{0.53;0.74;0.99}{\milli\metre}：显示带有单位的数字列表，其中数字之间用分号隔开。
 \end{itemize}
 
 \subsubsection*{数字和单位范围}
@@ -61,8 +61,8 @@
 数字和单位范围可以使用以下命令进行格式化：
 
 \begin{itemize}
-\item \numrange{65}{1284}：显示数字范围，其中数字用短横线隔开。
-\item \SIrange{58}{1024}{\degreeCelsius}：显示带有单位的数字范围。
+  \item \numrange{65}{1284}：显示数字范围，其中数字用短横线隔开。
+  \item \SIrange{58}{1024}{\degreeCelsius}：显示带有单位的数字范围。
 \end{itemize}
 
 以上是一些常见的使用示例，宏包 \pkg{siunitx} 还提供了许多其他选项和命令，可以根据需要进行自定义设置。
@@ -88,31 +88,31 @@
 
 公式末尾是需要添加标点符号的，至于用逗号还是句号，取决于公式下面一句是接着公式说的，还是另起一句。
 \begin{equation}
-		\sum_{n=1}^{\infty}\frac{\cos(nx)}{n^2}=\frac{\pi^2}{6}-\frac{x^2}{4}
+  \sum_{n=1}^{\infty}\frac{\cos(nx)}{n^2}=\frac{\pi^2}{6}-\frac{x^2}{4}
 \end{equation}
 
 公式较长时最好在等号“$=$”处转行。
 \begin{align}
-    & I(X_1;X_2)-I(X_1;X_2|X_3) \nonumber \\
-  = & H(X_2)-H(X_2|X_3) \nonumber \\
-  = & H(X_2,X_3)-H(X_3)-H(X_2|X_3) \nonumber \\
-  = & I(X_2;X_3)-I(X_2;X_3|X_1) \nonumber \\
-  = & I(X_2;X_3,X_1) \nonumber \\
-  \geq & 0
+       & I(X_1;X_2)-I(X_1;X_2|X_3) \nonumber    \\
+  =    & H(X_2)-H(X_2|X_3) \nonumber            \\
+  =    & H(X_2,X_3)-H(X_3)-H(X_2|X_3) \nonumber \\
+  =    & I(X_2;X_3)-I(X_2;X_3|X_1) \nonumber    \\
+  =    & I(X_2;X_3,X_1) \nonumber               \\
+  \geq & 0                                      
 \end{align}
 
 如果在等号处转行难以实现，也可在 $+$、$-$、$\times$、$\div$ 运算符号处转行，转行时运算符号仅书写于转行式前，不重复书写。
 \begin{multline}
-\frac{1}{2} \Delta (f_{ij} f^{ij}) =
-2 \left(\sum_{i<j} \chi_{ij}(\sigma_{i} - \sigma_{j})^{2}
-+ f^{ij} \nabla_{j} \nabla_{i} (\Delta f) \right. \\
-\left. + \nabla_{k} f_{ij} \nabla^{k} f^{ij} +
-f^{ij} f^{k} \left[2\nabla_{i}R_{jk}- \nabla_{k} R_{ij} \right] \vphantom{\sum_{i<j}} \right)
-- 3H^{2}\left[1+\frac{\dot{\phi}}{2H^2}\right] \\
-- \frac{\dot{\phi}^{2}}{2} - \frac{k}{a^{2}}\phi^{2} - \frac{1}{2}\left(\frac{\partial\phi}{\partial t}\right)^{2} + \frac{a^2}{2}\left(\frac{\partial\phi}{\partial x}\right)^{2}
-+ \frac{1}{4}\lambda\phi^{4} + \frac{\beta}{3}\phi^{3} -\frac{1}{2}\mu^{2}\phi^{2}(\ln{\phi^{2}} - c) \\
-+ \frac{e^{2}}{2}\left(\frac{\partial A_{\mu}}{\partial t}\right)^{2} - \frac{e^{2}}{2}\left(\frac{\partial A_{\mu}}{\partial x}\right)^{2}
-- e^{2}\phi^{2}A_{\mu}A^{\mu} + \frac{1}{4}F_{\mu\nu}F^{\mu\nu}.
+  \frac{1}{2} \Delta (f_{ij} f^{ij}) =
+  2 \left(\sum_{i<j} \chi_{ij}(\sigma_{i} - \sigma_{j})^{2}
+  + f^{ij} \nabla_{j} \nabla_{i} (\Delta f) \right. \\
+  \left. + \nabla_{k} f_{ij} \nabla^{k} f^{ij} +
+  f^{ij} f^{k} \left[2\nabla_{i}R_{jk}- \nabla_{k} R_{ij} \right] \vphantom{\sum_{i<j}} \right)
+  - 3H^{2}\left[1+\frac{\dot{\phi}}{2H^2}\right] \\
+  - \frac{\dot{\phi}^{2}}{2} - \frac{k}{a^{2}}\phi^{2} - \frac{1}{2}\left(\frac{\partial\phi}{\partial t}\right)^{2} + \frac{a^2}{2}\left(\frac{\partial\phi}{\partial x}\right)^{2}
+  + \frac{1}{4}\lambda\phi^{4} + \frac{\beta}{3}\phi^{3} -\frac{1}{2}\mu^{2}\phi^{2}(\ln{\phi^{2}} - c) \\
+  + \frac{e^{2}}{2}\left(\frac{\partial A_{\mu}}{\partial t}\right)^{2} - \frac{e^{2}}{2}\left(\frac{\partial A_{\mu}}{\partial x}\right)^{2}
+  - e^{2}\phi^{2}A_{\mu}A^{\mu} + \frac{1}{4}F_{\mu\nu}F^{\mu\nu}.
 \end{multline}
 
 \subsection{定理环境}
@@ -124,92 +124,91 @@ f^{ij} f^{k} \left[2\nabla_{i}R_{jk}- \nabla_{k} R_{ij} \right] \vphantom{\sum_{
 请注意，下面的文字均由ChatGPT生成。我们不保证它们的正确性。
 
 \begin{thm}
-对于任意正整数 $n$，存在无穷多个素数。
+  对于任意正整数 $n$，存在无穷多个素数。
 \end{thm}
 
 \begin{proof}
-我们采用反证法。假设存在一个最大的素数 $p$，那么任何大于 $p$ 的正整数 $n$ 都可以表示为 $p$ 和某个正整数 $k$ 的积，即 $n = pk$。但是根据这个假设，$p$ 已经是最大的素数了，所以 $k$ 不可能再包含其他的素数。这意味着我们可以将所有大于 $p$ 的正整数分成两个不相交的集合，一个是由 $p$ 的倍数组成的集合，另一个是由剩下的数组成的集合。而根据素数的定义，这两个集合中至少有一个是不存在素数的。然而，由于 $p$ 是最大的素数，所以它肯定不在由 $p$ 的倍数组成的集合中。这就产生了矛盾，因此假设不成立，定理得证。
+  我们采用反证法。假设存在一个最大的素数 $p$，那么任何大于 $p$ 的正整数 $n$ 都可以表示为 $p$ 和某个正整数 $k$ 的积，即 $n = pk$。但是根据这个假设，$p$ 已经是最大的素数了，所以 $k$ 不可能再包含其他的素数。这意味着我们可以将所有大于 $p$ 的正整数分成两个不相交的集合，一个是由 $p$ 的倍数组成的集合，另一个是由剩下的数组成的集合。而根据素数的定义，这两个集合中至少有一个是不存在素数的。然而，由于 $p$ 是最大的素数，所以它肯定不在由 $p$ 的倍数组成的集合中。这就产生了矛盾，因此假设不成立，定理得证。
 \end{proof}
 
 \begin{cor}
-如果 $a$ 和 $b$ 是正实数，则 $a+b \geq 2\sqrt{ab}$。
+  如果 $a$ 和 $b$ 是正实数，则 $a+b \geq 2\sqrt{ab}$。
 \end{cor}
 
 \begin{proof}
-我们可以使用平均数不小于几何平均数这个不等式来证明。具体地，我们有：
-\begin{align*}
-\sqrt{ab} &\leq \frac{a+b}{2} \\
-\Rightarrow 2\sqrt{ab} &\leq a+b
-\end{align*}
-因此，$a+b \geq 2\sqrt{ab}$，定理成立。
+  我们可以使用平均数不小于几何平均数这个不等式来证明。具体地，我们有：
+  \begin{align*}
+    \sqrt{ab}              & \leq \frac{a+b}{2} \\
+    \Rightarrow 2\sqrt{ab} & \leq a+b           
+  \end{align*}
+  因此，$a+b \geq 2\sqrt{ab}$，定理成立。
 \end{proof}
 
 \begin{lem}
-设 $f$ 是一个在 $[a,b]$ 上的可微函数，则 $f$ 在 $[a,b]$ 上一定有一点使得 $f'(x) = \frac{f(b)-f(a)}{b-a}$。
+  设 $f$ 是一个在 $[a,b]$ 上的可微函数，则 $f$ 在 $[a,b]$ 上一定有一点使得 $f'(x) = \frac{f(b)-f(a)}{b-a}$。
 \end{lem}
 
 \begin{proof}
-我们定义一个新的函数 $g(x) = f(x) - \frac{f(b)-f(a)}{b-a} \cdot (x-a)$。这个函数满足 $g(a) = f(a)$，$g(b) = f(b)$，且 $g'(x) = f'(x) - \frac{f(b)-f(a)}{b-a}$。如果我们能够找到一个点 $c \in (a,b)$，使得 $g(c) = 0$，那么根据罗尔定理，$g'(x)$ 必然在 $[a,b]$ 中的某个点为 $0$，即存在 $x_0 \in (a,b)$，使得 $f'(x_0) = \frac{f(b)-f(a)}{b-a}$。因此，我们只需要证明 $g(a)$ 和 $g(b)$ 异号即可。由于 $f$ 在 $[a,b]$ 上连续，根据介值定理，存在一个点 $c \in [a,b]$，使得 $f(c) = \frac{f(b)+f(a)}{2}$。那么，我们有：
-\begin{align*}
-g(a) &= f(a) - \frac{f(b)-f(a)}{b-a} \cdot (a-a) \\
-&= f(a) \\
-&< \frac{f(b)+f(a)}{2} \\
-&= f(c) \\
-&> \frac{f(b)-f(a)}{b-a} \cdot (c-a) \\
-&= f(a) - \frac{f(b)-f(a)}{b-a} \cdot (b-a) \\
-&= g(b)
-\end{align*}
-因此，$g(a)$ 和 $g(b)$ 异号，定理得证。
+  我们定义一个新的函数 $g(x) = f(x) - \frac{f(b)-f(a)}{b-a} \cdot (x-a)$。这个函数满足 $g(a) = f(a)$，$g(b) = f(b)$，且 $g'(x) = f'(x) - \frac{f(b)-f(a)}{b-a}$。如果我们能够找到一个点 $c \in (a,b)$，使得 $g(c) = 0$，那么根据罗尔定理，$g'(x)$ 必然在 $[a,b]$ 中的某个点为 $0$，即存在 $x_0 \in (a,b)$，使得 $f'(x_0) = \frac{f(b)-f(a)}{b-a}$。因此，我们只需要证明 $g(a)$ 和 $g(b)$ 异号即可。由于 $f$ 在 $[a,b]$ 上连续，根据介值定理，存在一个点 $c \in [a,b]$，使得 $f(c) = \frac{f(b)+f(a)}{2}$。那么，我们有：
+  \begin{align*}
+    g(a) & = f(a) - \frac{f(b)-f(a)}{b-a} \cdot (a-a) \\
+         & = f(a)                                     \\
+         & < \frac{f(b)+f(a)}{2}                      \\
+         & = f(c)                                     \\
+         & > \frac{f(b)-f(a)}{b-a} \cdot (c-a)        \\
+         & = f(a) - \frac{f(b)-f(a)}{b-a} \cdot (b-a) \\
+         & = g(b)                                     
+  \end{align*}
+  因此，$g(a)$ 和 $g(b)$ 异号，定理得证。
 \end{proof}
 
 \begin{prop}
-设 $f$ 和 $g$ 是两个单调递增的函数，则 $f+g$ 也是一个单调递增函数。
+  设 $f$ 和 $g$ 是两个单调递增的函数，则 $f+g$ 也是一个单调递增函数。
 \end{prop}
 
 \begin{proof}
-我们需要证明对于任意的 $x,y \in \mathbb{R}$，如果 $x < y$，则 $f(x)+g(x) < f(y)+g(y)$。由于 $f$ 和 $g$ 都是单调递增的，所以有 $f(x) < f(y)$ 和 $g(x) < g(y)$，于是 $f(x)+g(x) < f(y)+g(x) < f(y)+g(y)$。因此，$f+g$ 是单调递增的，定理得证。
+  我们需要证明对于任意的 $x,y \in \mathbb{R}$，如果 $x < y$，则 $f(x)+g(x) < f(y)+g(y)$。由于 $f$ 和 $g$ 都是单调递增的，所以有 $f(x) < f(y)$ 和 $g(x) < g(y)$，于是 $f(x)+g(x) < f(y)+g(x) < f(y)+g(y)$。因此，$f+g$ 是单调递增的，定理得证。
 \end{proof}
 
 \begin{conj}
-存在无穷多个双素数，即形如 $p(p+2)$ 的素数。
+  存在无穷多个双素数，即形如 $p(p+2)$ 的素数。
 \end{conj}
 
 \begin{proof}
-我们采用反证法。假设存在一个最大的双素数 $p(p+2)$，那么任何大于 $p(p+2)$ 的正整数 $n$ 都可以表示为 $p(p+2)$ 和某个正整数 $k$ 的积，即 $n = p(p+2)k$。但是根据这个假设，$p(p+2)$ 已经是最大的双素数了，所以 $k$ 不可能再包含其他的双素数。这意味着我们可以将所有大于 $p(p+2)$ 的正整数分成两个不相交的集合，一个是由 $p(p+2)$ 的倍数组成的集合，另一个是由剩下的数组成的集合。而根据双素数的定义，这两个集合中至少有一个是不存在双素数的。然而，由于 $p(p+2)$ 是最大的双素数，所以它肯定不在由 $p(p+2)$ 的倍数组成的集合中。这就产生了矛盾，因此假设不成立，定理得证。
+  我们采用反证法。假设存在一个最大的双素数 $p(p+2)$，那么任何大于 $p(p+2)$ 的正整数 $n$ 都可以表示为 $p(p+2)$ 和某个正整数 $k$ 的积，即 $n = p(p+2)k$。但是根据这个假设，$p(p+2)$ 已经是最大的双素数了，所以 $k$ 不可能再包含其他的双素数。这意味着我们可以将所有大于 $p(p+2)$ 的正整数分成两个不相交的集合，一个是由 $p(p+2)$ 的倍数组成的集合，另一个是由剩下的数组成的集合。而根据双素数的定义，这两个集合中至少有一个是不存在双素数的。然而，由于 $p(p+2)$ 是最大的双素数，所以它肯定不在由 $p(p+2)$ 的倍数组成的集合中。这就产生了矛盾，因此假设不成立，定理得证。
 \end{proof}
 
 \begin{assume}
-假设 $A$ 和 $B$ 是两个集合，则它们的笛卡尔积 $A \times B$ 的基数为 $|A| \cdot |B|$。
+  假设 $A$ 和 $B$ 是两个集合，则它们的笛卡尔积 $A \times B$ 的基数为 $|A| \cdot |B|$。
 \end{assume}
 
 \begin{proof}
-我们需要证明 $|A \times B| = |A| \cdot |B|$。我们可以使用等势关系来证明，即构造一个双射 $f: A \times B \rightarrow {1,2,\dots,|A| \cdot |B|}$。具体地，我们可以按照以下方式定义 $f$：
-\begin{equation}
+  我们需要证明 $|A \times B| = |A| \cdot |B|$。我们可以使用等势关系来证明，即构造一个双射 $f: A \times B \rightarrow {1,2,\dots,|A| \cdot |B|}$。具体地，我们可以按照以下方式定义 $f$：
+  \begin{equation}
     f(a,b)=(a-1)\cdot |B|+b
-\end{equation}
-其中 $a \in A$，$b \in B$。显然，$f$ 是一个双射，因为每个元素 $(a,b)$ 都对应着唯一的自然数 $(a-1) \cdot |B| + b$，而每个自然数也都可以唯一地表示为 $(a-1) \cdot |B| + b$ 的形式。因此，$A \times B$ 和 ${1,2,\dots,|A| \cdot |B|}$ 等势，即它们有相同的基数，定理得证。
+  \end{equation}
+  其中 $a \in A$，$b \in B$。显然，$f$ 是一个双射，因为每个元素 $(a,b)$ 都对应着唯一的自然数 $(a-1) \cdot |B| + b$，而每个自然数也都可以唯一地表示为 $(a-1) \cdot |B| + b$ 的形式。因此，$A \times B$ 和 ${1,2,\dots,|A| \cdot |B|}$ 等势，即它们有相同的基数，定理得证。
 \end{proof}
 
 \begin{dfn}
-一个有向无环图是拓扑排序的，当且仅当它的所有顶点都可以按照某个顺序进行编号，使得对于任意一条有向边 $(u,v)$，$u$ 的编号都小于 $v$ 的编号。
+  一个有向无环图是拓扑排序的，当且仅当它的所有顶点都可以按照某个顺序进行编号，使得对于任意一条有向边 $(u,v)$，$u$ 的编号都小于 $v$ 的编号。
 \end{dfn}
 
 \begin{exmp}
-考虑一个任务调度问题，其中有 $n$ 个任务需要按照一定的顺序执行。如果任务之间存在依赖关系，即某些任务必须在其他任务执行完毕之后才能开始执行，那么我们可以将这些任务和它们之间的依赖关系表示成一个有向无环图，并通过拓扑排序来确定任务的执行顺序。
+  考虑一个任务调度问题，其中有 $n$ 个任务需要按照一定的顺序执行。如果任务之间存在依赖关系，即某些任务必须在其他任务执行完毕之后才能开始执行，那么我们可以将这些任务和它们之间的依赖关系表示成一个有向无环图，并通过拓扑排序来确定任务的执行顺序。
 \end{exmp}
 
 \begin{rem}
-在数学中，定义和定理是数学推理的基础，而引理和命题则通常作为定理证明的中间步骤。而且在数学研究中，猜想和猜测往往需要大量的证明和反证，才能得到确定的结论。
+  在数学中，定义和定理是数学推理的基础，而引理和命题则通常作为定理证明的中间步骤。而且在数学研究中，猜想和猜测往往需要大量的证明和反证，才能得到确定的结论。
 \end{rem}
 
 \begin{proof}
-设 $n$ 是任意正整数，则存在一个双射 $f: {1,2,\dots,n} \rightarrow {n,n-1,\dots,1}$，即将 ${1,2,\dots,n}$ 中的元素按照相反的顺序重新编号，使得 $f(i) = n-i+1$。因此，我们有：
-\begin{align*}
-\sum_{i=1}^n i &= 1 + 2 + \cdots + (n-1) + n \
-&= f(1) + f(2) + \cdots + f(n-1) + f(n) \
-&= (n+1) \cdot \frac{n}{2} \
-&= \frac{n(n+1)}{2}
-\end{align*}
-因此，定理成立。
+  设 $n$ 是任意正整数，则存在一个双射 $f: {1,2,\dots,n} \rightarrow {n,n-1,\dots,1}$，即将 ${1,2,\dots,n}$ 中的元素按照相反的顺序重新编号，使得 $f(i) = n-i+1$。因此，我们有：
+  \begin{align*}
+    \sum_{i=1}^n i & = 1 + 2 + \cdots + (n-1) + n \           
+                   & = f(1) + f(2) + \cdots + f(n-1) + f(n) \ 
+                   & = (n+1) \cdot \frac{n}{2} \              
+                   & = \frac{n(n+1)}{2}                       
+  \end{align*}
+  因此，定理成立。
 \end{proof}
-
