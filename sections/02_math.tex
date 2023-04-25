@@ -183,11 +183,11 @@
 \end{assume}
 
 \begin{proof}
-  我们需要证明 $|A \times B| = |A| \cdot |B|$。我们可以使用等势关系来证明，即构造一个双射 $f: A \times B \rightarrow {1,2,\dots,|A| \cdot |B|}$。具体地，我们可以按照以下方式定义 $f$：
+  我们需要证明 $|A \times B| = |A| \cdot |B|$。我们可以使用等势关系来证明，即构造一个双射 $f: A \times B \rightarrow \left\{1,2,\dots,|A| \cdot |B|\right\}$。具体地，我们可以按照以下方式定义 $f$：
   \begin{equation}
     f(a,b)=(a-1)\cdot |B|+b
   \end{equation}
-  其中 $a \in A$，$b \in B$。显然，$f$ 是一个双射，因为每个元素 $(a,b)$ 都对应着唯一的自然数 $(a-1) \cdot |B| + b$，而每个自然数也都可以唯一地表示为 $(a-1) \cdot |B| + b$ 的形式。因此，$A \times B$ 和 ${1,2,\dots,|A| \cdot |B|}$ 等势，即它们有相同的基数，定理得证。
+  其中 $a \in A$，$b \in B$。显然，$f$ 是一个双射，因为每个元素 $(a,b)$ 都对应着唯一的自然数 $(a-1) \cdot |B| + b$，而每个自然数也都可以唯一地表示为 $(a-1) \cdot |B| + b$ 的形式。因此，$A \times B$ 和 $\left\{1,2,\dots,|A| \cdot |B|\right\}$ 等势，即它们有相同的基数，定理得证。
 \end{proof}
 
 \begin{dfn}
@@ -203,11 +203,11 @@
 \end{rem}
 
 \begin{proof}
-  设 $n$ 是任意正整数，则存在一个双射 $f: {1,2,\dots,n} \rightarrow {n,n-1,\dots,1}$，即将 ${1,2,\dots,n}$ 中的元素按照相反的顺序重新编号，使得 $f(i) = n-i+1$。因此，我们有：
+  设 $n$ 是任意正整数，则存在一个双射 $f: \left\{1,2,\dots,n\right\} \rightarrow \left\{n,n-1,\dots,1\right\}$，即将 $\left\{1,2,\dots,n\right\}$ 中的元素按照相反的顺序重新编号，使得 $f(i) = n-i+1$。因此，我们有：
   \begin{align*}
-    \sum_{i=1}^n i & = 1 + 2 + \cdots + (n-1) + n \           
-                   & = f(1) + f(2) + \cdots + f(n-1) + f(n) \ 
-                   & = (n+1) \cdot \frac{n}{2} \              
+    \sum_{i=1}^n i & = 1 + 2 + \cdots + (n-1) + n \\           
+                   & = f(1) + f(2) + \cdots + f(n-1) + f(n) \\ 
+                   & = (n+1) \cdot \frac{n}{2} \\              
                    & = \frac{n(n+1)}{2}                       
   \end{align*}
   因此，定理成立。
