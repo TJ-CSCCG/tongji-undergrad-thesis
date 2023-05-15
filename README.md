@@ -71,10 +71,10 @@ pip install Pygments
 sudo tlmgr update --self
 
 sudo tlmgr install adjustbox algorithmicx algorithms biber biblatex bibtex booktabs \ 
-    caption cases catchfile chinese-jfm chngcntr cleveref collectbox ctex dvips \ 
+    caption carlisle cases catchfile chinese-jfm chngcntr cleveref collectbox ctex dvips \ 
     enumitem environ extarrows fancybox fancyhdr fancyvrb float framed fvextra \ 
     gbt7714 gsftopk helvetic hologo ifplatform lastpage latexmk lineno \ 
-    minted multirow mwe natbib needspace nth pdftexcmds rsfs setspace siunitx subfig \
+    minted multirow mwe natbib needspace newtx nth oberdiek pdftexcmds realscripts rsfs setspace siunitx subfig \
     tcolorbox texcount texliveonfly threeparttable threeparttablex times titling tocloft \ 
     trimspaces txfonts ucs upquote was xcolor xecjk xstring zhnumber
 
