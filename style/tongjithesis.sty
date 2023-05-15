@@ -5,8 +5,19 @@
 % 数学符号
 % 使用更现代的 newtx
 % see https://tex.stackexchange.com/questions/56876/times-new-roman-fonts-and-maths-without-mathptmx
-\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
-\usepackage{txfonts}
+\usepackage{ifthen}
+\newboolean{useTimesNewRoman}
+\setboolean{useTimesNewRoman}{false} % Set to false if you don't want to use Times New Roman 
+                                     % or if you want to use the default math font (Latin Modern) for math symbols
+\ifthenelse{\boolean{useTimesNewRoman}}{%
+  \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}%
+  \usepackage{fontspec}%
+  \setmainfont{Times New Roman}%
+}{%
+  \usepackage{amsthm,amscd}%
+  \usepackage{newtxtext,newtxmath}%
+}
+
 \theoremstyle{definition}
 \newtheorem{thm}{定理\hspace{0.05pt}}[section]
 \newtheorem{cor}{推论\hspace{0.05pt}}[section]
