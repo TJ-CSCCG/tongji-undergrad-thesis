@@ -104,7 +104,7 @@ make wordcount                # wordcount
 
 2. 运行 Python 安装程序：双击下载的安装程序并按照提示进行安装。在安装过程中，记得勾选 `Add Python 3.x to PATH` 选项，这样 Python 才能在命令行中使用。
 
-#### ii. 使用 `pip` 安装 `pygmentize`
+#### ii. 使用 `pip` 安装 `pygments`
 
 在终端中输入以下命令：
 ```shell
@@ -113,9 +113,15 @@ pip install Pygments
 
 注意：如果你在安装过程中遇到了权限问题，可以在命令提示符中使用管理员权限运行以上命令。
 
+注意：若您担忧将某个具体版本的 Python 加入环境变量存在潜在的环境污染隐患，希望使用 Python 环境管理应用，则步骤如下：
+- 创建一个新的 Python 环境，在环境中安装 `pygments` 模块
+- 按照`main.tex`中的注释，在文件中直接指定该环境路径。
+
 #### iii. 安装 TeXLive
 
 通过 [此处](https://www.tug.org/texlive/acquire-netinstall.html) 下载 `install-tl-windows.exe`。
+
+注意：安装过程中会下载8GB左右的数据，请耐心等待。
 
 #### iv. 通过 Batchfile 构建项目
 
@@ -132,6 +138,8 @@ pip install Pygments
 .\make.bat wordcount            # wordcount
 .\make.bat help                 # read the manual
 ```
+
+至此，您已经可以借助LaTex撰写论文了。若相比命令行，您更倾向于在一个完整的UI环境中进行操作，请继续查阅以下内容。
 
 ### 5. 在 VSCode 上使用
 
