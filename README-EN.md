@@ -100,7 +100,7 @@ make wordcount                # wordcount
 
 2. Run the Python installer: Double-click the downloaded installer and follow the prompts to install it. During installation, remember to check the `Add Python 3.x to PATH` option so that Python can be used from the command line.
 
-#### ii. Install `pygmentize` using `pip`
+#### ii. Install `pygments` using `pip`
 
 Enter the following command in the terminal:
 ```shell
@@ -109,9 +109,15 @@ pip install Pygments
 
 Note: If you encounter permissions problems during the installation process, you can run the above command from a command prompt with administrator privileges.
 
+Note: If you are concerned about the potential environmental contamination risks of adding a specific version of Python to your environment paths and wish to use a Python environment manager application, proceed as follows:
+- Create a new Python environment and install the `pygments` module.
+- Follow the comments in `main.tex` which specify the environment path directly in the file.
+
 #### iii. Install TeXLive
 
 Download `install-tl-windows.exe` from [here](https://www.tug.org/texlive/acquire-netinstall.html).
+
+Note: A data pack of about 8GB will be downloaded during the installation process, please be patient.
 
 #### iv. Build the project through Batchfile
 
@@ -128,6 +134,8 @@ You can complete the corresponding operation with the following command:
 .\make.bat wordcount            # wordcount
 .\make.bat help                 # read the manual
 ```
+
+At this point, you are ready to write your paper with LaTex. If you prefer to operate in a full UI environment rather than the command line, please continue with the following.
 
 ### 5. Using on VSCode
 
