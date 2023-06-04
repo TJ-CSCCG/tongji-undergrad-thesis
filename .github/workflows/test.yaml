@@ -88,7 +88,7 @@ jobs:
       matrix:
         compiler: [-xelatex, -lualatex]
     env:
-      SET_PATH: ${env:PATH} = "${{ github.workspace }}\tmp\texlive\bin\win32;" + ${env:PATH}
+      SET_PATH: ${env:PATH} = "${{ github.workspace }}\tmp\texlive\bin\windows;" + ${env:PATH}
     steps:
       - name: checkout
         uses: actions/checkout@v2
