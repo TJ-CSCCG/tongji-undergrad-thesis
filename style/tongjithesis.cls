@@ -274,6 +274,7 @@
 \RequirePackage[
     backend=biber,
     style=gb7714-2015,
+    natbib=true,
 ]{biblatex}
 \addbibresource{bib/note.bib}
 
