@@ -295,7 +295,7 @@
 }{\renewcommand{\arraystretch}{1.2}\endoldtabular
 }
 
-\RequirePackage{ulem}
+\RequirePackage{ulem,calc}
 \newlength{\covertextwidth}
 \newlength{\covermaxwidth}
 
