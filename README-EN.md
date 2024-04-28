@@ -185,7 +185,7 @@ This project uses the [LPPL-1.3c license](https://www.latex-project.org/lppl/lpp
 
 ## Project History
 
-- This project originated from Yukuan Hu's undergraduate thesis, which was uploaded on May 24, 2019. [YukuanHU](https://github.com/YukuanHu)
+- This project originated from [YukuanHU](https://github.com/YukuanHu)'s undergraduate thesis, which was uploaded on May 24, 2019.
 - Starting May 9, 2021, [ganler](https://github.com/ganler) enhanced the functionalities (project structure and platform compatibility) based on the original project and began maintaining it.
 - As of May 12, 2022, [skyleaworlder](https://github.com/skyleaworlder) started contributing to the project, integrated it into [TJ-CSCCG](http://github.com/TJ-CSCCG), and has continued to update and improve it. It has now become a comprehensive undergraduate thesis template.
 - From April 2023, [RizhongLin](https://github.com/RizhongLin) began contributing to and managing the project.
