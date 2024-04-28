@@ -48,7 +48,7 @@
 
 #### 安装 $\TeX$ 发行版
 
-我们建议参照[官方快速安装指南](https://tug.org/texlive/quickinstall.html) 安装 TeX Live（Windows、Linux）或 MacTeX（macOS）。
+我们建议参照[官方快速安装指南](https://tug.org/texlive/quickinstall.html)安装 TeX Live（Windows、Linux）或 MacTeX（macOS）。
 
 #### 支持代码高亮
 
@@ -61,6 +61,7 @@
 ```latex
 \renewcommand{\MintedPython}{/path/to/your/python}
 ```
+
 </details>
 
 若您不需要代码高亮，请将 `minted` 宏包相关内容注释掉。
@@ -115,7 +116,6 @@ make wordcount          # wordcount
 
 详细使用方法见 [tongji-undergrad-thesis-env](https://github.com/TJ-CSCCG/tongji-undergrad-thesis-env)。
 
-
 ### 其他功能
 
 #### 双面打印版
@@ -152,8 +152,8 @@ make wordcount          # wordcount
 
 > [!WARNING]
 > 将 Adobe 字体文件放置在项目根目录下并在 `main.tex` 中指定字体路径的方式并不总是有效。因此，我们建议您将 Adobe 字体文件安装到系统字体目录中。
-> 
-> 经测试，在 Overleaf 项目的根目录下放置 Adobe 字体文件并在 `main.tex` 中指定字体路径的方式是有效的，但这种方式可能会导致编译速度变慢。
+>
+> 经测试，在 Overleaf 项目的根目录下放置 Adobe 字体文件，并只在使用 LuaLaTeX 编译的方式是有效的，但这种方式可能会导致编译速度变慢。
 
 ## 如何为该项目贡献代码？
 
