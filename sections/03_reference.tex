@@ -144,7 +144,6 @@
 需要同时引用几个并列的对象时，可以直接使用 \verb|\cref| 命令，例如：
 \begin{Verbatim}
 请参见\cref{sec:introduction,sec:conclusion}。
-请参见\cref{sec:introduction,sec:conclusion}。
 请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
 请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
 请参见\cref{sec:introduction,sec:reference,sec:conclusion}。
@@ -154,7 +153,6 @@
 
 这样，就可以在文档中产生“请参见章节 X 和 Y”的效果，其中 X 和 Y 为标签所在章节的编号：
 \begin{itemize}
-  \item 请参见\cref{sec:introduction,sec:conclusion}。
   \item 请参见\cref{sec:introduction,sec:conclusion}。
   \item 请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
   \item 请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
