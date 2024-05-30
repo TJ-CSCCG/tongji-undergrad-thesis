@@ -174,7 +174,16 @@
 \crefname{proof}{证明}{证明}
 \crefname{algorithm}{算法}{算法}
 \crefname{listing}{代码}{代码}
-
+% 连续引用的连接词需改为中文
+\newcommand{\crefpairconjunction}{ 和~}
+\newcommand{\crefmiddleconjunction}{、}
+\newcommand{\creflastconjunction}{ 和~}
+\newcommand{\crefpairgroupconjunction}{ 和}
+\newcommand{\crefmiddlegroupconjunction}{、}
+\newcommand{\creflastgroupconjunction}{ 和}
+\newcommand{\crefrangeconjunction}{ 至~}
+% \newcommand{\crefrangepreconjunction}{}
+% \newcommand{\crefrangepostconjunction}{}
 
 % 一些文档中用到的 logo
 \usepackage{hologo}
@@ -187,5 +196,6 @@
 \fvset{%
   breaklines=true, % enable line breaking
   linenos=true, % show line numbers
-  mathescape=true % enable math mode escape
+  mathescape=true, % enable math mode escape
+  breakanywhere=true, % allow line breaks anywhere
 }
