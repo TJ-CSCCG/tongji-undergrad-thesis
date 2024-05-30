@@ -141,4 +141,28 @@
 \end{Verbatim}
 这样，使用 \verb|\cref| 命令引用定理对象时，就会自动生成“请参见命题 X”的效果。
 
+需要同时引用几个并列的对象时，可以直接使用 \verb|\cref| 命令，例如：
+\begin{Verbatim}
+请参见\cref{sec:introduction,sec:conclusion}。
+请参见\cref{sec:introduction,sec:conclusion}。
+请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
+请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
+请参见\cref{sec:introduction,sec:reference,sec:conclusion}。
+请参见\cref{sec:introduction,sec:reference,sec:conclusion,%
+  algo:algorithm,fig:parallel1,lst:fibonacci}。
+\end{Verbatim}
+
+这样，就可以在文档中产生“请参见章节 X 和 Y”的效果，其中 X 和 Y 为标签所在章节的编号：
+\begin{itemize}
+  \item 请参见\cref{sec:introduction,sec:conclusion}。
+  \item 请参见\cref{sec:introduction,sec:conclusion}。
+  \item 请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
+  \item 请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
+  \item 请参见\cref{sec:introduction,sec:reference,sec:conclusion}。
+  \item 请参见\cref{sec:introduction,sec:reference,sec:conclusion,%
+        algo:algorithm,fig:parallel1,lst:fibonacci}。
+\end{itemize}
+
+上面的例子中，我们展示了如何使用 \verb|\cref| 命令引用多个并列的对象。在引用多个对象时，\pkg{cleveref} 宏包会自动根据对象类型生成正确的引用词汇，并使用适当的连接词将多个对象连接起来。
+
 总之，交叉引用是撰写文档时非常有用的功能，可以方便读者查找相关内容。在使用交叉引用时，可以选择使用 \verb|\ref| 命令手动指定引用词汇，也可以使用 \verb|\cref| 命令自动根据对象类型生成引用词汇。同时，\pkg{cleveref} 宏包可以帮助用户自动设置正确的引用词汇，提高文档的可读性。
