@@ -110,16 +110,13 @@
 % 设置有序列表与无序列表格式
 \RequirePackage{enumerate} % 下面用到了 enumerate
 \RequirePackage[inline]{enumitem}
-\RequirePackage{pifont} % 用于带圆圈的数字
-
-% 定义带圆圈的数字，且宽度为 1em
-\newcommand{\circled}[1]{\text{\ding{\numexpr171+#1\relax}}}
+\RequirePackage{circledsteps} % 用于带圆圈的数字
 
 \setlistdepth{2}
 
 \setlist[enumerate]{nosep,labelsep=0pt}
 \setlist[enumerate,1]{label=（\arabic*）,left=2em,nosep,labelsep=0pt,wide=\parindent}
-\setlist[enumerate,2]{label=\circled{\arabic*},nosep,labelsep=0pt,labelwidth=1em,listparindent=0pt}
+\setlist[enumerate,2]{label=\Circled{\arabic*},nosep,labelsep=0pt,labelwidth=1em,listparindent=0pt}
 
 \setlist[itemize]{nosep}
 \setlist[itemize,1]{wide=\parindent}
