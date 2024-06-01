@@ -18,7 +18,7 @@ env:
   # biber biblatex bibtex: for executable bibtex
   # txfonts: mathptmx is obsoleted; times: times is obsoleted but utmb8a.pfb is needed
   # dvips: for 8r.enc, OS X needed; gsftopk: command needed when xdv -> pdf
-  TL_PACKAGES: adjustbox algorithmicx algorithms biber biblatex biblatex-gb7714-2015 bibtex booktabs caption carlisle cases catchfile chinese-jfm chngcntr circledsteps cleveref collectbox ctex dvips enumitem environ extarrows fancybox fancyhdr fancyvrb float framed fvextra gbt7714 gsftopk helvetic hologo ifplatform lastpage latexmk lineno minted multirow mwe natbib needspace newtx nth oberdiek pdftexcmds pgf pgfkeyx pict2e picture realscripts rsfs setspace siunitx subfig tcolorbox texcount texliveonfly threeparttable threeparttablex times titling tocloft trimspaces txfonts ucs upquote was xcolor xecjk xpatch xpicture xstring zhnumber
+  TL_PACKAGES: adjustbox algorithmicx algorithms biber biblatex biblatex-gb7714-2015 bibtex booktabs caption carlisle cases catchfile chinese-jfm chngcntr circledsteps cleveref collectbox ctex dvips enumitem environ extarrows fancybox fancyhdr fancyvrb float framed fvextra gbt7714 gsftopk helvetic hologo ifplatform lastpage latexmk lineno minted multirow mwe natbib needspace newtx nth oberdiek pdftexcmds pgf pict2e picture realscripts rsfs setspace siunitx subfig tcolorbox texcount texliveonfly threeparttable threeparttablex times titling tocloft trimspaces txfonts ucs upquote was xcolor xecjk xpatch xstring zhnumber
 
 jobs:
   build-linux:
