@@ -109,9 +109,19 @@
 
 % 设置有序列表与无序列表格式
 \RequirePackage{enumerate} % 下面用到了 enumerate
-\RequirePackage{enumitem}
-\setlist[itemize]{labelindent=2em,leftmargin=*,itemsep=0pt,parsep=0pt}
-\setlist[enumerate]{labelindent=2em,leftmargin=*,itemsep=0pt,parsep=0pt}
+\RequirePackage[inline]{enumitem}
+\RequirePackage{circledsteps} % 用于带圆圈的数字
+
+\setlistdepth{2}
+
+\setlist[enumerate]{nosep,labelsep=0pt}
+\setlist[enumerate,1]{label=（\arabic*）,left=2em,nosep,labelsep=0pt,wide=\parindent}
+\setlist[enumerate,2]{label=\Circled{\arabic*},nosep,labelsep=0pt,labelwidth=1em,listparindent=0pt}
+
+\setlist[itemize]{nosep}
+\setlist[itemize,1]{wide=\parindent}
+\setlist[itemize,2]{wide=2\parindent}
+
 
 
 % 设置目录格式
@@ -359,7 +369,7 @@
 	\end{spacing}
 
 	\vskip 5mm
-	\noindent{\songti\zihao{5}{
+	\noindent{\songti\zihao{5}{%
 			\textbf{关键词：}#2
 		}}~\\
 }
@@ -385,7 +395,7 @@
 
 	\vskip 13.65pt % 小五字体单倍行距 13.65pt
 	\noindent{\heiti\zihao{5}
-		\textbf{Key words:\quad}#2
+		\textbf{Key words: }#2
 	}
 	\par
 }
