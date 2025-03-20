@@ -260,14 +260,6 @@
 
 \setcounter{secnumdepth}{5}
 
-% 设置参考文献格式
-\RequirePackage[
-	backend=biber,
-	style=gb7714-2015,
-	natbib=true,
-]{biblatex}
-\addbibresource{bib/note.bib}
-
 \makeatletter
 \AtBeginDocument{\let\c@listing\c@figure}
 \makeatother

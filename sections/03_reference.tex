@@ -4,7 +4,12 @@
 
 \subsection{参考文献的引用}
 
-在学术论文或科技报告中，通常需要引用相关文献以支持观点或论证。为了方便读者查阅，我们需要在论文中标注参考文献。在 \LaTeX\ 中，可使用 \verb|\cite| 命令引用参考文献。参考文献的外观应符合国标 GB/T 7714，可使用 \BibLaTeX{} 配合 \pkg{biblatex-gb7714-2015} 样式包来控制输出样式。关于各类文献的标准格式和 \BibLaTeX{} 的使用方法，请参考 \pkg{biblatex-gb7714-2015} 样式包文档的第 4.3 节。
+在学术论文或科技报告中，通常需要引用相关文献以支持观点或论证。为了方便读者查阅，我们需要在论文中标注参考文献。在 \LaTeX\ 中，可使用 \verb|\cite| 命令引用参考文献。参考文献的外观应符合国标 GB/T 7714，本模板提供两种方式：
+\begin{enumerate}
+    \item 使用 \BibTeX{} 配合 \pkg{gbt7714} 宏包
+    \item 使用 \BibLaTeX{} 配合 \pkg{biblatex-gb7714-2015} 样式包
+\end{enumerate}
+两种方式都能实现符合国标的参考文献格式。
 
 在正文中，可使用 \verb|\cite| 命令引用参考文献。例如：
 
@@ -35,6 +40,23 @@
   \item 电子文献\cite{online1,online2,online3}
 \end{itemize}
 
+% 根据使用的是 BibTeX 还是 BibLaTeX，parentcite 命令不同
+\ifx\parencite\undefined
+% 如果使用BibTeX，使用citep
+使用 \verb|\citep{key1,key2,key3...}| 命令可以在正文中产生带有括号的引用参考文献。下面是使用 \verb|\citep| 命令的引用示例：
+\begin{itemize}
+  \item 普通图书\citep{book1,book2}
+  \item 论文集、会议录\citep{conf1,conf2}
+  \item 科技报告\citep{techreport1,techreport2}
+  \item 学位论文\citep{thesis1,thesis2,thesis3}
+  \item 专利文献\citep{patent1,patent2}
+  \item 专著中析出的文献\citep{inbook1,inbook2}
+  \item 期刊中析出的文献\citep{qin2021,article1,article2}
+  \item 报纸中析出的文献\citep{newspaper1,newspaper2}
+  \item 电子文献\citep{online1,online2,online3}
+\end{itemize}
+\else
+% 如果使用BibLaTeX，使用parencite
 使用 \verb|\parencite{key1,key2,key3...}| 命令可以在正文中产生带有括号的引用参考文献。下面是使用 \verb|\parencite| 命令的引用示例：
 \begin{itemize}
   \item 普通图书\parencite{book1,book2}
@@ -47,9 +69,20 @@
   \item 报纸中析出的文献\parencite{newspaper1,newspaper2}
   \item 电子文献\parencite{online1,online2,online3}
 \end{itemize}
-
+\fi
 
 可使用 \verb|\nocite{key1,key2,key3...}| 将参考文献条目加入文献表中，但不在正文中引用。使用 \verb|\nocite{*}| 可将参考文献数据库中的所有条目加入文献表中。
+
+% 以下部分仅在使用BibLaTeX时显示
+\ifx\fullcite\undefined
+% 使用BibTeX时，不显示这部分内容
+\else
+% 使用BibLaTeX时，显示这部分内容
+\subsubsection{\BibLaTeX{}特有的引用命令}
+
+当使用BibLaTeX宏包时，有一些额外的引用命令可供使用。
+
+\paragraph{完整引用}
 
 当我们想在正文（非参考文献章节）中插入对某一参考文献的完整引用时，可以使用 \verb|\fullcite{key1}| 命令。下面是使用 \verb|\fullcite| 命令的引用示例：
 
@@ -57,29 +90,26 @@
     \item \fullcite{qin2021}
 \end{itemize}
 
+\paragraph{脚注引用}
+
 有时，我们想要用脚注的形式引用某参考文献，那么我们可以使用 \verb|\footfullcite{key1}| 命令\footfullcite{qin2021}。
+\fi
 
 另外，为了避免遗漏引用，有时候需要使用文献管理工具来管理参考文献，例如 Zotero 或 EndNote 等。这些工具可以帮助你轻松管理文献数据库，生成参考文献列表，甚至将参考文献直接插入到文档中。
-
 无论使用何种方法，都应该注意文献的准确性和完整性。在引用文献时，应尽可能使用最新的版本，并注意对文献信息的正确引用和格式化。这样可以提高文献的可信度，也能为读者提供更多参考信息。
 
 \subsection{脚注}
 
-脚注是一种在文本底部添加注释或补充说明的方式。在 \LaTeX\ 中，可以使用 \verb|\footnote| 命令添加脚注。
-
-例如，在文本中需要添加脚注时，可以在需要添加脚注的单词或句子后面使用 \verb|\footnote| 命令，如下所示：
+脚注是一种在文本底部添加注释或补充说明的方式。在 \LaTeX\ 中，可以使用 \verb|\footnote| 命令添加脚注。例如，在文本中需要添加脚注时，可以在需要添加脚注的单词或句子后面使用 \verb|\footnote| 命令，如下所示：
 
 \begin{Verbatim}
 脚注是一种在文本底部添加注释或补充说明的方式\footnote{通常，我们在脚注里也写完整的句子。在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。}。
 \end{Verbatim}
 
-其中，花括号中的文本就是脚注的内容。编译文档后，脚注会出现在页面底部，并自动标上数字，如下所示：
-
-脚注是一种在文本底部添加注释或补充说明的方式\footnote{通常，我们在脚注里也写完整的句子。在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。}。
+其中，花括号中的文本就是脚注的内容。编译文档后，脚注会出现在页面底部，并自动标上数字：脚注是一种在文本底部添加注释或补充说明的方式\footnote{通常，我们在脚注里也写完整的句子。在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。}。
 
 需要注意的是，在使用脚注时，应该尽量避免使用过多的脚注，以免影响文本的阅读体验。同时，脚注的内容应该尽可能简洁明了，突出重点，有助于读者理解和记忆文本内容。
-
-另外，需要注意的是，在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。同时，对于自己的观点和推断，应该明确标注为个人观点，以免误导读者。
+另外，在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。同时，对于自己的观点和推断，应该明确标注为个人观点，以免误导读者。
 
 \subsection{交叉引用}
 

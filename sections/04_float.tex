@@ -1,9 +1,7 @@
 \section{浮动体}\label{sec:float}
 
 在本节（\cref{sec:float}）中，我们将介绍浮动体的概念、分类及其在论文中的使用。浮动体包括图片、表格和算法等，它们的共同特点是可以自由浮动在页面中，不会影响正文的排版。
-
 浮动体可以通过插入代码或使用专门的宏包来实现，常用的宏包有 \pkg{graphicx}、\pkg{float} 和 \pkg{algorithm} 等。在插入浮动体时，需要注意设置浮动体的位置和大小，以保证排版效果。
-
 浮动体的正确使用可以提高论文的可读性和美观程度，但也需要注意不要过度使用或使其影响正文的连贯性。
 
 \subsection{插图}
@@ -14,7 +12,7 @@
 
 要插入单个图形，可以使用 \verb|\includegraphics| 命令，并在其参数中指定图像文件名和一些选项。例如：
 
-\begin{figure}[htbp]
+\begin{figure}[!htb]
   \centering
   \includegraphics[width=0.5\textwidth]{example-image}
   \caption{这是一个示例图形}
@@ -28,10 +26,9 @@
 \subsubsection{多个图形}
 
 如果需要在同一浮动体中插入多个图形，可以使用 \verb|\subfigure| 命令或 \pkg{subcaption} 宏包。这些方法可以按照一定的排列方式组合多个图形，并分别为每个子图形添加标题和标签。
-
 例如，可以使用 \verb|\subfigure| 命令插入两个水平并列的子图，如\cref{fig:example-subfig-1} 所示。这两个子图共用一个图形计数器，没有各自的子图题。
 
-\begin{figure}[!htp]
+\begin{figure}[!htb]
   \centering
   \includegraphics[width=0.4\textwidth]{example-image-a}
   \hspace{1cm}
@@ -40,9 +37,9 @@
   \label{fig:example-subfig-1}
 \end{figure}
 
-如果多个图形相互独立，不共用一个图形计数器，可以使用 \texttt{minipage} 或 \texttt{parbox}，如\cref{fig:parallel1} 和\cref{fig:parallel2}。
+如果多个图形相互独立，不共用一个图形计数器，可以使用 \texttt{minipage} 或 \texttt{parbox}，如\cref{fig:parallel1,fig:parallel2}。
 
-\begin{figure}[!htp]
+\begin{figure}[!htb]
   \begin{minipage}{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{example-image-a}
@@ -61,7 +58,7 @@
 
 \pkg{subcaption} 宏包提供了 \cs{subcaptionbox} 命令，可以方便地实现子图的并排排列，并为每个子图添加子图题，如\cref{fig:subcaptionbox} 所示。此外，也可以使用 \pkg{subcaption} 宏包的 \cs{subcaption} 命令，将子图题放在子图之下，子图号用 a)、b) 等表示。可以将多个子图放在 \texttt{minipage} 中，用法与 \cs{caption} 相同。
 
-\begin{figure}[!htp]
+\begin{figure}[!htb]
   \centering
   \subcaptionbox{左图}{\includegraphics[width=0.4\textwidth]{example-image-a}}
   \hspace{1cm}
@@ -72,7 +69,7 @@
 
 另外，\pkg{subcaption} 宏包还提供了 \pkg{subfigure} 和 \pkg{subtable} 环境，如\cref{fig:subfigure} 所示。这些环境的使用方法与 \pkg{subcaptionbox} 相似，可以实现子图的并排排列，并为每个子图添加子图题。
 
-\begin{figure}[!htp]
+\begin{figure}[!htb]
   \centering
   \begin{subfigure}{0.3\textwidth}
     \centering
@@ -101,8 +98,8 @@
 编排表格时应简单明了、表达一致，内容明晰易懂，表文呼应，内容一致。表题应置于表格上方。
 
 表格的编排建议采用国际通行的三线表\footnote{三线表以其形式简洁、功能分明、阅读方便而在科技论文中被推荐使用。三线表通常只有3条线，即顶线、底线和栏目线，没有竖线。}。可以使用 \pkg{booktabs} 宏包提供的 \cs{toprule}、\cs{midrule} 和 \cs{bottomrule} 命令来绘制三线表。同时，\pkg{longtable} 宏包可以与三线表很好地配合使用，可以排版较长的表格。
-
 要编写三线表，需要在表格的头部、底部和每一栏之间绘制水平线。其中，\cs{toprule} 绘制顶部线，\cs{midrule} 绘制中部线，\cs{bottomrule} 绘制底部线。可以按照如下方式绘制三线表：
+
 \begin{table}[!hpt]
   \caption{一个三线表}
   \label{tab:firstone}
@@ -123,7 +120,7 @@
 我们经常会在表格下方标注数据来源，或者对表格里面的条目进行解释。可以用
 \pkg{threeparttable} 实现带有脚注的表格，如\cref{tab:bigtable}。
 
-\begin{table}[!htbp]
+\begin{table}[!htb]
   \centering
   \begin{threeparttable}[b]
     \caption{一个更大的三线表}
@@ -258,12 +255,9 @@
 虽然我们可以在论文中加入算法，但是并不推荐添加过多的代码。如果确实需要在论文中添加代码，建议采用 \pkg{minted} 宏包，该宏包可以提供代码高亮的功能，使得代码更加易于阅读。
 
 为了让代码可以在论文中正确地排版，我们使用了 \pkg{listings} 宏包来包装 \pkg{minted}。具体来说，我们在 \texttt{listing} 环境中嵌套了 \texttt{minted} 环境来展示代码，并使用 \texttt{caption} 命令来添加代码标题。代码的标签和交叉引用可以使用 \texttt{label} 和 \texttt{cref} 命令来实现。
-
 \cref{algo:algorithm} 的Python代码如\cref{lst:fibonacci} 所示。
 
-
-
-\begin{listing}[htbp]
+\begin{listing}[!htb]
   \begin{minted}{python}
 def fibonacci(n: int) -> int:
     """
@@ -292,9 +286,8 @@ def fibonacci(n: int) -> int:
 \subsection{\texttt{clearpage} 与 \texttt{newpage}}
 
 在 \LaTeX\ 中，使用 \verb|\newpage| 命令可以在当前位置开始新的一页。而使用 \verb|\clearpage| 命令不仅可以开始新的一页，还可以将未处理的浮动体（例如图表等）全部输出，确保当前页面上的所有浮动体都已经处理完毕。
-
 因此，在需要控制页面排版时，应该优先使用 \verb|\clearpage| 命令，而不是简单地使用 \verb|\newpage| 命令。如果不使用 \verb|\clearpage| 命令，可能会导致未处理的浮动体出现在不合适的位置，影响文档的排版效果。
 
-另外，需要注意的是，如果在文档中使用了浮动体（例如图表等），那么最好将浮动体放在一个浮动体环境中，并设置适当的位置选项（例如 \verb|[htbp]| 等），以控制浮动体的排版位置。在需要开始新的一页时，应该尽可能使用 \verb|\clearpage| 命令，以确保当前页面上的所有浮动体都已经处理完毕，从而避免出现排版问题。
+另外，需要注意的是，如果在文档中使用了浮动体（例如图表等），那么最好将浮动体放在一个浮动体环境中，并设置适当的位置选项（例如 \verb|[htb]| 等），以控制浮动体的排版位置。在需要开始新的一页时，应该尽可能使用 \verb|\clearpage| 命令，以确保当前页面上的所有浮动体都已经处理完毕，从而避免出现排版问题。
 
 综上所述，使用 \verb|\clearpage| 命令可以确保当前页面上的所有浮动体都已经处理完毕，从而避免出现排版问题。在文档中使用浮动体时，应该将浮动体放在一个浮动体环境中，并设置适当的位置选项，以控制浮动体的排版位置。
