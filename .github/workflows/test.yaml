@@ -54,7 +54,7 @@ jobs:
       SET_PATH: export PATH=/tmp/texlive/bin/universal-darwin:/usr/texbin:$PATH
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: install Python for minted
         uses: actions/setup-python@v4
         with:
@@ -79,7 +79,7 @@ jobs:
         run: |
           cat main.log
       - name: upload pdf
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: document macos output
           path: macos${{ matrix.compiler }}.pdf
@@ -93,7 +93,7 @@ jobs:
       SET_PATH: ${env:PATH} = "${{ github.workspace }}\tmp\texlive\bin\windows;" + ${env:PATH}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: install Python for minted
         uses: actions/setup-python@v4
         with:
@@ -115,7 +115,7 @@ jobs:
           .\make.bat thesis ${{ matrix.compiler }}
           mv main.pdf windows${{ matrix.compiler }}.pdf
       - name: upload pdf
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: document windows output
           path: windows${{ matrix.compiler }}.pdf
