@@ -42,7 +42,7 @@ jobs:
       - name: upload pdf
         uses: actions/upload-artifact@v4
         with:
-          name: document linux output
+          name: document linux output ${{ matrix.compiler }}
           path: linux${{ matrix.compiler }}.pdf
 
   build-macos:
@@ -81,7 +81,7 @@ jobs:
       - name: upload pdf
         uses: actions/upload-artifact@v4
         with:
-          name: document macos output
+          name: document macos output ${{ matrix.compiler }}
           path: macos${{ matrix.compiler }}.pdf
 
   build-windows:
@@ -117,5 +117,5 @@ jobs:
       - name: upload pdf
         uses: actions/upload-artifact@v4
         with:
-          name: document windows output
+          name: document windows output ${{ matrix.compiler }}
           path: windows${{ matrix.compiler }}.pdf
