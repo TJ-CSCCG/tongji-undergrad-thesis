@@ -40,7 +40,7 @@ jobs:
         run: |
           cat main.log
       - name: upload pdf
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: document linux output
           path: linux${{ matrix.compiler }}.pdf
