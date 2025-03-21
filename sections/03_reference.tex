@@ -1,6 +1,6 @@
 \section{引用}\label{sec:reference}
 
-在本节（{\ref{sec:introduction}}）中，我们将探讨如何在 \LaTeX\ 中进行参考文献引用和交叉引用，以便于读者查阅文献和方便地引用文档中的其他部分。
+在本节（{\cref{sec:introduction}}）中，我们将探讨如何在 \LaTeX\ 中进行参考文献引用和交叉引用，以便于读者查阅文献和方便地引用文档中的其他部分。
 
 \subsection{参考文献的引用}
 
@@ -126,7 +126,7 @@
 然后，在文档的其他位置使用 \verb|\ref| 命令来引用这个标签：
 
 \begin{Verbatim}
-请参见第 \ref{sec:intro} 章节。
+请参见第 \cref{sec:intro} 章节。
 \end{Verbatim}
 
 这样，就可以在文档中产生“请参见第 X 章节”的效果，其中 X 为标签所在章节的编号。
@@ -153,7 +153,7 @@
 
 接下来，在文档的其他位置使用 \verb|\cref| 命令引用这个标签：
 \begin{Verbatim}
-请参见\ref{sec:intro}。
+请参见\cref{sec:intro}。
 \end{Verbatim}
 这样，就可以在文档中产生“请参见章节 X”的效果，其中 X 为标签所在章节的编号。\pkg{cleveref} 宏包会自动根据标签所在对象的类型生成正确的引用词汇。
 
@@ -173,21 +173,21 @@
 
 需要同时引用几个并列的对象时，可以直接使用 \verb|\cref| 命令，例如：
 \begin{Verbatim}
-请参见\ref{sec:introduction,sec:conclusion}。
-请参见\ref{sec:introduction,sec:math,sec:reference,sec:float}。
-请参见\ref{sec:introduction,sec:math,sec:reference,,sec:float}。
-请参见\ref{sec:introduction,sec:reference,sec:conclusion}。
-请参见\ref{sec:introduction,sec:reference,sec:conclusion,%
+请参见\cref{sec:introduction,sec:conclusion}。
+请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
+请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
+请参见\cref{sec:introduction,sec:reference,sec:conclusion}。
+请参见\cref{sec:introduction,sec:reference,sec:conclusion,%
   algo:algorithm,fig:parallel1,lst:fibonacci}。
 \end{Verbatim}
 
 这样，就可以在文档中产生“请参见章节 X 和 Y”的效果，其中 X 和 Y 为标签所在章节的编号：
 \begin{itemize}
-  \item 请参见\ref{sec:introduction,sec:conclusion}。
-  \item 请参见\ref{sec:introduction,sec:math,sec:reference,sec:float}。
-  \item 请参见\ref{sec:introduction,sec:math,sec:reference,,sec:float}。
-  \item 请参见\ref{sec:introduction,sec:reference,sec:conclusion}。
-  \item 请参见\ref{sec:introduction,sec:reference,sec:conclusion,%
+  \item 请参见\cref{sec:introduction,sec:conclusion}。
+  \item 请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
+  \item 请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
+  \item 请参见\cref{sec:introduction,sec:reference,sec:conclusion}。
+  \item 请参见\cref{sec:introduction,sec:reference,sec:conclusion,%
         algo:algorithm,fig:parallel1,lst:fibonacci}。
 \end{itemize}
 
