@@ -1,6 +1,6 @@
 \section{浮动体}\label{sec:float}
 
-在本节（\cref{sec:float}）中，我们将介绍浮动体的概念、分类及其在论文中的使用。浮动体包括图片、表格和算法等，它们的共同特点是可以自由浮动在页面中，不会影响正文的排版。
+在本节（\ref{sec:float}）中，我们将介绍浮动体的概念、分类及其在论文中的使用。浮动体包括图片、表格和算法等，它们的共同特点是可以自由浮动在页面中，不会影响正文的排版。
 浮动体可以通过插入代码或使用专门的宏包来实现，常用的宏包有 \pkg{graphicx}、\pkg{float} 和 \pkg{algorithm} 等。在插入浮动体时，需要注意设置浮动体的位置和大小，以保证排版效果。
 浮动体的正确使用可以提高论文的可读性和美观程度，但也需要注意不要过度使用或使其影响正文的连贯性。
 
@@ -26,7 +26,7 @@
 \subsubsection{多个图形}
 
 如果需要在同一浮动体中插入多个图形，可以使用 \verb|\subfigure| 命令或 \pkg{subcaption} 宏包。这些方法可以按照一定的排列方式组合多个图形，并分别为每个子图形添加标题和标签。
-例如，可以使用 \verb|\subfigure| 命令插入两个水平并列的子图，如\cref{fig:example-subfig-1} 所示。这两个子图共用一个图形计数器，没有各自的子图题。
+例如，可以使用 \verb|\subfigure| 命令插入两个水平并列的子图，如\ref{fig:example-subfig-1} 所示。这两个子图共用一个图形计数器，没有各自的子图题。
 
 \begin{figure}[!htb]
   \centering
@@ -37,7 +37,7 @@
   \label{fig:example-subfig-1}
 \end{figure}
 
-如果多个图形相互独立，不共用一个图形计数器，可以使用 \texttt{minipage} 或 \texttt{parbox}，如\cref{fig:parallel1,fig:parallel2}。
+如果多个图形相互独立，不共用一个图形计数器，可以使用 \texttt{minipage} 或 \texttt{parbox}，如\ref{fig:parallel1,fig:parallel2}。
 
 \begin{figure}[!htb]
   \begin{minipage}{0.4\textwidth}
@@ -56,7 +56,7 @@
 
 为共用一个计数器的多个子图添加子图题，建议使用较新的 \pkg{subcaption} 宏包，不建议使用 \pkg{subfigure} 或 \pkg{subfig} 等宏包。
 
-\pkg{subcaption} 宏包提供了 \cs{subcaptionbox} 命令，可以方便地实现子图的并排排列，并为每个子图添加子图题，如\cref{fig:subcaptionbox} 所示。此外，也可以使用 \pkg{subcaption} 宏包的 \cs{subcaption} 命令，将子图题放在子图之下，子图号用 a)、b) 等表示。可以将多个子图放在 \texttt{minipage} 中，用法与 \cs{caption} 相同。
+\pkg{subcaption} 宏包提供了 \cs{subcaptionbox} 命令，可以方便地实现子图的并排排列，并为每个子图添加子图题，如\ref{fig:subcaptionbox} 所示。此外，也可以使用 \pkg{subcaption} 宏包的 \cs{subcaption} 命令，将子图题放在子图之下，子图号用 a)、b) 等表示。可以将多个子图放在 \texttt{minipage} 中，用法与 \cs{caption} 相同。
 
 \begin{figure}[!htb]
   \centering
@@ -67,7 +67,7 @@
   \label{fig:subcaptionbox}
 \end{figure}
 
-另外，\pkg{subcaption} 宏包还提供了 \pkg{subfigure} 和 \pkg{subtable} 环境，如\cref{fig:subfigure} 所示。这些环境的使用方法与 \pkg{subcaptionbox} 相似，可以实现子图的并排排列，并为每个子图添加子图题。
+另外，\pkg{subcaption} 宏包还提供了 \pkg{subfigure} 和 \pkg{subtable} 环境，如\ref{fig:subfigure} 所示。这些环境的使用方法与 \pkg{subcaptionbox} 相似，可以实现子图的并排排列，并为每个子图添加子图题。
 
 \begin{figure}[!htb]
   \centering
@@ -118,7 +118,7 @@
 \subsubsection{复杂表格}
 
 我们经常会在表格下方标注数据来源，或者对表格里面的条目进行解释。可以用
-\pkg{threeparttable} 实现带有脚注的表格，如\cref{tab:bigtable}。
+\pkg{threeparttable} 实现带有脚注的表格，如\ref{tab:bigtable}。
 
 \begin{table}[!htb]
   \centering
@@ -145,7 +145,7 @@
 
 
 如某个表需要转页接排，可以用 \pkg{longtable} 实现。接排时表题省略，表头应重复书
-写，并在右上方写“续表 X”，如\cref{tab:performance}。
+写，并在右上方写“续表 X”，如\ref{tab:performance}。
 
 \begin{ThreePartTable}
   \begin{TableNotes}
@@ -232,7 +232,7 @@
 \subsection{算法环境}
 
 算法环境可以使用 \pkg{algorithms} 宏包或者较新的 \pkg{algorithm2e} 实现。
-\cref{algo:algorithm} 是一个使用 \pkg{algorithms} 的例子。关于排版算法环境
+\ref{algo:algorithm} 是一个使用 \pkg{algorithms} 的例子。关于排版算法环境
 的具体方法，请阅读相关宏包的官方文档。
 
 \begin{algorithm}
@@ -255,7 +255,7 @@
 虽然我们可以在论文中加入算法，但是并不推荐添加过多的代码。如果确实需要在论文中添加代码，建议采用 \pkg{minted} 宏包，该宏包可以提供代码高亮的功能，使得代码更加易于阅读。
 
 为了让代码可以在论文中正确地排版，我们使用了 \pkg{listings} 宏包来包装 \pkg{minted}。具体来说，我们在 \texttt{listing} 环境中嵌套了 \texttt{minted} 环境来展示代码，并使用 \texttt{caption} 命令来添加代码标题。代码的标签和交叉引用可以使用 \texttt{label} 和 \texttt{cref} 命令来实现。
-\cref{algo:algorithm} 的Python代码如\cref{lst:fibonacci} 所示。
+\ref{algo:algorithm} 的Python代码如\ref{lst:fibonacci} 所示。
 
 \begin{listing}[!htb]
   \begin{minted}{python}
