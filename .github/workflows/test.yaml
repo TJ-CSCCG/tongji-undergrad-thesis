@@ -65,11 +65,11 @@ jobs:
       - name: install TeXLive
         run: |
           ${{ env.SET_PATH }}
-          curl -O https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/install-tl-unx.tar.gz
+          curl -O https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/install-tl-unx.tar.gz
           tar -xzf install-tl-unx.tar.gz
           cd install-tl-20* && ./install-tl --profile ../.github/ci/texlive.profile
           tlmgr install ${{ env.TL_PACKAGES }}
-          tlmgr update --self --all --no-auto-install --repository=https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final/
+          tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/tlnet-final/
           tlmgr path add
       - name: compile LaTeX document
         run: |
@@ -104,12 +104,12 @@ jobs:
       - name: install TeXLive
         run: |
           ${{ env.SET_PATH }}
-          Invoke-WebRequest -Uri https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final/install-tl.zip -OutFile install-tl.zip
+          Invoke-WebRequest -Uri https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/install-tl.zip -OutFile install-tl.zip
           Expand-Archive install-tl.zip -DestinationPath .
           Set-Location install-tl-*
           .\install-tl-windows --no-gui --profile ..\.github\ci\texlive-win.profile
           tlmgr install ${{ env.TL_PACKAGES }}
-          tlmgr update --self --all --no-auto-install --repository=https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final/
+          tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
       - name: compile LaTeX document
         run: |
           ${{ env.SET_PATH }}
