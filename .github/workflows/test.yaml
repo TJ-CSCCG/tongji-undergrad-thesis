@@ -32,7 +32,7 @@ jobs:
       - name: compile LaTeX document
         uses: xu-cheng/texlive-action/@v2
         with:
-          texlive_version: 2023
+          texlive_version: 2025
           run: |
             make ENGINE=${{ matrix.compiler }} all
             mv main.pdf linux${{ matrix.compiler }}.pdf
