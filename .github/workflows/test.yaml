@@ -196,13 +196,13 @@ jobs:
           .\make.bat thesis ${{ matrix.compiler }}
           mv main.pdf windows${{ matrix.compiler }}.pdf
 
+      - name: Check compile
+        if: ${{ failure() }}
+        run: |
+          cat main.log
+
       - name: Upload pdf
         uses: actions/upload-artifact@v4
         with:
           name: document windows output ${{ matrix.compiler }}
           path: windows${{ matrix.compiler }}.pdf
-
-      - name: Check compile
-        if: ${{ failure() }}
-        run: |
-          cat main.log
