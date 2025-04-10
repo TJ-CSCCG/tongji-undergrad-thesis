@@ -69,7 +69,7 @@ jobs:
           tar -xzf install-tl-unx.tar.gz
           cd install-tl-20* && ./install-tl --profile ../.github/ci/texlive.profile
           tlmgr install ${{ env.TL_PACKAGES }}
-          tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/tlnet-final/
+          tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
           tlmgr path add
       - name: compile LaTeX document
         run: |
