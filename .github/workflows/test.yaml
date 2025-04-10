@@ -120,3 +120,8 @@ jobs:
         with:
           name: document windows output ${{ matrix.compiler }}
           path: windows${{ matrix.compiler }}.pdf
+      - name: check compile
+        if: ${{ failure() }}
+        run: |
+          ${{ env.SET_PATH }}
+          cat main.log
