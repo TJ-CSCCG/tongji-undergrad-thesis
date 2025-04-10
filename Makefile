@@ -34,6 +34,7 @@ LATEXMK_OPT = \
     -shell-escape \
     -synctex=1 \
     -recorder \
+	-usepretex="\listfiles" \
     $(ENGINE)
 
 # Preview continuous mode options

@@ -95,32 +95,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Install Python for minted
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          
+
       - name: Install Pygments for minted
         run: pip install Pygments
-        
+
       - name: Install TeX Live
         uses: teatimeguest/setup-texlive-action@v3
         with:
           version: 2023
           packages: ${{ env.TL_PACKAGES }}
           update-all-packages: true
-          
+
       - name: Compile LaTeX document
         run: |
           make ENGINE=${{ matrix.compiler }} all
           mv main.pdf linux${{ matrix.compiler }}.pdf
-          
+
       - name: Check compile
         if: ${{ failure() }}
         run: |
           cat main.log
-          
+
       - name: Upload pdf
         uses: actions/upload-artifact@v4
         with:
@@ -135,32 +135,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Install Python for minted
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          
+
       - name: Install Pygments for minted
         run: pip install Pygments
-        
+
       - name: Install TeX Live
         uses: teatimeguest/setup-texlive-action@v3
         with:
           version: 2023
           packages: ${{ env.TL_PACKAGES }}
           update-all-packages: true
-          
+
       - name: Compile LaTeX document
         run: |
           make ENGINE=${{ matrix.compiler }} all
           mv main.pdf macos${{ matrix.compiler }}.pdf
-          
+
       - name: Check compile
         if: ${{ failure() }}
         run: |
           cat main.log
-          
+
       - name: Upload pdf
         uses: actions/upload-artifact@v4
         with:
@@ -175,33 +175,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Install Python for minted
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          
+
       - name: Install Pygments for minted
         run: pip install Pygments
-        
+
       - name: Install TeX Live
         uses: teatimeguest/setup-texlive-action@v3
         with:
           version: 2023
           packages: ${{ env.TL_PACKAGES }}
           update-all-packages: true
-          
+
       - name: Compile LaTeX document
         run: |
           .\make.bat thesis ${{ matrix.compiler }}
           mv main.pdf windows${{ matrix.compiler }}.pdf
-          
+
       - name: Upload pdf
         uses: actions/upload-artifact@v4
         with:
           name: document windows output ${{ matrix.compiler }}
           path: windows${{ matrix.compiler }}.pdf
-          
+
       - name: Check compile
         if: ${{ failure() }}
         run: |
