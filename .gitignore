@@ -18,4 +18,5 @@ _out
 *.synctex.gz
 
 # minted
-_minted-main/
+_minted*
+*.pyg

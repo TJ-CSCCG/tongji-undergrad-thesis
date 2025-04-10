@@ -142,6 +142,7 @@
 % 提供 verbatim 环境，minted 中不支持纯文本，可以使用该环境创建无格式文本块
 \usepackage{verbatim}
 % 使得可以跳转
+% Make sure hyperref is loaded before cleveref
 \usepackage[colorlinks,
   linkcolor=black,
   citecolor=black,
@@ -149,8 +150,13 @@
   urlcolor=black,
   unicode=true]{hyperref}
 
-\usepackage{cleveref} % 导入 cleveref 宏包
-% 为各种环境定义引用名称
+% Add explicit nameref package (often helps with cleveref conflicts)
+\usepackage{nameref}
+
+% Load cleveref last and with proper options
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+% Configure references in Chinese
 \crefname{equation}{式}{式}
 \crefname{figure}{图}{图}
 \crefname{table}{表}{表}
@@ -174,7 +180,8 @@
 \crefname{proof}{证明}{证明}
 \crefname{algorithm}{算法}{算法}
 \crefname{listing}{代码}{代码}
-% 连续引用的连接词需改为中文
+
+% Configure connecting words
 \newcommand{\crefpairconjunction}{ 和~}
 \newcommand{\crefmiddleconjunction}{、}
 \newcommand{\creflastconjunction}{ 和~}

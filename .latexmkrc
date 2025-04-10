@@ -24,7 +24,7 @@ $clean_ext = 'bbl glo gls gz hd loa run.xml thm xdv ' .
              'acn acr alg aux bcf fdb_latexmk fls ' .
              'ent ist lof lot nav out snm ' .
              'synctex.gz synctex(busy) toc vrb ' .
-             '_minted-%R/* _minted-%R';
+             '_minted-%R/* _minted-%R _minted/* _minted';
 
 # Don't delete PDF files during cleanup
 $clean_full_ext = '';
@@ -35,4 +35,4 @@ $clean_full_ext = '';
 $max_repeat = 5;
 
 # Force directory creation if needed
-system('mkdir -p sections figures style bib');
+system('mkdir sections figures style bib');

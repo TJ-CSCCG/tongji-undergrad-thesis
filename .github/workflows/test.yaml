@@ -12,13 +12,79 @@ on:
 name: test
 
 env:
-  # gbt7714 natbib: gbt7714 needed
-  # chinese-jfm: lualatex needed
-  # catchfile fancyvrb framed fvextra ifplatform lineno minted pdftexcmds upquote xstring: minted needed
-  # biber biblatex bibtex: for executable bibtex
-  # txfonts: mathptmx is obsoleted; times: times is obsoleted but utmb8a.pfb is needed
-  # dvips: for 8r.enc, OS X needed; gsftopk: command needed when xdv -> pdf
-  TL_PACKAGES: adjustbox algorithmicx algorithms biber biblatex biblatex-gb7714-2015 bibtex booktabs caption carlisle cases catchfile chinese-jfm chngcntr circledsteps cleveref collectbox ctex dvips enumitem environ extarrows fancybox fancyhdr fancyvrb float framed fvextra gbt7714 gsftopk helvetic hologo ifplatform lastpage latexmk lineno minted multirow mwe natbib needspace newtx nth oberdiek pdftexcmds pgf pict2e picture realscripts rsfs setspace siunitx subfig tcolorbox texcount texliveonfly threeparttable threeparttablex times titling tocloft trimspaces txfonts ucs upquote was xcolor xecjk xpatch xstring zhnumber
+  # Packages needed for the thesis compilation
+  TL_PACKAGES: |
+    adjustbox
+    algorithmicx
+    algorithms
+    biber
+    biblatex
+    biblatex-gb7714-2015
+    bibtex
+    booktabs
+    caption
+    carlisle
+    cases
+    catchfile
+    chinese-jfm
+    chngcntr
+    circledsteps
+    cleveref
+    collectbox
+    ctex
+    dvips
+    enumitem
+    environ
+    extarrows
+    fancybox
+    fancyhdr
+    fancyvrb
+    float
+    framed
+    fvextra
+    gbt7714
+    gsftopk
+    helvetic
+    hologo
+    ifplatform
+    lastpage
+    latexmk
+    lineno
+    minted
+    multirow
+    mwe
+    natbib
+    needspace
+    newtx
+    nth
+    oberdiek
+    pdftexcmds
+    pgf
+    pict2e
+    picture
+    realscripts
+    rsfs
+    setspace
+    siunitx
+    subfig
+    tcolorbox
+    texcount
+    texliveonfly
+    threeparttable
+    threeparttablex
+    times
+    titling
+    tocloft
+    trimspaces
+    txfonts
+    ucs
+    upquote
+    was
+    xcolor
+    xecjk
+    xpatch
+    xstring
+    zhnumber
 
 jobs:
   build-linux:
@@ -27,22 +93,38 @@ jobs:
       matrix:
         compiler: [-xelatex, -lualatex]
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: compile LaTeX document
-        uses: xu-cheng/texlive-action/full@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python for minted
+        uses: actions/setup-python@v5
         with:
-          run: |
-            make ENGINE=${{ matrix.compiler }} all
-            mv main.pdf linux${{ matrix.compiler }}.pdf
-      - name: check compile
+          python-version: "3.11"
+
+      - name: Install Pygments for minted
+        run: pip install Pygments
+
+      - name: Install TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          version: 2023
+          packages: ${{ env.TL_PACKAGES }}
+          update-all-packages: true
+
+      - name: Compile LaTeX document
+        run: |
+          make ENGINE=${{ matrix.compiler }} all
+          mv main.pdf linux${{ matrix.compiler }}.pdf
+
+      - name: Check compile
         if: ${{ failure() }}
         run: |
           cat main.log
-      - name: upload pdf
-        uses: actions/upload-artifact@v2
+
+      - name: Upload pdf
+        uses: actions/upload-artifact@v4
         with:
-          name: document linux output
+          name: document linux output ${{ matrix.compiler }}
           path: linux${{ matrix.compiler }}.pdf
 
   build-macos:
@@ -50,38 +132,39 @@ jobs:
     strategy:
       matrix:
         compiler: [-xelatex, -lualatex]
-    env:
-      SET_PATH: export PATH=/tmp/texlive/bin/universal-darwin:/usr/texbin:$PATH
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: install Python for minted
-        uses: actions/setup-python@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python for minted
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: pip install Pygments for minted
+
+      - name: Install Pygments for minted
         run: pip install Pygments
-      - name: install TeXLive
-        run: |
-          ${{ env.SET_PATH }}
-          curl -O https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/install-tl-unx.tar.gz
-          tar -xzf install-tl-unx.tar.gz
-          cd install-tl-20* && ./install-tl --profile ../.github/ci/texlive.profile
-          tlmgr install ${{ env.TL_PACKAGES }}
-          tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
-          tlmgr path add
-      - name: compile LaTeX document
+
+      - name: Install TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          version: 2023
+          packages: ${{ env.TL_PACKAGES }}
+          update-all-packages: true
+
+      - name: Compile LaTeX document
         run: |
           make ENGINE=${{ matrix.compiler }} all
           mv main.pdf macos${{ matrix.compiler }}.pdf
-      - name: check compile
+
+      - name: Check compile
         if: ${{ failure() }}
         run: |
           cat main.log
-      - name: upload pdf
-        uses: actions/upload-artifact@v2
+
+      - name: Upload pdf
+        uses: actions/upload-artifact@v4
         with:
-          name: document macos output
+          name: document macos output ${{ matrix.compiler }}
           path: macos${{ matrix.compiler }}.pdf
 
   build-windows:
@@ -89,33 +172,37 @@ jobs:
     strategy:
       matrix:
         compiler: [-xelatex, -lualatex]
-    env:
-      SET_PATH: ${env:PATH} = "${{ github.workspace }}\tmp\texlive\bin\windows;" + ${env:PATH}
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: install Python for minted
-        uses: actions/setup-python@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python for minted
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: pip install Pygments for minted
+
+      - name: Install Pygments for minted
         run: pip install Pygments
-      - name: install TeXLive
+
+      - name: Install TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          version: 2023
+          packages: ${{ env.TL_PACKAGES }}
+          update-all-packages: true
+
+      - name: Compile LaTeX document
         run: |
-          ${{ env.SET_PATH }}
-          Invoke-WebRequest -Uri https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/install-tl.zip -OutFile install-tl.zip
-          Expand-Archive install-tl.zip -DestinationPath .
-          Set-Location install-tl-*
-          .\install-tl-windows --no-gui --profile ..\.github\ci\texlive-win.profile
-          tlmgr install ${{ env.TL_PACKAGES }}
-          tlmgr update --self --all --no-auto-install --repository=https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/
-      - name: compile LaTeX document
-        run: |
-          ${{ env.SET_PATH }}
           .\make.bat thesis ${{ matrix.compiler }}
           mv main.pdf windows${{ matrix.compiler }}.pdf
-      - name: upload pdf
-        uses: actions/upload-artifact@v2
+
+      - name: Check compile
+        if: ${{ failure() }}
+        run: |
+          cat main.log
+
+      - name: Upload pdf
+        uses: actions/upload-artifact@v4
         with:
-          name: document windows output
+          name: document windows output ${{ matrix.compiler }}
           path: windows${{ matrix.compiler }}.pdf
