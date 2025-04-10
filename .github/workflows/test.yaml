@@ -104,7 +104,7 @@ jobs:
       - name: install TeXLive
         run: |
           ${{ env.SET_PATH }}
-          Invoke-WebRequest -Uri https://mirrors.rit.edu/CTAN/systems/texlive/tlnet/install-tl.zip -OutFile install-tl.zip
+          Invoke-WebRequest -Uri https://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip -OutFile install-tl.zip
           Expand-Archive install-tl.zip -DestinationPath .
           Set-Location install-tl-*
           .\install-tl-windows --no-gui --profile ..\.github\ci\texlive-win.profile
