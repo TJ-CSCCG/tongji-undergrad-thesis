@@ -1,0 +1,595 @@
+name: Generate CTAN Package
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - "style/**"
+      - "figures/**"
+      - ".github/workflows/ctan-package.yml"
+      - "package.json"
+  pull_request:
+    branches: [main, dev]
+    paths:
+      - "style/**"
+      - "figures/**"
+      - ".github/workflows/ctan-package.yml"
+      - "package.json"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build-ctan-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract package metadata
+        id: package-metadata
+        run: |
+          # Use jq to extract metadata from package.json if it exists
+          if [ -f package.json ]; then
+            echo "PACKAGE_VERSION=$(jq -r '.version // "1.0.0"' package.json)" >> $GITHUB_ENV
+            echo "PACKAGE_AUTHOR=$(jq -r '.author // "R. Lin"' package.json)" >> $GITHUB_ENV
+            echo "PACKAGE_EMAIL=$(jq -r '.email // "rizhong.lin@epfl.ch"' package.json)" >> $GITHUB_ENV
+            echo "PACKAGE_DATE=$(date +%Y/%m/%d)" >> $GITHUB_ENV
+          else
+            # Default values if package.json doesn't exist
+            echo "PACKAGE_VERSION=1.0.0" >> $GITHUB_ENV
+            echo "PACKAGE_AUTHOR=R. Lin" >> $GITHUB_ENV
+            echo "PACKAGE_EMAIL=rizhong.lin@epfl.ch" >> $GITHUB_ENV
+            echo "PACKAGE_DATE=$(date +%Y/%m/%d)" >> $GITHUB_ENV
+          fi
+          # Extract year for copyright statements
+          echo "CURRENT_YEAR=$(date +%Y)" >> $GITHUB_ENV
+
+          # Print for debugging
+          echo "Package version: $PACKAGE_VERSION"
+          echo "Package author: $PACKAGE_AUTHOR"
+          echo "Package email: $PACKAGE_EMAIL"
+          echo "Package date: $PACKAGE_DATE"
+          echo "Current year: $CURRENT_YEAR"
+
+      - name: Set up directories
+        run: |
+          mkdir -p ctan/tongjithesis/example/figures
+
+      - name: Create consolidated class file
+        run: |
+          # Combine cls and sty files into a single file
+          cat > ctan/tongjithesis/tongjithesis.cls << EOF
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          % tongjithesis -- Tongji University Undergraduate Thesis Template
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \NeedsTeXFormat{LaTeX2e}
+          \ProvidesClass{tongjithesis}[$PACKAGE_DATE v$PACKAGE_VERSION Tongji University Undergraduate Thesis Class]
+
+          %% tongji-undergrad-thesis
+          %% Copyright 2023-$CURRENT_YEAR TJ-CSCCG
+          %
+          % This work may be distributed and/or modified under the
+          % conditions of the LaTeX Project Public License, either version 1.3
+          % of this license or (at your option) any later version.
+          % The latest version of this license is in
+          %   http://www.latex-project.org/lppl.txt
+          % and version 1.3 or later is part of all distributions of LaTeX
+          % version 2003/12/01 or later.
+          %
+          % This work has the LPPL maintenance status "maintained".
+          %
+          % This Current Maintainer of this work is $PACKAGE_AUTHOR.
+          %
+          % This work consists of all the *.tex, *.cls, *.cfg, and *.sty files in
+          %   https://github.com/TJ-CSCCG/tongji-undergrad-thesis
+
+          % ==========================================
+          % Option Declaration
+          % ==========================================
+          \RequirePackage{kvoptions}
+          \SetupKeyvalOptions{
+            family=tongjithesis,
+            prefix=tongjithesis@,
+            setkeys=\kvsetkeys
+          }
+          \DeclareBoolOption[false]{twoside}
+          \DeclareBoolOption[false]{draft}
+          \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexart}}
+          \ProcessKeyvalOptions*
+          EOF
+
+          # Append the content of the original cls file without the header
+          sed '1,5d' style/tongjithesis.cls >> ctan/tongjithesis/tongjithesis.cls
+
+          # Append the content of the sty file without the header
+          echo "
+          % ==========================================
+          % Additional Package Features (from sty)
+          % ==========================================" >> ctan/tongjithesis/tongjithesis.cls
+          sed '1,4d' style/tongjithesis.sty >> ctan/tongjithesis/tongjithesis.cls
+
+      - name: Create configuration file
+        run: |
+          cp style/tongjithesis.cfg ctan/tongjithesis/
+
+      - name: Create installation file
+        run: |
+          cat > ctan/tongjithesis/tongjithesis.ins << EOF
+          %%
+          %% Installation file for the tongjithesis package
+          %%
+
+          \input docstrip.tex
+          \keepsilent
+
+          \usedir{tex/latex/tongjithesis}
+
+          \preamble
+          This is a generated file.
+
+          This work may be distributed and/or modified under the
+          conditions of the LaTeX Project Public License, either version 1.3
+          of this license or (at your option) any later version.
+          The latest version of this license is in
+            http://www.latex-project.org/lppl.txt
+          and version 1.3 or later is part of all distributions of LaTeX
+          version 2003/12/01 or later.
+
+          This work has the LPPL maintenance status "maintained".
+
+          This Current Maintainer of this work is $PACKAGE_AUTHOR.
+
+          This work consists of the files tongjithesis.dtx, tongjithesis.ins
+          and the derived files tongjithesis.cls and tongjithesis.cfg.
+
+          \endpreamble
+
+          % Extract the class file
+          \generate{\file{tongjithesis.cls}{\from{tongjithesis.dtx}{class}}}
+
+          % Extract the configuration file
+          \generate{\file{tongjithesis.cfg}{\from{tongjithesis.dtx}{config}}}
+
+          \obeyspaces
+          \Msg{****************************************************}
+          \Msg{*                                                  *}
+          \Msg{* To finish the installation you have to move the  *}
+          \Msg{* following files into a directory searched by TeX:*}
+          \Msg{*                                                  *}
+          \Msg{* - tongjithesis.cls                               *}
+          \Msg{* - tongjithesis.cfg                               *}
+          \Msg{*                                                  *}
+          \Msg{* To produce the documentation, run the file       *}
+          \Msg{* tongjithesis.dtx through LaTeX.                  *}
+          \Msg{*                                                  *}
+          \Msg{* Happy TeXing!                                    *}
+          \Msg{*                                                  *}
+          \Msg{****************************************************}
+
+          \endbatchfile
+          EOF
+
+      - name: Create documentation file
+        run: |
+          cat > ctan/tongjithesis/tongjithesis.dtx << EOF
+          % \iffalse meta-comment
+          %
+          % Copyright (C) 2023-$CURRENT_YEAR TJ-CSCCG
+          % 
+          % This file may be distributed and/or modified under the
+          % conditions of the LaTeX Project Public License, either version 1.3
+          % of this license or (at your option) any later version.
+          % The latest version of this license is in:
+          %
+          %    http://www.latex-project.org/lppl.txt
+          %
+          % and version 1.3 or later is part of all distributions of LaTeX
+          % version 2003/12/01 or later.
+          %
+          % This work has the LPPL maintenance status "maintained".
+          % 
+          % The Current Maintainer of this work is $PACKAGE_AUTHOR.
+          %
+          % This work consists of the files tongjithesis.dtx, tongjithesis.ins
+          % and the derived files tongjithesis.cls and tongjithesis.cfg.
+          %
+          % \fi
+          %
+          % \iffalse
+          %<*driver>
+          \documentclass{ltxdoc}
+          \usepackage{amssymb,amsmath}
+          \usepackage{fancyvrb}
+          \usepackage{makeidx}
+          \usepackage{hyperref}
+          \usepackage{xcolor}
+
+          \RecordChanges
+          \EnableCrossrefs         
+          \CodelineIndex
+          \begin{document}
+            \DocInput{tongjithesis.dtx}
+            \PrintChanges
+            \PrintIndex
+          \end{document}
+          %</driver>
+          %<class>\NeedsTeXFormat{LaTeX2e}
+          %<class>\ProvidesClass{tongjithesis}[$PACKAGE_DATE v$PACKAGE_VERSION Tongji University Undergraduate Thesis Class]
+          %<config>\ProvidesFile{tongjithesis.cfg}[$PACKAGE_DATE v$PACKAGE_VERSION Tongji University Undergraduate Thesis Class configuration file]
+          %
+          % \fi
+          %
+          % \CheckSum{0}
+          %
+          % \CharacterTable
+          %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+          %   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+          %   Digits        \0\1\2\3\4\5\6\7\8\9
+          %   Exclamation   \!     Double quote  \"     Hash (number) \#
+          %   Dollar        \$     Percent       \%     Ampersand     \&
+          %   Acute accent  \'     Left paren    \(     Right paren   \)
+          %   Asterisk      \*     Plus          \+     Comma         \,
+          %   Minus         \-     Point         \.     Solidus       \/
+          %   Colon         \:     Semicolon     \;     Less than     \<
+          %   Equals        \=     Greater than  \>     Question mark \?
+          %   Commercial at \@     Left bracket  \[     Backslash     \\
+          %   Right bracket \]     Circumflex    \^     Underscore    \_
+          %   Grave accent  \`     Left brace    \{     Vertical bar  \|
+          %   Right brace   \}     Tilde         \~}
+          %
+          % \changes{v$PACKAGE_VERSION}{$PACKAGE_DATE}{Initial version consolidating .cls and .sty files}
+          %
+          % \DoNotIndex{\newcommand,\newenvironment}
+          %
+          % \title{The \textsf{tongjithesis} Document Class\thanks{This document
+          %   corresponds to \textsf{tongjithesis}~\fileversion, dated \filedate.}}
+          % \author{$PACKAGE_AUTHOR \\ \texttt{$PACKAGE_EMAIL}}
+          %
+          % \maketitle
+          %
+          % \begin{abstract}
+          %   The \textsf{tongjithesis} document class provides a template for
+          %   undergraduate thesis documents at Tongji University, China. The class
+          %   is designed to satisfy the university's formatting requirements while
+          %   allowing students to focus on content rather than formatting details.
+          % \end{abstract}
+          %
+          % \section{Introduction}
+          %
+          % The \textsf{tongjithesis} document class is designed to format
+          % undergraduate thesis documents according to the standards required by
+          % Tongji University in China. It provides a simple interface for creating
+          % properly formatted title pages, table of contents, abstracts, chapter
+          % headings, and other elements required in a thesis.
+          %
+          % This class is based on the \textsf{ctexart} class, which provides
+          % support for Chinese language typesetting, and extends it with specific
+          % Tongji University thesis formatting requirements.
+          %
+          % \section{Usage}
+          %
+          % \subsection{Basic Usage}
+          %
+          % A typical thesis document using this class would look like:
+          %
+          % \begin{verbatim}
+          % \documentclass[oneside]{tongjithesis}
+          %
+          % % Set thesis information
+          % \school{计算机科学与技术学院}
+          % \major{计算机科学与技术}
+          % \student{1234567}{张三}
+          % \thesistitle{基于机器学习的图像分类研究}{——以交通标志识别为例}
+          % \thesistitleeng{Research on Image Classification Based on Machine Learning}{——Take Traffic Sign Recognition as an Example}
+          % \thesisadvisor{李四 教授}
+          % \thesisdate{2025}{4}{20}
+          %
+          % \begin{document}
+          %
+          % % Generate cover
+          % \MakeCover
+          %
+          % % Chinese Abstract
+          % \pagestyle{firststyle}
+          % \MakeAbstract{摘要内容...}{关键词1; 关键词2; 关键词3}
+          %
+          % % English Abstract
+          % \MakeAbstractEng{Abstract content...}{keyword1; keyword2; keyword3}
+          %
+          % % Table of contents
+          % \clearpage
+          % \tableofcontents
+          % \cleardoublepage
+          %
+          % % Main content with page style
+          % \pagestyle{mainstyle}
+          % \section{引言}
+          % % ... your content ...
+          %
+          % % References
+          % \printbibliography[heading=bibintoc,title=参考文献]
+          %
+          % \end{document}
+          % \end{verbatim}
+          %
+          % \subsection{Class Options}
+          %
+          % The \textsf{tongjithesis} class accepts the following options:
+          %
+          % \begin{description}
+          %   \item[oneside] Formats the document for one-sided printing (default).
+          %   \item[twoside] Formats the document for two-sided printing.
+          %   \item[draft] Enables draft mode.
+          % \end{description}
+          %
+          % \subsection{Thesis Information Commands}
+          %
+          % The following commands should be used to set up the thesis information:
+          %
+          % \begin{description}
+          %   \item[\texttt{\textbackslash school\{...\}}] Sets the name of the school.
+          %   \item[\texttt{\textbackslash major\{...\}}] Sets the name of the major.
+          %   \item[\texttt{\textbackslash student\{id\}\{name\}}] Sets the student ID and name.
+          %   \item[\texttt{\textbackslash thesistitle\{title\}\{subtitle\}}] Sets the thesis title and subtitle (in Chinese).
+          %   \item[\texttt{\textbackslash thesistitleeng\{title\}\{subtitle\}}] Sets the thesis title and subtitle (in English).
+          %   \item[\texttt{\textbackslash thesisadvisor\{...\}}] Sets the name of the thesis advisor.
+          %   \item[\texttt{\textbackslash thesisdate\{year\}\{month\}\{day\}}] Sets the submission date.
+          % \end{description}
+          %
+          % \subsection{Document Structure Commands}
+          %
+          % The following commands are provided to help structure the thesis:
+          %
+          % \begin{description}
+          %   \item[\texttt{\textbackslash MakeCover}] Generates the thesis cover page.
+          %   \item[\texttt{\textbackslash MakeAbstract\{content\}\{keywords\}}] Creates a Chinese abstract page.
+          %   \item[\texttt{\textbackslash MakeAbstractEng\{content\}\{keywords\}}] Creates an English abstract page.
+          %   \item[\texttt{\textbackslash enableFullStopReplacement}] Replaces Chinese period (。) with Western-style period (．).
+          % \end{description}
+          %
+          % \subsection{Page Styles}
+          %
+          % The class defines two page styles:
+          %
+          % \begin{description}
+          %   \item[\texttt{firststyle}] Used for preliminary pages (abstracts, table of contents).
+          %   \item[\texttt{mainstyle}] Used for the main thesis content.
+          % \end{description}
+          %
+          % \section{Implementation}
+          %
+          % The implementation details of the class are documented here.
+          % For the full code implementation, please refer to the source code in the tongjithesis.cls file.
+          %
+          %<*class>
+          % This section contains the code for the class file.
+          % The code has been omitted in this documentation for brevity.
+          % Please refer to the generated .cls file for the complete implementation.
+          %</class>
+          %
+          %<*config>
+          % 基本信息配置
+          \def\tongjiuniversity{同济大学}
+          \def\tongjiuniversityeng{Tongji University}
+          \def\tongjischool{}
+          \def\tongjimajor{}
+          \def\tongjiauthornumber{}
+          \def\tongjiauthor{}
+          \def\tongjithesistitle{}
+          \def\tongjithesissubtitle{}
+          \def\tongjithesistitleeng{}
+          \def\tongjithesissubtitleeng{}
+          \def\tongjithesisadvisor{}
+          \def\tongjithesisyear{}
+          \def\tongjithesismonth{}
+          \def\tongjithesisday{}
+          %</config>
+          %
+          % \Finale
+          \endinput
+          EOF
+
+      - name: Create README
+        run: |
+          cat > ctan/tongjithesis/README.md << EOF
+          # Tongji University Undergraduate Thesis Template
+
+          ## Overview
+
+          \`tongjithesis\` is a LaTeX class for creating undergraduate theses that comply with the official requirements of Tongji University, China. This template is designed to help students focus on content creation rather than formatting details.
+
+          ## Features
+
+          - Compliant with Tongji University's official undergraduate thesis requirements
+          - Support for both one-sided and two-sided printing
+          - Comprehensive formatting for title page, abstract, table of contents, chapters, etc.
+          - Customized citation styles that comply with Chinese GB/T 7714-2015 standard
+          - Support for code listings with syntax highlighting
+          - Integration of mathematical formulas, figures, tables, and algorithms
+
+          ## Requirements
+
+          - A complete TeX distribution (TeXLive, MikTeX, or MacTeX)
+          - XeLaTeX or LuaLaTeX engine (the template doesn't support pdfLaTeX)
+          - Python with Pygments installed (for code syntax highlighting via \`minted\`)
+
+          ## Installation
+
+          1. **Manual Installation**: 
+             - Copy \`tongjithesis.cls\` and \`tongjithesis.cfg\` to your project directory, or
+             - Install to your local texmf tree (recommended)
+             
+          2. **Install to TEXMF tree**:
+             - For TeX Live on Unix-like systems: \`~/texmf/tex/latex/tongjithesis/\`
+             - For MiKTeX on Windows: \`%USERPROFILE%\texmf\tex\latex\tongjithesis\`
+             - For MacTeX: \`~/Library/texmf/tex/latex/tongjithesis/\`
+
+          ## Basic Usage
+
+          \`\`\`latex
+          \documentclass[oneside]{tongjithesis}  % Use 'twoside' for double-sided printing
+
+          % Set thesis information
+          \school{计算机科学与技术学院}
+          \major{计算机科学与技术}
+          \student{1234567}{张三}
+          \thesistitle{基于机器学习的图像分类研究}{——以交通标志识别为例}
+          \thesistitleeng{Research on Image Classification Based on Machine Learning}{——Take Traffic Sign Recognition as an Example}
+          \thesisadvisor{李四 教授}
+          \thesisdate{2025}{4}{20}
+
+          \begin{document}
+
+          % Generate cover
+          \MakeCover
+
+          % Abstract pages
+          \pagestyle{firststyle}
+          \input{sections/abstract}
+
+          % Table of contents
+          \clearpage
+          \tableofcontents
+          \cleardoublepage
+
+          % Main content with page style
+          \pagestyle{mainstyle}
+          \input{sections/introduction}
+          % ... more sections ...
+
+          % References
+          \printbibliography[heading=bibintoc,title=参考文献]
+
+          % Acknowledgements
+          \clearpage
+          \input{sections/acknowledgements}
+
+          \end{document}
+          \`\`\`
+
+          ## Documentation
+
+          For detailed documentation, please refer to the user guide (tongjithesis-guide.pdf).
+
+          ## License
+
+          This template is licensed under the LaTeX Project Public License (LPPL) version 1.3c or later.
+
+          ## Maintainer
+
+          Current Maintainer: $PACKAGE_AUTHOR
+
+          ## Acknowledgements
+
+          - This project is maintained by the TJ-CSCCG (Tongji University Computer Science Curricula Collection Group)
+          - Original author: YukuanHU
+          - Contributors: ganler, skyleaworlder, RizhongLin
+
+          ## Reporting Issues
+
+          Please report any issues or feature requests through the GitHub repository:
+          https://github.com/TJ-CSCCG/tongji-undergrad-thesis
+          EOF
+
+      - name: Create MANIFEST
+        run: |
+          cat > ctan/tongjithesis/MANIFEST << 'EOF'
+          README.md                     # Package description and usage information
+          tongjithesis.dtx              # Source and documentation file
+          tongjithesis.ins              # Installation script
+          tongjithesis.cls              # LaTeX class file (generated from .dtx)
+          tongjithesis.cfg              # Configuration file (generated from .dtx)
+          example/                      # Example directory
+            example.tex                 # Example thesis document
+            figures/                    # Figures directory
+              tongji.pdf               # Tongji University logo for example
+          EOF
+
+      - name: Create example files
+        run: |
+          cp figures/tongji.pdf ctan/tongjithesis/example/figures/
+
+          cat > ctan/tongjithesis/example/example.tex << 'EOF'
+          %!TEX program = xelatex
+          %!TEX encoding = UTF-8
+
+          \documentclass[oneside]{tongjithesis}
+
+          % Set thesis information
+          \school{计算机科学与技术学院}
+          \major{计算机科学与技术}
+          \student{1234567}{张三}
+          \thesistitle{基于机器学习的图像分类研究}{——以交通标志识别为例}
+          \thesistitleeng{Research on Image Classification Based on Machine Learning}{——Take Traffic Sign Recognition as an Example}
+          \thesisadvisor{李四 教授}
+          \thesisdate{2025}{4}{20}
+
+          \begin{document}
+
+          % Generate cover
+          \MakeCover
+
+          % Abstract pages
+          \pagestyle{firststyle}
+          \MakeAbstract{
+              本文研究了基于机器学习的图像分类技术，并以交通标志识别为应用场景进行了实验验证。
+              图像分类是计算机视觉中的基础任务，具有广泛的应用前景。本文首先综述了图像分类领域的经典算法和最新进展，
+              然后提出了一种改进的卷积神经网络模型用于交通标志识别。实验结果表明，所提出的方法在准确率和计算效率方面
+              均取得了良好的性能。
+          }{机器学习; 图像分类; 卷积神经网络; 交通标志识别}
+
+          % English Abstract
+          \MakeAbstractEng{
+              This paper investigates image classification techniques based on machine learning, 
+              with traffic sign recognition as an application scenario for experimental validation. 
+              Image classification is a fundamental task in computer vision with extensive application prospects. 
+              This paper first reviews classic algorithms and recent advances in the field of image classification, 
+              then proposes an improved convolutional neural network model for traffic sign recognition. 
+              Experimental results demonstrate that the proposed method achieves good performance in terms of 
+              accuracy and computational efficiency.
+          }{Machine Learning; Image Classification; Convolutional Neural Network; Traffic Sign Recognition}
+
+          % Table of contents
+          \clearpage
+          \tableofcontents
+          \cleardoublepage
+
+          % Main content with page style
+          \pagestyle{mainstyle}
+
+          \section{引言}
+
+          图像分类是计算机视觉中的基础任务之一，其目标是将图像分配到预定义的类别中。
+          随着深度学习技术的发展，图像分类的性能得到了显著提升。
+          本文研究基于机器学习的图像分类技术，并以交通标志识别为例进行应用研究。
+
+          \subsection{研究背景}
+
+          交通标志识别是自动驾驶系统的重要组成部分，它能够帮助车辆理解道路环境，遵守交通规则。
+          准确、实时的交通标志识别对于提高自动驾驶安全性具有重要意义。
+
+          % ... More sections would go here ...
+
+          \section{结论}
+
+          本文提出了一种高效的交通标志识别方法，在准确率和计算效率方面均表现出色。
+          未来工作将探索模型的进一步轻量化，以及在嵌入式设备上的部署方案。
+
+          \end{document}
+          EOF
+
+      - name: Update main project with consolidated class file
+        run: |
+          # Copy the consolidated class file back to the main project
+          cp ctan/tongjithesis/tongjithesis.cls style/
+
+          # Update main.tex to remove the .sty import if needed
+          sed -i 's/\\usepackage{tongjithesis}/% \\usepackage{tongjithesis} % No longer needed as functionality is integrated in the .cls file/' main.tex
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ctan/ style/tongjithesis.cls main.tex
+          git commit -m "Update CTAN package and consolidate class file [skip ci]" || echo "No changes to commit"
+          git push

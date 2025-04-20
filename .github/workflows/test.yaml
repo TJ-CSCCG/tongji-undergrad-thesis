@@ -3,11 +3,13 @@ on:
     branches:
       - master
       - proposal
+      - dev
       - fix-ci
   pull_request:
     branches:
       - master
       - proposal
+      - dev
 
 name: test
 
