@@ -55,58 +55,9 @@ jobs:
         run: |
           mkdir -p ctan/tongjithesis/example/figures
 
-      - name: Create consolidated class file
+      - name: Create class file
         run: |
-          # Combine cls and sty files into a single file
-          cat > ctan/tongjithesis/tongjithesis.cls << EOF
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          % tongjithesis -- Tongji University Undergraduate Thesis Template
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          \NeedsTeXFormat{LaTeX2e}
-          \ProvidesClass{tongjithesis}[$PACKAGE_DATE v$PACKAGE_VERSION Tongji University Undergraduate Thesis Class]
-
-          %% tongji-undergrad-thesis
-          %% Copyright 2023-$CURRENT_YEAR TJ-CSCCG
-          %
-          % This work may be distributed and/or modified under the
-          % conditions of the LaTeX Project Public License, either version 1.3
-          % of this license or (at your option) any later version.
-          % The latest version of this license is in
-          %   http://www.latex-project.org/lppl.txt
-          % and version 1.3 or later is part of all distributions of LaTeX
-          % version 2003/12/01 or later.
-          %
-          % This work has the LPPL maintenance status "maintained".
-          %
-          % This Current Maintainer of this work is $PACKAGE_AUTHOR.
-          %
-          % This work consists of all the *.tex, *.cls, *.cfg, and *.sty files in
-          %   https://github.com/TJ-CSCCG/tongji-undergrad-thesis
-
-          % ==========================================
-          % Option Declaration
-          % ==========================================
-          \RequirePackage{kvoptions}
-          \SetupKeyvalOptions{
-            family=tongjithesis,
-            prefix=tongjithesis@,
-            setkeys=\kvsetkeys
-          }
-          \DeclareBoolOption[false]{twoside}
-          \DeclareBoolOption[false]{draft}
-          \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexart}}
-          \ProcessKeyvalOptions*
-          EOF
-
-          # Append the content of the original cls file without the header
-          sed '1,5d' style/tongjithesis.cls >> ctan/tongjithesis/tongjithesis.cls
-
-          # Append the content of the sty file without the header
-          echo "
-          % ==========================================
-          % Additional Package Features (from sty)
-          % ==========================================" >> ctan/tongjithesis/tongjithesis.cls
-          sed '1,4d' style/tongjithesis.sty >> ctan/tongjithesis/tongjithesis.cls
+          cp style/tongjithesis.cls ctan/tongjithesis/
 
       - name: Create configuration file
         run: |
