@@ -52,6 +52,7 @@ env:
     lastpage
     latexmk
     lineno
+    listings
     minted
     multirow
     mwe

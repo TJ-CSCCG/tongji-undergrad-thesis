@@ -36,6 +36,8 @@
 \DeclareBoolOption[false]{fullwidthstop}
 % Define times option (default is false)
 \DeclareBoolOption[false]{times}
+% Define minted option (default is true)
+\DeclareBoolOption[true]{minted}
 
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexart}}
 \ProcessKeyvalOptions*
@@ -103,9 +105,78 @@
 \RequirePackage{algorithm}
 \RequirePackage{algorithmicx}
 \RequirePackage{algpseudocode}
-\RequirePackage[section]{minted}
+
+% Always load listings package first (mandatory)
+\RequirePackage{listings}
+\definecolor{bg}{rgb}{0.96,0.96,0.96}
+\definecolor{commentcolor}{rgb}{0.0,0.6,0.0}
+\definecolor{stringcolor}{rgb}{0.58,0.0,0.82}
+\definecolor{keywordcolor}{rgb}{0.0,0.0,0.8}
+\lstset{
+  frame=single,
+  backgroundcolor=\color{bg},
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true,
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=2em,
+  tabsize=4,
+  escapeinside=||
+}
+\renewcommand{\lstlistingname}{代码}
+\renewcommand{\lstlistlistingname}{代码列表}
+
+% Conditionally load minted package (optional)
+\makeatletter
+\iftongjithesis@minted
+  \RequirePackage[section]{minted}
+  \setminted{linenos,
+    bgcolor=bg,
+    fontsize=\small,
+    breaklines,
+    mathescape,
+    escapeinside=||}
+  \renewcommand{\listingscaption}{代码}
+  
+  % When using minted, DO NOT redefine the listing environment
+  % It's already defined by the minted package
+\else
+  % When not using minted, create compatibility layer
+  \newenvironment{listing}[1][]{%
+    \begin{figure}[#1]%
+  }{%
+    \end{figure}%
+  }
+  
+  % Define a fake minted environment that forwards to listings
+  \newenvironment{minted}[2][]{%
+    \begin{lstlisting}[language=#2,#1]%
+  }{%
+    \end{lstlisting}%
+  }
+  
+  % Define inputminted command
+  \newcommand{\inputminted}[3][]{\lstinputlisting[language=#2,#1]{#3}}
+\fi
+\makeatother
+
 \RequirePackage{tcolorbox}
 \RequirePackage{verbatim}
+
+% Add enhanced verbatim support (no Python dependency)
+\RequirePackage{fancyvrb}  % Enhanced verbatim environments
+\fvset{
+  frame=single,
+  numbers=left,
+  fontsize=\small,
+  baselinestretch=1,
+  tabsize=4
+}
 
 % Cross-referencing and hyperlinks
 \RequirePackage[colorlinks,allcolors=black,unicode=true]{hyperref}
@@ -299,7 +370,8 @@
 \RequirePackage{chngcntr}
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
-\counterwithin{listing}{section}
+\AtBeginDocument{\counterwithin{lstlisting}{section}}
+% \counterwithin{listing}{section}
 \counterwithin{equation}{section}
 \counterwithin{algorithm}{section}
 
@@ -350,6 +422,7 @@
 
 \makeatletter
 \AtBeginDocument{\let\c@listing\c@figure}
+\AtBeginDocument{\let\c@lstlisting\c@figure}
 \makeatother
 
 % ==========================================
@@ -415,15 +488,6 @@
 }% \@fs@post for \@fs@ruled
 \makeatother
 
-% 代码块设置
-\renewcommand{\listingscaption}{代码}
-\definecolor{bg}{rgb}{0.96,0.96,0.96}
-\setminted{linenos,
-  bgcolor=bg,
-  fontsize=\small,
-  breaklines,
-  mathescape}
-
 % ==========================================
 % Cross-Referencing Commands
 % ==========================================
@@ -434,7 +498,22 @@
 \renewcommand*{\eqref}[1]{公式（\ref{#1}）}
 \newcommand*{\tabref}[1]{\tablename~\ref{#1}~}
 \newcommand*{\figref}[1]{\figurename~\ref{#1}~}
-\newcommand*{\listingref}[1]{\listingscaption~\ref{#1}~}
+
+% Counter and cross-reference setup for code listings
+\makeatletter
+\iftongjithesis@minted
+  % For minted package
+  \renewcommand{\listingscaption}{代码}
+  \crefname{listing}{代码}{代码}
+  \Crefname{listing}{代码}{代码}
+\fi
+\makeatother
+
+% For listings package
+\renewcommand{\lstlistingname}{代码}
+\crefname{lstlisting}{代码}{代码}
+\Crefname{lstlisting}{代码}{代码}
+\newcommand*{\listingref}[1]{\lstlistingname~\ref{#1}}
 
 % Configure references in Chinese
 \crefname{equation}{式}{式}
@@ -459,7 +538,6 @@
 \crefname{pf}{证明}{证明}
 \crefname{proof}{证明}{证明}
 \crefname{algorithm}{算法}{算法}
-\crefname{listing}{代码}{代码}
 
 % Configure connecting words
 \newcommand{\crefpairconjunction}{ 和~}
@@ -610,7 +688,7 @@
   \catcode`\。=\active
   \newcommand{。}{\ifmmode\text{．}\else ．\fi}
 \fi
-\makeatother
+\makeatletter
 
 % 加载用户配置文件
 \AtEndOfPackage{

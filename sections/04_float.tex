@@ -252,42 +252,167 @@
 
 \subsection{代码环境}
 
-虽然我们可以在论文中加入算法，但是并不推荐添加过多的代码。如果确实需要在论文中添加代码，建议采用 \pkg{minted} 宏包，该宏包可以提供代码高亮的功能，使得代码更加易于阅读。
+\subsubsection{代码高亮方式介绍}
 
-为了让代码可以在论文中正确地排版，我们使用了 \pkg{listings} 宏包来包装 \pkg{minted}。具体来说，我们在 \texttt{listing} 环境中嵌套了 \texttt{minted} 环境来展示代码，并使用 \texttt{caption} 命令来添加代码标题。代码的标签和交叉引用可以使用 \texttt{label} 和 \texttt{cref} 命令来实现。
-\cref{algo:algorithm} 的Python代码如\cref{lst:fibonacci} 所示。
+在论文中，适当的代码高亮不仅可以提高代码的可读性，还能使文档更加专业美观。本模板提供了两种代码高亮解决方案：
 
+\begin{enumerate}
+  \item \textbf{\pkg{listings} 包}（始终可用）：\LaTeX{} 原生支持的代码显示包，无需外部依赖，适合所有环境。
+  \item \textbf{\pkg{minted} 包}（可选增强）：基于 Python Pygments 的高级代码高亮，提供更丰富的语法高亮功能和更精美的渲染效果。
+\end{enumerate}
+
+这两种方案可通过文档类选项 \texttt{minted=true}（默认）或 \texttt{minted=false} 来切换。无论使用哪种选项，\pkg{listings} 包总是可用的，而 \pkg{minted} 则作为增强功能提供更精细的代码高亮。
+
+% 重要说明：
+% \begin{itemize}
+%   \item 使用 \pkg{minted} 需要系统安装 Python 和 Pygments 库（\texttt{pip install pygments}）
+%   \item 使用 \pkg{minted} 编译时需添加 \texttt{-shell-escape} 参数
+%   \item 若环境受限不能安装 Python 或执行外部命令，请使用 \texttt{minted=false} 选项
+% \end{itemize}
+
+\subsubsection{\pkg{listings} 包基础用法}
+
+\pkg{listings} 包是 \LaTeX{} 最常用的代码高亮工具，无论 \texttt{minted} 选项如何设置，它始终可用。以下是一个基本示例：
+
+\begin{lstlisting}[
+  language=Python,         % 指定语法高亮的编程语言
+  caption={使用listings包的Python示例},
+  label=lst:basic-example,
+  frame=single,            % 添加单线边框
+  basicstyle=\small\ttfamily, % 设置字体为等宽小号字体
+  numbers=left,            % 显示行号
+  numberstyle=\tiny,       % 行号使用极小字体
+  backgroundcolor=\color{bg}, % 设置背景色
+  commentstyle=\color{commentcolor}\itshape, % 注释样式
+  keywordstyle=\color{keywordcolor}\bfseries, % 关键字样式
+  stringstyle=\color{stringcolor}, % 字符串样式
+  breaklines=true,         % 允许自动换行
+  showstringspaces=false   % 不显示字符串中的空格
+]
+# 这是一个简单的Python函数
+def hello_world(name: str = "World") -> str:
+    """返回个性化问候语"""
+    greeting = f"Hello, {name}!"
+    return greeting
+
+# 调用函数并打印结果
+print(hello_world())  # 输出: Hello, World!
+print(hello_world("LaTeX"))  # 输出: Hello, LaTeX!
+\end{lstlisting}
+
+\pkg{listings} 包支持绝大多数编程语言，如 C/C++、Java、Python、MATLAB、R、SQL 等，使用 \texttt{language} 参数指定即可。
+
+\subsubsection{\pkg{minted} 包增强功能}
+
+当设置 \texttt{minted=true} 时（默认），可以使用 \pkg{minted} 包提供的增强高亮功能。\pkg{minted} 基于 Python 的 Pygments 库，支持超过 500 种编程语言，并提供更精确的语法解析和更丰富的高亮效果：
+
+\makeatletter
+\iftongjithesis@minted
 \begin{listing}[!htb]
   \begin{minted}{python}
-def fibonacci(n: int) -> int:
-    """
-    Calculates the nth Fibonacci number.
+# 这是一个简单的Python函数
+def hello_world(name: str = "World") -> str:
+    """返回个性化问候语"""
+    greeting = f"Hello, {name}!"
+    return greeting
 
-    Args:
-        n (int): Index of the desired Fibonacci number. Must be non-negative.
-
-    Returns:
-        int: The nth Fibonacci number.
-
-    Raises:
-        ValueError: If the input is negative.
-    """
-    if n < 0:
-        raise ValueError("Negative arguments are not supported")
-    if n == 0:
-        return 0
-    if n == 1:
-        return 1
-    return fibonacci(n - 1) + fibonacci(n - 2)
+# 调用函数并打印结果
+print(hello_world())  # 输出: Hello, World!
+print(hello_world("LaTeX"))  # 输出: Hello, LaTeX!
   \end{minted}
-  \caption{计算斐波那契数列的Python实现}\label{lst:fibonacci}
+  \caption{使用minted包的Python示例}\label{listing:minted-example}
 \end{listing}
+\fi
+\makeatother
+
+\subsubsection{代码高亮方式的优势}
+
+代码高亮包（\pkg{minted} 和 \pkg{listings}）与纯文本 \verb|verbatim| 环境相比具有显著优势。这些高亮工具能够自动为代码元素（如关键字、变量、字符串和注释等）着色，准确识别不同编程语言的语法特性，并支持行号、边框和背景色等美化功能。同时，它们提供了行内命令（如 \verb|\mintinline| 或 \verb|\lstinline|）用于在行文中高亮代码片段，还允许用户根据个人喜好定制代码显示样式。
+
+在两种高亮解决方案中，基于Python的 \pkg{minted} 相比纯\LaTeX{}的 \pkg{listings} 提供了更多增强功能。\pkg{minted} 能够更准确地解析和高亮代码语法，支持多达数百种编程语言和方言，可以自动处理特殊字符而无需手动转义。行内代码高亮效果也更为精细，例如：
+\makeatletter
+\iftongjithesis@minted
+  \mintinline{python}{print("Hello")}
+\else
+  \lstinline[language=Python]{print("Hello")}
+\fi
+\makeatother
+（与普通文本 \verb|print("Hello")| 对比）。
+
+若不希望引入Python依赖，本模板也提供了纯\LaTeX{}的增强选项：
+\begin{itemize}
+  \item \textbf{\pkg{listings}}：内置于模板，完全不依赖外部程序
+  \item \textbf{\pkg{fancyvrb}}：在 \texttt{minted=false} 时可以使用的增强型verbatim环境
+\end{itemize}
+
+\subsubsection{代码兼容性策略}
+
+为使文档在任何环境下都能正常编译，推荐使用以下代码兼容性策略：
+
+\begin{enumerate}
+  \item \textbf{短代码段}：直接使用 \pkg{listings}，它在所有环境都可用。
+  \item \textbf{重要复杂代码}：使用条件判断，针对不同环境提供两种实现。
+  \item \textbf{行内代码}：使用通用的 \verb|\verb| 命令，或根据环境条件选择。
+\end{enumerate}
+
+以下是一个展示兼容性处理的示例：
+
+\makeatletter
+\iftongjithesis@minted
+% 当minted=true时显示的代码，使用minted增强功能
+\begin{listing}[!htb]
+  \begin{minted}[linenos, frame=lines, framesep=2mm, fontsize=\footnotesize]{c++}
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> fibonacci = {0, 1, 1, 2, 3, 5, 8, 13, 21};
+    
+    std::cout << "Fibonacci序列的前" << fibonacci.size() << "个数：" << std::endl;
+    for (const auto& num : fibonacci) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
+  \end{minted}
+  \caption{使用minted高亮的C++代码示例}\label{listing:cpp-minted}
+\end{listing}
+\else
+% 当minted=false时显示的代码，使用listings基础功能
+\begin{lstlisting}[
+  language=C++,
+  caption={使用listings高亮的C++代码示例},
+  label=lst:cpp-listings,
+  float=htbp,
+  frame=lines,
+  numbers=left,
+  basicstyle=\footnotesize\ttfamily,
+  xleftmargin=15pt
+]
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> fibonacci = {0, 1, 1, 2, 3, 5, 8, 13, 21};
+    
+    std::cout << "Fibonacci序列的前" << fibonacci.size() << "个数：" << std::endl;
+    for (const auto& num : fibonacci) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
+\end{lstlisting}
+\fi
+\makeatother
 
 \subsection{\texttt{clearpage} 与 \texttt{newpage}}
 
-在 \LaTeX\ 中，使用 \verb|\newpage| 命令可以在当前位置开始新的一页。而使用 \verb|\clearpage| 命令不仅可以开始新的一页，还可以将未处理的浮动体（例如图表等）全部输出，确保当前页面上的所有浮动体都已经处理完毕。
-因此，在需要控制页面排版时，应该优先使用 \verb|\clearpage| 命令，而不是简单地使用 \verb|\newpage| 命令。如果不使用 \verb|\clearpage| 命令，可能会导致未处理的浮动体出现在不合适的位置，影响文档的排版效果。
+在\LaTeX{}排版系统中，\verb|\newpage| 和 \verb|\clearpage| 命令都能强制开始新页面，但它们有着重要区别。\verb|\newpage| 仅创建新页面，而 \verb|\clearpage| 还会处理所有待处理的浮动体，确保它们在新页面前被正确放置。
 
-另外，需要注意的是，如果在文档中使用了浮动体（例如图表等），那么最好将浮动体放在一个浮动体环境中，并设置适当的位置选项（例如 \verb|[htb]| 等），以控制浮动体的排版位置。在需要开始新的一页时，应该尽可能使用 \verb|\clearpage| 命令，以确保当前页面上的所有浮动体都已经处理完毕，从而避免出现排版问题。
+使用浮动体（如图、表）时，应当将它们置于适当的浮动环境中，并通过位置选项（如 \verb|[htb]|）来控制它们的排版位置。当需要确保所有浮动体都已处理并开始新页面时，应优先使用 \verb|\clearpage| 而非 \verb|\newpage|。这样可以防止浮动体累积并出现在文档中不合适的位置，导致排版混乱。
 
-综上所述，使用 \verb|\clearpage| 命令可以确保当前页面上的所有浮动体都已经处理完毕，从而避免出现排版问题。在文档中使用浮动体时，应该将浮动体放在一个浮动体环境中，并设置适当的位置选项，以控制浮动体的排版位置。
+合理使用 \verb|\clearpage| 命令和浮动体环境能有效确保文档排版的专业性和整洁度，使论文结构更加清晰有序。

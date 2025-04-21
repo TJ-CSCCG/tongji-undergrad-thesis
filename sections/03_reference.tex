@@ -13,17 +13,17 @@
 
 在正文中，可使用 \verb|\cite| 命令引用参考文献。例如：
 
-\begin{Verbatim}
+\begin{verbatim}
 这是一个引用示例 \cite{book1}。
-\end{Verbatim}
+\end{verbatim}
 
 其中，\verb|book1| 是参考文献的键值，即参考文献文件中每个条目的唯一标识符。引用命令会自动在文中插入相应文献序号，并在文末的参考文献列表中显示相应文献条目。
 
 如果需要同时标注多个参考文献，可使用逗号分隔键值。例如：
 
-\begin{Verbatim}
+\begin{verbatim}
 这是一个引用示例 \cite{book1,online1}。
-\end{Verbatim}
+\end{verbatim}
 
 请注意，本模板所用的所有文献均为ChatGPT生成的。我们不保证这些文献的真实性。
 
@@ -92,7 +92,7 @@
 
 \paragraph{脚注引用}
 
-有时，我们想要用脚注的形式引用某参考文献，那么我们可以使用 \verb|\footfullcite{key1}| 命令\footfullcite{qin2021}。
+有时，我们想要用脚注的形式引用某参考文献，那么我们可以使用 \verb|\footfullcite{key1}| 命令\footfullcite{qin2021}.
 \fi
 
 另外，为了避免遗漏引用，有时候需要使用文献管理工具来管理参考文献，例如 Zotero 或 EndNote 等。这些工具可以帮助你轻松管理文献数据库，生成参考文献列表，甚至将参考文献直接插入到文档中。
@@ -102,9 +102,9 @@
 
 脚注是一种在文本底部添加注释或补充说明的方式。在 \LaTeX\ 中，可以使用 \verb|\footnote| 命令添加脚注。例如，在文本中需要添加脚注时，可以在需要添加脚注的单词或句子后面使用 \verb|\footnote| 命令，如下所示：
 
-\begin{Verbatim}
+\begin{verbatim}
 脚注是一种在文本底部添加注释或补充说明的方式\footnote{通常，我们在脚注里也写完整的句子。在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。}。
-\end{Verbatim}
+\end{verbatim}
 
 其中，花括号中的文本就是脚注的内容。编译文档后，脚注会出现在页面底部，并自动标上数字：脚注是一种在文本底部添加注释或补充说明的方式\footnote{通常，我们在脚注里也写完整的句子。在文本中使用脚注时，应该遵循学术规范，尽可能引用可信的来源，并注明出处。}。
 
@@ -117,25 +117,25 @@
 
 例如，在文档中的某个章节中添加一个标签：
 
-\begin{Verbatim}
+\begin{verbatim}
 \section{引言}
 \label{sec:intro}
 这是一段引言。
-\end{Verbatim}
+\end{verbatim}
 
 然后，在文档的其他位置使用 \verb|\ref| 命令来引用这个标签：
 
-\begin{Verbatim}
+\begin{verbatim}
 请参见第 \ref{sec:intro} 章节。
-\end{Verbatim}
+\end{verbatim}
 
 这样，就可以在文档中产生“请参见第 X 章节”的效果，其中 X 为标签所在章节的编号。
 
 类似地，使用 \verb|\pageref| 命令可以引用页面编号。例如：
 
-\begin{Verbatim}
+\begin{verbatim}
 请参见第 \pageref{sec:intro} 页。
-\end{Verbatim}
+\end{verbatim}
 
 这样，就可以在文档中产生“请参见第 X 页”的效果，其中 X 为标签所在页码的编号。
 
@@ -145,41 +145,40 @@
 
 在文档中为需要引用的对象添加标签，例如：
 
-\begin{Verbatim}
+\begin{verbatim}
 \section{引言}
 \label{sec:intro}
 这是一段引言。
-\end{Verbatim}
+\end{verbatim}
 
 接下来，在文档的其他位置使用 \verb|\cref| 命令引用这个标签：
-\begin{Verbatim}
+\begin{verbatim}
 请参见\cref{sec:intro}。
-\end{Verbatim}
+\end{verbatim}
 这样，就可以在文档中产生“请参见章节 X”的效果，其中 X 为标签所在章节的编号。\pkg{cleveref} 宏包会自动根据标签所在对象的类型生成正确的引用词汇。
 
 需要注意的是，如果需要修改引用词汇，可以在导言区添加如下代码：
 
-\begin{Verbatim}
+\begin{verbatim}
 \crefname{对象类型}{引用词汇}{引用词汇复数形式}
 \Crefname{对象类型}{引用词汇}{引用词汇复数形式}
-\end{Verbatim}
+\end{verbatim}
 
 例如，可以使用以下代码将“定理”引用词汇修改为“命题”：
-\begin{Verbatim}
+\begin{verbatim}
 \crefname{theorem}{命题}{命题}
 \Crefname{theorem}{命题}{命题}
-\end{Verbatim}
-这样，使用 \verb|\cref| 命令引用定理对象时，就会自动生成“请参见命题 X”的效果。
+\end{verbatim}
 
 需要同时引用几个并列的对象时，可以直接使用 \verb|\cref| 命令，例如：
-\begin{Verbatim}
+\begin{verbatim}
 请参见\cref{sec:introduction,sec:conclusion}。
 请参见\cref{sec:introduction,sec:math,sec:reference,sec:float}。
 请参见\cref{sec:introduction,sec:math,sec:reference,,sec:float}。
 请参见\cref{sec:introduction,sec:reference,sec:conclusion}。
 请参见\cref{sec:introduction,sec:reference,sec:conclusion,%
   algo:algorithm,fig:parallel1,lst:fibonacci}。
-\end{Verbatim}
+\end{verbatim}
 
 这样，就可以在文档中产生“请参见章节 X 和 Y”的效果，其中 X 和 Y 为标签所在章节的编号：
 \begin{itemize}

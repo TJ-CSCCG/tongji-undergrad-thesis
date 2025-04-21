@@ -50,11 +50,46 @@
 
 我们建议参照[官方快速安装指南](https://tug.org/texlive/quickinstall.html)安装 TeX Live（Windows、Linux）或 MacTeX（macOS）。
 
-#### 支持代码高亮
+#### 代码高亮选项
 
-本模板通过引入 `minted` 宏包支持代码高亮。`minted` 宏包需要 Python 环境支持，因此您需要安装 Python 并使用 `pip` 安装 `Pygments`。此后，需要将装有 `Pygments` 的 Python 路径添加到环境变量 `PATH` 中，或者按照下面的说明配置，使得 $\LaTeX$ 能够正确调用 `minted` 宏包。
+本模板提供两种代码高亮解决方案：
 
-<details><summary>不想将此 Python 路径添加到环境变量 `PATH` 中？</summary>
+1. **`minted` 包**（基于 Python）：提供高级的语法高亮功能，需要 Python 环境。
+   - 通过在 `main.tex` 中设置 `minted=true`（默认）启用
+   - 需要安装 Python 及 Pygments 库（`pip install pygments`）
+   - 编译时需添加 `-shell-escape` 参数
+
+2. **`listings` 包**（纯 LaTeX）：不依赖外部程序，在任何环境都能使用。
+   - 通过在 `main.tex` 中设置 `minted=false` 启用
+   - 无需额外安装任何程序
+
+如果您不希望安装 Python 或遇到 `minted` 相关错误，可以在 `main.tex` 中将:
+
+```latex
+\documentclass[
+  oneside,
+  % fullwidthstop=true,
+  fontset=fandol,
+  % times=true,
+  minted=true,
+]{tongjithesis}
+```
+
+修改为:
+
+```latex
+\documentclass[
+  oneside,
+  % fullwidthstop=true,
+  fontset=fandol,
+  % times=true,
+  minted=false,
+]{tongjithesis}
+```
+
+使用 `minted=false` 时，模板将自动使用 `listings` 包处理所有代码，无需其他配置。
+
+<details><summary>使用 `minted` 但不想将 Python 添加到环境变量 `PATH` 中？</summary>
 
 可以在 `main.tex` 文件中添加重定向 `minted` 宏包的 Python 路径：
 
@@ -63,8 +98,6 @@
 ```
 
 </details>
-
-若您不需要代码高亮，请将 `minted` 宏包相关内容注释掉。
 
 #### 构建项目
 
