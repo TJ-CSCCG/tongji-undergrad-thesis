@@ -7,7 +7,7 @@
 > [!NOTE]
 > 完整样例可见 [模板输出样例展示（完整版）](https://github.com/TJ-CSCCG/tongji-undergrad-thesis/discussions/21)、[Release 页](https://github.com/TJ-CSCCG/tongji-undergrad-thesis/releases) 中 "Assets" 下的 pdf 下载链接或 [Overleaf 模版 PDF](https://www.overleaf.com/latex/templates/tongji-university-undergraduate-thesis-template/tfvdvyggqybn.pdf)。
 
-以下依次展示 “封面”、“中文摘要”、“目录”、“主要内容”、“参考文献” 与 “谢辞”。
+以下依次展示 "封面"、"中文摘要"、"目录"、"主要内容"、"参考文献" 与 "谢辞"。
 
 <p align="center">
     <img src="https://media.githubusercontent.com/media/TJ-CSCCG/TJCS-Images/tongji-undergrad-thesis/preview/main_page-0001.jpg" width="30%">
@@ -50,44 +50,53 @@
 
 我们建议参照[官方快速安装指南](https://tug.org/texlive/quickinstall.html)安装 TeX Live（Windows、Linux）或 MacTeX（macOS）。
 
-#### 代码高亮选项
+#### 文档类选项
+
+本模板提供以下文档类选项，可以在 `main.tex` 中进行配置：
+
+```latex
+\documentclass[
+  oneside,           % 单面打印（默认），使用 twoside 可启用双面打印
+  fullwidthstop=false, % 是否将中文句号"。"替换为西文句号"．"，默认为false
+  fontset=fandol,    % 使用的字体集，默认为 fandol
+  times=false,       % 是否使用 Times New Roman 字体，默认为 false
+  minted=true,       % 是否使用 minted 包进行代码高亮，默认为 true
+]{tongjithesis}
+```
+
+##### 单双面打印选项
+
+- `oneside`：单面打印（默认）
+- `twoside`：双面打印，会调整页边距和装订线
+
+##### 字体选项
+
+- `fontset=fandol`：使用 Fandol 字体集（默认）
+- `fontset=adobe`：使用 Adobe 字体集（需要安装 Adobe 字体）
+- `times=false`：使用 `newtx` 包提供的字体（默认）
+- `times=true`：使用 Times New Roman 字体
+
+##### 中文标点选项
+
+- `fullwidthstop=false`：保持中文句号"。"不变（默认）
+- `fullwidthstop=true`：将中文句号"。"替换为西文句号"．"
+
+##### 代码高亮选项
 
 本模板提供两种代码高亮解决方案：
 
 1. **`minted` 包**（基于 Python）：提供高级的语法高亮功能，需要 Python 环境。
    - 通过在 `main.tex` 中设置 `minted=true`（默认）启用
    - 需要安装 Python 及 Pygments 库（`pip install pygments`）
-   - 编译时需添加 `-shell-escape` 参数
+   - 需要将 Python 添加到系统环境变量 `PATH` 中，
+     - 或者在 `main.tex` 中指定 Python 路径（见下文）
+   - 编译时需添加 `-shell-escape` 参数（本模板已添加）
 
 2. **`listings` 包**（纯 LaTeX）：不依赖外部程序，在任何环境都能使用。
    - 通过在 `main.tex` 中设置 `minted=false` 启用
    - 无需额外安装任何程序
 
-如果您不希望安装 Python 或遇到 `minted` 相关错误，可以在 `main.tex` 中将:
-
-```latex
-\documentclass[
-  oneside,
-  % fullwidthstop=true,
-  fontset=fandol,
-  % times=true,
-  minted=true,
-]{tongjithesis}
-```
-
-修改为:
-
-```latex
-\documentclass[
-  oneside,
-  % fullwidthstop=true,
-  fontset=fandol,
-  % times=true,
-  minted=false,
-]{tongjithesis}
-```
-
-使用 `minted=false` 时，模板将自动使用 `listings` 包处理所有代码，无需其他配置。
+如果您不希望安装 Python 或遇到 `minted` 相关错误，可以在 `main.tex` 中将 `minted=true` 修改为 `minted=false`。使用 `minted=false` 时，模板将自动使用 `listings` 包处理所有代码，无需其他配置。
 
 <details><summary>使用 `minted` 但不想将 Python 添加到环境变量 `PATH` 中？</summary>
 
@@ -151,37 +160,19 @@ make wordcount          # wordcount
 
 ### 其他功能
 
-#### 双面打印版
-
-如果您需要使用双面打印版，请在 `main.tex` 中将第 1 行的
-
-```latex
-\documentclass[oneside]{tongjithesis}
-```
-
-修改为
-
-```latex
-\documentclass[twoside]{tongjithesis}
-```
-
-即可。
-
 #### 渲染生僻字
 
-由于本模版默认使用 Fandol 字体，对于姓名、专有名词等生僻字的支持可能不够完善。我们在本模版 GitHub 仓库的 [`fonts`](https://github.com/TJ-CSCCG/tongji-undergrad-thesis/tree/fonts) 分支中提供了 Adobe 字体集，您可以下载、安装这些字体，然后在 `style/tongjithesis.cls` 中将
+由于本模版默认使用 Fandol 字体，对于姓名、专有名词等生僻字的支持可能不够完善。我们在本模版 GitHub 仓库的 [`fonts`](https://github.com/TJ-CSCCG/tongji-undergrad-thesis/tree/fonts) 分支中提供了 Adobe 字体集，您可以下载、安装这些字体，然后在 `main.tex` 中通过 `fontset=adobe` 选项来使用 Adobe 字体集：
 
 ```latex
-\LoadClass[UTF8,a4paper,fontset=fandol]{ctexart}
+\documentclass[
+  oneside,
+  fontset=adobe,
+  % 其他选项...
+]{tongjithesis}
 ```
 
-修改为
-
-```latex
-\LoadClass[UTF8,a4paper,fontset=adobe]{ctexart}
-```
-
-这样修改后，LaTeX 将使用 Adobe 字体集来渲染文档。您可以在模板文档的 1.2.1 小节 “测试生僻字” 中查看具体效果。
+这样修改后，LaTeX 将使用 Adobe 字体集来渲染文档。您可以在模板文档的 1.2.1 小节 "测试生僻字" 中查看具体效果。
 
 > [!WARNING]
 > 将 Adobe 字体文件放置在项目根目录下并在 `main.tex` 中指定字体路径的方式并不总是有效。因此，我们建议您将 Adobe 字体文件安装到系统字体目录中。
@@ -198,7 +189,7 @@ make wordcount          # wordcount
 
 ```text
 %% tongji-undergrad-thesis
-%% Copyright 2023 TJ-CSCCG
+%% Copyright 2022-2025 TJ-CSCCG
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -222,6 +213,7 @@ make wordcount          # wordcount
 - 2021.05.09 起，[ganler](https://github.com/ganler) 以上述项目为基础，增强其功能（项目结构与平台适配）并开始维护新项目。
 - 2022.05.12 起，[skyleaworlder](https://github.com/skyleaworlder) 开始贡献本项目，并将其整合进 [TJ-CSCCG](http://github.com/TJ-CSCCG)，并持续对该项目进行更新和改进，目前已经成为一个完善的本科毕业论文模板。
 - 2023.04 起，[RizhongLin](https://github.com/RizhongLin) 开始贡献本项目，并负责项目的维护和更新。
+- 2025.04 更新，实现基于键值对的类选项，支持更灵活的配置。
 
 我们非常感谢以上贡献者的付出，他们的工作为更多同学提供了方便和帮助。
 
@@ -242,5 +234,5 @@ make wordcount          # wordcount
     f'jiawei#@$.edu'.replace('#', '6').replace('$', 'illinois'),
     f'jgli22@$.edu.cn'.replace('$', 'm.fudan'),
     f'rizhong.lin@$.%'.replace('$', 'epfl').replace('%', 'ch'),
-]
+][-1]
 ```

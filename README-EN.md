@@ -50,21 +50,63 @@ The project is configured with GitHub Actions in `.github/workflows/*.yaml`. Pus
 
 We recommend installing TeX Live (Windows, Linux) or MacTeX (macOS) following the [official quick install guide](https://tug.org/texlive/quickinstall.html).
 
-#### Supporting Code Highlighting
+#### Document Class Options
 
-This template supports code highlighting by incorporating the `minted` package. The `minted` package requires Python support, so you need to install Python and use `pip` to install `Pygments`. Afterwards, add the Python path with `Pygments` installed to the environment variable `PATH`, or configure as follows to ensure $\LaTeX$ can correctly invoke the `minted` package.
+This template provides the following document class options, which can be configured in `main.tex`:
 
-<details><summary>Don't want to add this Python path to the environment variable `PATH`?</summary>
+```latex
+\documentclass[
+  oneside,           % One-sided printing (default), use twoside for double-sided printing
+  fullwidthstop=false, % Whether to replace Chinese period "。" with Western-style period "．", default is false
+  fontset=fandol,    % Font set to use, default is fandol
+  times=false,       % Whether to use Times New Roman font, default is false
+  minted=true,       % Whether to use the minted package for code highlighting, default is true
+]{tongjithesis}
+```
 
-You can add a redirect to the Python path of the `minted` package in the `main.tex` file:
+##### Single/Double-Sided Printing Options
+
+- `oneside`: Single-sided printing (default)
+- `twoside`: Double-sided printing, adjusts page margins and binding line
+
+##### Font Options
+
+- `fontset=fandol`: Use Fandol font set (default)
+- `fontset=adobe`: Use Adobe font set (requires Adobe fonts installation)
+- `times=false`: Use default math font (default)
+- `times=true`: Use Times New Roman font
+
+##### Chinese Punctuation Options
+
+- `fullwidthstop=false`: Keep Chinese period "。" unchanged (default)
+- `fullwidthstop=true`: Replace Chinese period "。" with Western-style period "．"
+
+##### Code Highlighting Options
+
+This template provides two code highlighting solutions:
+
+1. **`minted` package** (Python-based): Provides advanced syntax highlighting features, requires Python environment.
+   - Enable by setting `minted=true` (default) in `main.tex`
+   - Requires installation of Python and Pygments library (`pip install pygments`)
+   - You need to add Python to the system `PATH` environment variable, 
+     - or specify the Python path in `main.tex` (see below)
+   - Requires `-shell-escape` parameter during compilation (this template has added)
+
+2. **`listings` package** (pure LaTeX): Does not depend on external programs, can be used in any environment.
+   - Enable by setting `minted=false` in `main.tex`
+   - No additional program installation required
+
+If you do not want to install Python or encounter `minted`-related errors, you can change `minted=true` to `minted=false` in `main.tex`. When using `minted=false`, the template will automatically use the `listings` package to process all code, without requiring additional configuration.
+
+<details><summary>Using `minted` but don't want to add Python to the `PATH` environment variable?</summary>
+
+You can add a redirection to the Python path of the `minted` package in the `main.tex` file:
 
 ```latex
 \renewcommand{\MintedPython}{/path/to/your/python}
 ```
 
 </details>
-
-If you do not need code highlighting, please comment out the related content in the `minted` package.
 
 #### Building the Project
 
@@ -118,34 +160,16 @@ For detailed usage, see [tongji-undergrad-thesis-env](https://github.com/TJ-CSCC
 
 ### Other Features
 
-#### Double-Sided Printing
-
-If you need to use double-sided printing, simply change the first line in `main.tex` from
-
-```latex
-\documentclass[oneside]{tongjithesis}
-```
-
-to
-
-```latex
-\documentclass[twoside]{tongjithesis}
-```
-
-to enable it.
-
 #### Rendering Rare Characters
 
-Due to the default use of the Fandol font in this template, support for rare characters such as names and specific terms might not be adequate. We provide the Adobe font set in the [`fonts`](https://github.com/TJ-CSCCG/tongji-undergrad-thesis/tree/fonts) branch of our GitHub repository. You can download and install these fonts, and then change the line in `style/tongjithesis.cls` from
+Due to the default use of the Fandol font in this template, support for rare characters such as names and specific terms might not be adequate. We provide the Adobe font set in the [`fonts`](https://github.com/TJ-CSCCG/tongji-undergrad-thesis/tree/fonts) branch of our GitHub repository. You can download and install these fonts, and then use the `fontset=adobe` option in `main.tex` to use the Adobe font set:
 
 ```latex
-\LoadClass[UTF8,a4paper,fontset=fandol]{ctexart}
-```
-
-to
-
-```latex
-\LoadClass[UTF8,a4paper,fontset=adobe]{ctexart}
+\documentclass[
+  oneside,
+  fontset=adobe,
+  % other options...
+]{tongjithesis}
 ```
 
 This modification will switch the rendering in the document to use the Adobe font set, enhancing support for rare characters.
@@ -165,7 +189,7 @@ This project uses the [LPPL-1.3c license](https://www.latex-project.org/lppl/lpp
 
 ```text
 %% tongji-undergrad-thesis
-%% Copyright 2023 TJ-CSCCG
+%% Copyright 2022-2025 TJ-CSCCG
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -189,6 +213,7 @@ This project uses the [LPPL-1.3c license](https://www.latex-project.org/lppl/lpp
 - Starting May 9, 2021, [ganler](https://github.com/ganler) enhanced the functionalities (project structure and platform compatibility) based on the original project and began maintaining it.
 - As of May 12, 2022, [skyleaworlder](https://github.com/skyleaworlder) started contributing to the project, integrated it into [TJ-CSCCG](http://github.com/TJ-CSCCG), and has continued to update and improve it. It has now become a comprehensive undergraduate thesis template.
 - From April 2023, [RizhongLin](https://github.com/RizhongLin) began contributing to and managing the project.
+- April 2025 update, implemented key-value based class options, supporting more flexible configuration.
 
 We deeply appreciate the efforts of these contributors, whose work has facilitated and assisted many students.
 
@@ -209,5 +234,5 @@ We have learned a lot from excellent open-source projects from top universities:
     f'jiawei#@$.edu'.replace('#', '6').replace('$', 'illinois'),
     f'jgli22@$.edu.cn'.replace('$', 'm.fudan'),
     f'rizhong.lin@$.%'.replace('$', 'epfl').replace('%', 'ch'),
-]
+][-1]
 ```
