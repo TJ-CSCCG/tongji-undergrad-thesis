@@ -181,6 +181,7 @@
 \captionsetup[listing]{skip=12pt}
 
 \RequirePackage{subcaption}
+\captionsetup[sub]{font={tj@caption,tj@songti},labelformat=simple,labelsep=space,skip=6pt}
 
 % Algorithms and code listings
 \RequirePackage{algorithm}
