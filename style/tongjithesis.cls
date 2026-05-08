@@ -309,10 +309,36 @@
     style=gb7714-2015,
     natbib=true,
   ]{biblatex}
+  % 参考文献序号左对齐至页边距，悬挂统一为 0.74cm（与 Word 模板一致）。
+  % 0.74cm 为最小宽度；若实际最宽标签（如 [100]+ 三位数引用）超过 0.74cm，
+  % 则使用实际宽度，避免标签溢出与正文首字符重叠。
+  \defbibenvironment{bibliography}
+    {\list
+       {\printtext[labelnumberwidth]{%
+          \printfield{labelprefix}%
+          \printfield{labelnumber}}}
+       {\setlength{\labelwidth}{\labelnumberwidth}%
+        \ifdim\labelwidth<0.74cm \setlength{\labelwidth}{0.74cm}\fi
+        \setlength{\labelsep}{0pt}%
+        \setlength{\leftmargin}{\labelwidth}%
+        \setlength{\itemindent}{0pt}%
+        \setlength{\itemsep}{\bibitemsep}%
+        \setlength{\parsep}{\bibparsep}%
+        \renewcommand*{\makelabel}[1]{##1\hfill}}}
+    {\endlist}
+    {\item}
 \else
   \RequirePackage[sort&compress]{gbt7714}
   \bibliographystyle{gbt7714-numerical}
   \setlength{\bibsep}{3pt}
+  % 参考文献序号左对齐至页边距，悬挂统一为 0.74cm（与 Word 模板一致）。
+  % gbt7714 已将 \@biblabel 改为 [#1]\hfill（左对齐），此处只需固定标签框宽度。
+  % 0.74cm 为最小宽度；若 thebibliography 自动测量的最宽标签更宽，则保留之，
+  % 避免 [100]+ 三位数引用时标签溢出与正文首字符重叠。
+  \renewcommand{\@openbib@code}{%
+    \ifdim\labelwidth<0.74cm \setlength{\labelwidth}{0.74cm}\fi
+    \setlength{\labelsep}{0pt}%
+    \setlength{\leftmargin}{\labelwidth}}
 \fi
 
 % \tjbibresource{file1,file2,...} — register bib files (preamble only)
