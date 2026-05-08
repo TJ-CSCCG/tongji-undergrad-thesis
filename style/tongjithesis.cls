@@ -90,7 +90,7 @@
 \newcommand{\tjfontchapter}{\zihao{-3}}      % 章标题：小三号
 \newcommand{\tjfontheading}{\zihao{4}}       % 摘要 / 目录 / 参考文献 / 谢辞标题：四号
 \newcommand{\tjfontbody}{\zihao{-4}}         % 正文 / 二三级标题 / 关键词 / 摘要正文：小四号
-\newcommand{\tjfontcaption}{\zihao{-5}}      % 表题 / 图题：小五号
+\newcommand{\tjfontcaption}{\zihao{5}}      % 表题 / 图题：五号
 \newcommand{\tjfontcover}{\zihao{-3}}        % 封面表格字段值：小三号（与 \tjfontchapter 同字号，语义分离）
 \newcommand{\tjfonttable}{\zihao{-5}}        % 表内文字：小五号
 \newcommand{\tjfontinfotitle}{\zihao{3}}     % 信息说明页标题：三号（仅此页专用）
