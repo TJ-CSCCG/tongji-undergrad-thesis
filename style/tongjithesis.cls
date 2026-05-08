@@ -332,13 +332,20 @@
   \bibliographystyle{gbt7714-numerical}
   \setlength{\bibsep}{3pt}
   % 参考文献序号左对齐至页边距，悬挂统一为 0.74cm（与 Word 模板一致）。
-  % gbt7714 已将 \@biblabel 改为 [#1]\hfill（左对齐），此处只需固定标签框宽度。
-  % 0.74cm 为最小宽度；若 thebibliography 自动测量的最宽标签更宽，则保留之，
-  % 避免 [100]+ 三位数引用时标签溢出与正文首字符重叠。
-  \renewcommand{\@openbib@code}{%
+  % gbt7714 已将 \@biblabel 改为 [#1]\hfill（左对齐）。natbib（gbt7714 内部加载）
+  % 重写了 thebibliography，绕过 book.cls 的 \@openbib@code 钩子，因此须直接
+  % 替换 numeric 模式下的列表参数宏 \@bibsetup（natbib 默认 \let 至 \NAT@bibsetnum）。
+  % 0.74cm 为最小宽度；若实际最宽标签更宽（如 [100]+），则使用实际宽度。
+  % \AtBeginDocument 确保替换在 natbib 自身 \NAT@set@cites 钩子（同样在 \AtBeginDocument）
+  % 之后生效；用独立辅助宏 \tj@bibsetup 避免 \xdef 展开期 ## 参数歧义。
+  \newcommand{\tj@bibsetup}[1]{%
+    \settowidth\labelwidth{\@biblabel{#1}}%
     \ifdim\labelwidth<0.74cm \setlength{\labelwidth}{0.74cm}\fi
+    \setlength{\leftmargin}{\labelwidth}%
     \setlength{\labelsep}{0pt}%
-    \setlength{\leftmargin}{\labelwidth}}
+    \setlength{\itemsep}{\bibsep}%
+    \setlength{\parsep}{\z@}}
+  \AtBeginDocument{\let\@bibsetup\tj@bibsetup}
 \fi
 
 % \tjbibresource{file1,file2,...} — register bib files (preamble only)
