@@ -120,7 +120,7 @@ env:
     zhnumber
 
 jobs:
-  # Cross-platform build: default options (minted=true, biblatex=true)
+  # Cross-platform build: default options (minted=false, biblatex=true)
   build:
     strategy:
       fail-fast: false
@@ -132,14 +132,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
-      - name: Install Python for minted
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
-
-      - name: Install Pygments for minted
-        run: pip install Pygments
 
       - name: Install TeX Live
         id: setup-tl
@@ -184,22 +176,22 @@ jobs:
           path: tongjithesis-*.pdf
           retention-days: 30
 
-  # Option variants: test minted=false and bibtex (Linux-only, xelatex-only)
+  # Option variants: test minted=true, bibtex, and other configurations (Linux-only, xelatex-only)
   build-variants:
     strategy:
       fail-fast: false
       matrix:
         include:
-          - variant: minted-false
-            pygments: false
-          - variant: bibtex
+          - variant: minted-true
             pygments: true
+          - variant: bibtex
+            pygments: false
           - variant: minimal
             pygments: false
           - variant: twoside
-            pygments: true
+            pygments: false
           - variant: humanities
-            pygments: true
+            pygments: false
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -210,7 +202,7 @@ jobs:
         if: matrix.pygments
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: Install Pygments for minted
         if: matrix.pygments
@@ -225,20 +217,19 @@ jobs:
         env:
           SETUP_TEXLIVE_ACTION_NO_CACHE_ON_FAILURE: 1
 
-      - name: Configure minted=false variant
-        if: matrix.variant == 'minted-false'
+      - name: Configure minted=true variant
+        if: matrix.variant == 'minted-true'
         run: |
-          sed -i 's/minted=true/minted=false/' main.tex
+          sed -i 's/minted=false/minted=true/' main.tex
 
       - name: Configure bibtex variant
         if: matrix.variant == 'bibtex'
         run: |
           sed -i 's/biblatex=true/biblatex=false/' main.tex
 
-      - name: Configure minimal variant (no minted, no biblatex)
+      - name: Configure minimal variant (no biblatex)
         if: matrix.variant == 'minimal'
         run: |
-          sed -i 's/minted=true/minted=false/' main.tex
           sed -i 's/biblatex=true/biblatex=false/' main.tex
 
       - name: Configure twoside variant
@@ -254,8 +245,8 @@ jobs:
       - name: Verify variant configuration
         run: |
           git diff main.tex
-          if [ "${{ matrix.variant }}" = "minted-false" ] || [ "${{ matrix.variant }}" = "minimal" ]; then
-            grep -q 'minted=false' main.tex || { echo "ERROR: minted=false not set"; exit 1; }
+          if [ "${{ matrix.variant }}" = "minted-true" ]; then
+            grep -q 'minted=true' main.tex || { echo "ERROR: minted=true not set"; exit 1; }
           fi
           if [ "${{ matrix.variant }}" = "bibtex" ] || [ "${{ matrix.variant }}" = "minimal" ]; then
             grep -q 'biblatex=false' main.tex || { echo "ERROR: biblatex=false not set"; exit 1; }
