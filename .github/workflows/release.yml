@@ -208,7 +208,7 @@ jobs:
             fullwidthstop=false,
             fontset=fandol,
             times=false,
-            minted=true,
+            minted=false,
             biblatex=true,
           ]{tongjithesis}
 
