@@ -369,6 +369,6 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v7
         with:
-          name: release-pdfs
+          name: release-pdf-${{ matrix.field }}
           path: TongjiThesis-v*.pdf
           retention-days: 90

@@ -459,15 +459,14 @@ jobs:
           fi
 
           echo "Downloading release PDFs from test run: $WORKFLOW_RUN_ID"
-          if gh run download "$WORKFLOW_RUN_ID" \
+          for field in science humanities; do
+            gh run download "$WORKFLOW_RUN_ID" \
               --repo "$GITHUB_REPOSITORY" \
-              --name release-pdfs \
-              --dir release-pdfs 2>/dev/null; then
-            echo "Downloaded PDFs:"
-            ls -la release-pdfs/*.pdf
-          else
-            echo "Could not download release PDFs. Continuing without them."
-          fi
+              --name "release-pdf-${field}" \
+              --dir release-pdfs 2>/dev/null || true
+          done
+          echo "Downloaded PDFs:"
+          ls -la release-pdfs/*.pdf 2>/dev/null || echo "No release PDFs found"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
