@@ -109,7 +109,7 @@ make wordcount          # wordcount
   fullwidthstop=circle, % 句号样式：circle 保留"。"（默认）/ dot 替换为"．"
   fontset=fandol,       % 字体集，传递给 ctex，默认为 fandol
   times=false,          % true：使用系统 Times New Roman；false：使用 newtx（默认）
-  minted=true,          % true：minted 代码高亮（需 Python+Pygments）；false：listings
+  minted=false,         % true：minted 代码高亮（需 Python+Pygments）；false：listings（默认）
   biblatex=true,        % true：biblatex+biber（默认）；false：bibtex+gbt7714
 ]{tongjithesis}
 
@@ -130,10 +130,8 @@ make wordcount          # wordcount
 
 ### 代码高亮
 
-1. **`minted`**（默认）：基于 Python Pygments，语法高亮更丰富。需安装 Python 并确保 `pygments` 可用（`pip install pygments`）。
-2. **`listings`**：纯 LaTeX 实现，无外部依赖。
-
-在 `main.tex` 中设置 `minted=false` 即可切换。遇到 `minted` 相关错误时，改为 `minted=false` 即可。
+1. **`listings`**（默认）：纯 LaTeX 实现，无外部依赖。适合大多数场景。
+2. **`minted`**：基于 Python Pygments，语法高亮更丰富。在 `main.tex` 中设置 `minted=true` 即可启用。需要安装 Python 3.11–3.13 并确保 `pygments` 可用（`pip install pygments`）。若系统安装了多个 Python 版本，可通过 `\renewcommand{\MintedPython}{/path/to/python}` 指定 minted 使用的 Python 解释器。
 
 ## 贡献与项目历史
 

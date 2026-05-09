@@ -39,8 +39,8 @@
 \DeclareStringOption[circle]{fullwidthstop}
 % Define times option (default is false)
 \DeclareBoolOption[false]{times}
-% Define minted option (default is true)
-\DeclareBoolOption[true]{minted}
+% Define minted option (default is false)
+\DeclareBoolOption[false]{minted}
 % Define biblatex option (default is true)
 \DeclareBoolOption[true]{biblatex}
 % Define degree option: bachelor (default), master, doctor
@@ -241,15 +241,17 @@
   baselinestretch=1,
   tabsize=4,
   breaklines=true,
-  bgcolor=bg,
   mathescape=true
 }
+% fvextra v1.8.0 (2024-09-14) introduced bgcolor; guard for older TeX Live
+\@ifpackagelater{fvextra}{2024/09/14}{%
+  \fvset{bgcolor=bg}%
+}{}
 
 % Conditionally load minted package (optional)
 \iftongjithesis@minted
   \RequirePackage[chapter]{minted}
   \setminted{linenos,
-    bgcolor=bg,
     frame=single,
     framesep=2mm,
     rulecolor=\color{gray!40},
@@ -257,6 +259,10 @@
     breaklines,
     mathescape,
     escapeinside=||}
+  % fvextra v1.8.0 (2024-09-14) introduced bgcolor; guard for older TeX Live
+  \@ifpackagelater{fvextra}{2024/09/14}{%
+    \setminted{bgcolor=bg}%
+  }{}
   \renewcommand{\listingscaption}{代码}
 
   % When using minted, DO NOT redefine the listing environment

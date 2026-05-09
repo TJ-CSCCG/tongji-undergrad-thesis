@@ -109,7 +109,7 @@ Configure in `main.tex` via `\documentclass`:
   fullwidthstop=circle, % Period style: circle keeps "。" (default) / dot replaces with "．"
   fontset=fandol,       % Font set passed to ctex, default is fandol
   times=false,          % true: system Times New Roman; false: newtx (default)
-  minted=true,          % true: minted highlighting (needs Python+Pygments); false: listings
+  minted=false,         % true: minted highlighting (needs Python+Pygments); false: listings (default)
   biblatex=true,        % true: biblatex+biber (default); false: bibtex+gbt7714
 ]{tongjithesis}
 
@@ -130,10 +130,8 @@ Configure in `main.tex` via `\documentclass`:
 
 ### Code Highlighting
 
-1. **`minted`** (default): Python-based (Pygments) with richer syntax highlighting. Requires Python with `pygments` installed (`pip install pygments`).
-2. **`listings`**: Pure LaTeX, no external dependencies.
-
-Set `minted=false` in `main.tex` to switch. If you encounter `minted`-related errors, switch to `minted=false`.
+1. **`listings`** (default): Pure LaTeX, no external dependencies. Suitable for most use cases.
+2. **`minted`**: Python-based (Pygments) with richer syntax highlighting. Set `minted=true` in `main.tex` to enable. Requires Python 3.11–3.13 with `pygments` installed (`pip install pygments`). If you have multiple Python versions installed, use `\renewcommand{\MintedPython}{/path/to/python}` to specify the Python interpreter for minted.
 
 ## Contributing & Project History
 

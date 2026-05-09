@@ -225,7 +225,7 @@
 
 \subsection{代码高亮方式}
 
-本模板提供 \pkg{listings} 和 \pkg{minted} 两种代码高亮方案，可通过文档类选项 \texttt{minted=true}（默认）或 \texttt{minted=false} 切换。\pkg{listings} 是 \LaTeX{} 原生的代码显示包，始终可用，无需外部依赖；\pkg{minted} 基于 Python Pygments，提供更精确的语法解析和更丰富的高亮效果，但需要安装 Python 和 Pygments（\texttt{pip install pygments}），编译时需添加 \texttt{-shell-escape} 参数。若环境受限，可设置 \texttt{minted=false} 回退至 \pkg{listings}。
+本模板提供 \pkg{listings} 和 \pkg{minted} 两种代码高亮方案，可通过文档类选项 \texttt{minted=false}（默认）或 \texttt{minted=true} 切换。\pkg{listings} 是 \LaTeX{} 原生的代码显示包，始终可用，无需外部依赖；\pkg{minted} 基于 Python Pygments，提供更精确的语法解析和更丰富的高亮效果，但需要安装 Python 3.11–3.13 和 Pygments（\texttt{pip install pygments}），编译时需添加 \texttt{-shell-escape} 参数。若需要更好的高亮效果，可设置 \texttt{minted=true} 启用 \pkg{minted}。
 
 \subsection{代码块示例}
 
