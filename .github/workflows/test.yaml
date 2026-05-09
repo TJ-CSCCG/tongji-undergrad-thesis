@@ -4,9 +4,6 @@ on:
       - master
       - proposal
       - dev
-      - 'feat/**'
-      - 'fix/**'
-      - 'refactor/**'
     tags:
       - 'v*'
     paths-ignore:
