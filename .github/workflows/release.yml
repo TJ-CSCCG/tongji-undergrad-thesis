@@ -435,12 +435,11 @@ jobs:
         with:
           name: release-packages-v${{ env.PACKAGE_VERSION }}
 
-      - name: Download compiled PDFs from test workflow
+      - name: Download release PDFs from test workflow
         if: steps.check.outputs.exists == 'false'
         run: |
-          mkdir -p compiled-pdfs
+          mkdir -p release-pdfs
 
-          # Use the exact triggering test run ID when available, otherwise find latest
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
             WORKFLOW_RUN_ID="${{ github.event.workflow_run.id }}"
           else
@@ -454,20 +453,20 @@ jobs:
           fi
 
           if [ -z "$WORKFLOW_RUN_ID" ] || [ "$WORKFLOW_RUN_ID" = "null" ]; then
-            echo "No successful test run found. PDFs will not be included."
+            echo "No successful test run found. Release PDFs will not be included."
             echo "Tip: Run the test workflow first, then re-trigger this release."
             exit 0
           fi
 
-          echo "Downloading PDFs from test run: $WORKFLOW_RUN_ID"
+          echo "Downloading release PDFs from test run: $WORKFLOW_RUN_ID"
           if gh run download "$WORKFLOW_RUN_ID" \
               --repo "$GITHUB_REPOSITORY" \
-              --name all-compiled-documents \
-              --dir compiled-pdfs 2>/dev/null; then
+              --name release-pdfs \
+              --dir release-pdfs 2>/dev/null; then
             echo "Downloaded PDFs:"
-            ls -la compiled-pdfs/*.pdf
+            ls -la release-pdfs/*.pdf
           else
-            echo "Could not download compiled PDFs. Continuing without them."
+            echo "Could not download release PDFs. Continuing without them."
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -481,44 +480,66 @@ jobs:
           body: |
             ## TongjiThesis LaTeX Class v${{ env.PACKAGE_VERSION }}
 
-            [EDIT THIS SECTION: Add your release notes, changelog, and acknowledgments here]
+            [EDIT: 编写本版本的更新日志 | Write the changelog for this release]
 
-            This release contains multiple download options for the Tongji University undergraduate thesis template.
+            ### 新增 | New Features
 
-            ### Download Options
+            -
 
-            **CTAN Package** (for LaTeX package distribution):
+            ### 修正 | Fixes
+
+            -
+
+            ### 规范对齐 | Spec Alignment
+
+            -
+
+            ### 文档与维护 | Docs & Maintenance
+
+            -
+
+            ---
+
+            源文件下载见下方 Assets，或直接通过 GitHub 提供的 **Source code** (zip/tar.gz) 获取。| Source files available below, or use GitHub's auto-generated **Source code** archives.
+
+            ### 下载说明 | Download Options
+
+            **预编译示例 | Compiled Examples**:
+            - `TongjiThesis-v${{ env.PACKAGE_VERSION }}-science.pdf` — 理工科 (science/engineering)
+            - `TongjiThesis-v${{ env.PACKAGE_VERSION }}-humanities.pdf` — 文科 (humanities)
+
+            **CTAN 包 | CTAN Package** (LaTeX 包管理器分发 | for package distribution):
             - `tongjithesis-ctan-v${{ env.PACKAGE_VERSION }}.tar.gz`
             - `tongjithesis-ctan-v${{ env.PACKAGE_VERSION }}.zip`
 
-            **Complete Source Code** (for end users):
-            - `tongjithesis-source-v${{ env.PACKAGE_VERSION }}.tar.gz`
-            - `tongjithesis-source-v${{ env.PACKAGE_VERSION }}.zip`
+            ### 快速开始 | Quick Start
 
-            **Compiled Examples** (preview final output):
-            - PDFs compiled on Linux / macOS / Windows with XeLaTeX and LuaLaTeX
+            ```shell
+            git clone https://github.com/TJ-CSCCG/TongjiThesis.git
+            cd TongjiThesis && make
+            ```
 
-            ### Quick Start
+            或通过 [Overleaf 模板](https://www.overleaf.com/latex/templates/tongjithesis-tongji-university-thesis-template/tfvdvyggqybn) 零配置使用。| Or use the [Overleaf template](https://www.overleaf.com/latex/templates/tongjithesis-tongji-university-thesis-template/tfvdvyggqybn) for zero-config setup.
 
-            Download the source archive, extract, edit `main.tex`, and compile with XeLaTeX or LuaLaTeX.
+            ### 系统要求 | Requirements
 
-            ### Requirements
-            - XeLaTeX or LuaLaTeX engine
-            - Complete TeX distribution (TeX Live 2026+ recommended)
-            - Python with Pygments (optional, for minted code highlighting)
+            - XeLaTeX 或 LuaLaTeX 引擎 | XeLaTeX or LuaLaTeX engine
+            - TeX Live 2026+ 推荐 | TeX Live 2026+ recommended
+            - Python + Pygments（可选，用于 minted）| Python with Pygments (optional, for minted)
 
-            ### Links
-            - [GitHub Repository](https://github.com/TJ-CSCCG/TongjiThesis)
-            - [Overleaf Template](https://www.overleaf.com/latex/templates/tongji-university-undergraduate-thesis-template/tfvdvyggqybn)
+            ### 链接 | Links
+
+            - [GitHub](https://github.com/TJ-CSCCG/TongjiThesis)
+            - [Overleaf](https://www.overleaf.com/latex/templates/tongjithesis-tongji-university-thesis-template/tfvdvyggqybn)
+            - [CJK 字体仓库](https://github.com/TJ-CSCCG/cjk-fonts-for-ctex)
 
             ---
-            **Note**: This is a draft release. Edit the sections above and publish when ready.
+            **注意**: 此发布为草稿，请编辑上述各部分后再发布。| **Note**: This is a draft release. Edit the sections above before publishing.
           files: |
             ctan/tongjithesis-ctan-v${{ env.PACKAGE_VERSION }}.tar.gz
             ctan/tongjithesis-ctan-v${{ env.PACKAGE_VERSION }}.zip
-            tongjithesis-source-v${{ env.PACKAGE_VERSION }}.tar.gz
-            tongjithesis-source-v${{ env.PACKAGE_VERSION }}.zip
-            compiled-pdfs/tongjithesis-*.pdf
+            release-pdfs/TongjiThesis-v${{ env.PACKAGE_VERSION }}-science.pdf
+            release-pdfs/TongjiThesis-v${{ env.PACKAGE_VERSION }}-humanities.pdf
           draft: true
           prerelease: false
           fail_on_unmatched_files: false

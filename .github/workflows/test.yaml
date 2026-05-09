@@ -186,8 +186,8 @@ jobs:
             pygments: true
           - variant: bibtex
             pygments: false
-          - variant: minimal
-            pygments: false
+          - variant: humanities-minted
+            pygments: true
           - variant: twoside
             pygments: false
           - variant: humanities
@@ -227,10 +227,11 @@ jobs:
         run: |
           sed -i 's/biblatex=true/biblatex=false/' main.tex
 
-      - name: Configure minimal variant (no biblatex)
-        if: matrix.variant == 'minimal'
+      - name: Configure humanities-minted variant
+        if: matrix.variant == 'humanities-minted'
         run: |
-          sed -i 's/biblatex=true/biblatex=false/' main.tex
+          sed -i 's/field=science/field=humanities/' main.tex
+          sed -i 's/minted=false/minted=true/' main.tex
 
       - name: Configure twoside variant
         if: matrix.variant == 'twoside'
@@ -248,14 +249,17 @@ jobs:
           if [ "${{ matrix.variant }}" = "minted-true" ]; then
             grep -q 'minted=true' main.tex || { echo "ERROR: minted=true not set"; exit 1; }
           fi
-          if [ "${{ matrix.variant }}" = "bibtex" ] || [ "${{ matrix.variant }}" = "minimal" ]; then
+          if [ "${{ matrix.variant }}" = "bibtex" ]; then
             grep -q 'biblatex=false' main.tex || { echo "ERROR: biblatex=false not set"; exit 1; }
           fi
           if [ "${{ matrix.variant }}" = "twoside" ]; then
             grep -q 'twoside' main.tex || { echo "ERROR: twoside not set"; exit 1; }
           fi
-          if [ "${{ matrix.variant }}" = "humanities" ]; then
+          if [ "${{ matrix.variant }}" = "humanities" ] || [ "${{ matrix.variant }}" = "humanities-minted" ]; then
             grep -q 'field=humanities' main.tex || { echo "ERROR: field=humanities not set"; exit 1; }
+          fi
+          if [ "${{ matrix.variant }}" = "humanities-minted" ]; then
+            grep -q 'minted=true' main.tex || { echo "ERROR: minted=true not set"; exit 1; }
           fi
 
       - name: Compile LaTeX document
@@ -318,4 +322,53 @@ jobs:
         with:
           name: all-compiled-documents
           path: "*.pdf"
+          retention-days: 90
+
+  # Build release PDFs on version tags (science + humanities, Linux xelatex-only)
+  build-release-pdfs:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - field: science
+            sed_science: ''
+          - field: humanities
+            sed_science: 's/field=science/field=humanities/'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install TeX Live
+        uses: tex-live/setup-texlive-action@v4
+        with:
+          version: 2026
+          packages: ${{ env.TL_PACKAGES }}
+        env:
+          SETUP_TEXLIVE_ACTION_NO_CACHE_ON_FAILURE: 1
+
+      - name: Configure field
+        if: matrix.field == 'humanities'
+        run: |
+          sed -i '${{ matrix.sed_science }}' main.tex
+
+      - name: Compile LaTeX document
+        run: |
+          make ENGINE=-xelatex all
+
+      - name: Rename PDF
+        if: success()
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          mv main.pdf "TongjiThesis-v${VERSION}-${{ matrix.field }}.pdf"
+
+      - name: Upload PDF
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-pdfs
+          path: TongjiThesis-v*.pdf
           retention-days: 90
