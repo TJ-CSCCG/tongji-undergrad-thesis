@@ -6,7 +6,7 @@
 
 ## 检查清单 | Checklist
 
-- [ ] 已通读[贡献指南](CONTRIBUTING.md)。
+- [ ] 已通读[贡献指南](https://github.com/TJ-CSCCG/TongjiThesis/blob/master/CONTRIBUTING.md)。
 - [ ] 如涉及模板功能变更，已编写注释并更新对应文档。
 - [ ] 如涉及模板功能变更，已尽可能在各平台上进行测试。
 
