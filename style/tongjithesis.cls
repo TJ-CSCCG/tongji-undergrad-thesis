@@ -992,17 +992,36 @@
 
 \newlength{\covertextwidth}
 \newlength{\covermaxwidth}
+\newlength{\coverparwidth}
 
 \newcommand{\ulinecentered}[1]{
   \setlength{\covertextwidth}{\widthof{#1}}
-  \setlength{\covermaxwidth}{20em} % Set the maximum width you allow
-  \ifthenelse{\lengthtest{\covertextwidth > \covermaxwidth}}{
-    % Calculate scale factor and scale down text if too wide
-    \pgfmathsetmacro{\scalefactor}{\covermaxwidth/\covertextwidth}
-    \uline{\makebox[\covermaxwidth][c]{\scalebox{\scalefactor}[1]{#1}}}
-  }{
-    \uline{\makebox[\covermaxwidth][c]{#1}} % Use normal text if within the limit
-  }
+  \setlength{\covermaxwidth}{20em}
+  \ifdim\covertextwidth > \covermaxwidth
+    \ifdim\covertextwidth > 1.95\covermaxwidth
+      \setlength{\coverparwidth}{0.53\covertextwidth}
+      \pgfmathsetmacro{\coverscale}{\covermaxwidth / \coverparwidth}
+      \uline{%
+        \scalebox{\coverscale}[1]{%
+          \parbox[b]{\coverparwidth}{%
+            \centering
+            \renewcommand{\baselinestretch}{0.8}\selectfont
+            #1%
+          }%
+        }%
+      }
+    \else
+      \uline{%
+        \parbox[b]{\covermaxwidth}{%
+          \centering
+          \renewcommand{\baselinestretch}{0.8}\selectfont
+          #1%
+        }%
+      }
+    \fi
+  \else
+    \uline{\makebox[\covermaxwidth][c]{#1}}
+  \fi
 }
 
 % 论文基本信息配置
