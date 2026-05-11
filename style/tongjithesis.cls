@@ -811,8 +811,8 @@
 % ==========================================
 % Math and Theorem Environments
 % ==========================================
-
 \theoremstyle{definition}
+
 \newtheorem{thm}{定理\hspace{0.05pt}}[chapter]
 \newtheorem{cor}{推论\hspace{0.05pt}}[chapter]
 \newtheorem{lem}{引理\hspace{0.05pt}}[chapter]
