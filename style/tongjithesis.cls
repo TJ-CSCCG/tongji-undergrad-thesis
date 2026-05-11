@@ -1169,7 +1169,7 @@
   \end{spacing}
 
   \vspace{1em}%
-  \noindent{\songti\tjfontbody{\textbf{关键词：}#2}\par}
+  \songti\tjfontbody{\noindent\textbf{关键词：}#2}\par
 }
 
 % 设置英文摘要页
@@ -1194,8 +1194,8 @@
     \par
   \end{spacing}
 
-  \vspace{1em}
-  \noindent{\tjfontbody\textbf{Key words: }#2\par}
+  \vspace{1em}%
+  \tjfontbody{\noindent\textbf{Key words: }#2}\par
 }
 
 % ==========================================
