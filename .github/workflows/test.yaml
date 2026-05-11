@@ -78,6 +78,7 @@ env:
     helvetic
     hologo
     ifplatform
+    ifoddpage
     lastpage
     latexmk
     lineno
@@ -114,6 +115,7 @@ env:
     xcolor
     xecjk
     xpatch
+    xspace
     xstring
     zhnumber
 
