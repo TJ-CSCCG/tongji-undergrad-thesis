@@ -547,6 +547,15 @@
   \counterwithin{algorithm}{section}%
   \counterwithin{listing}{section}%
   \counterwithin{lstlisting}{section}%
+  \counterwithin{thm}{section}%
+  \counterwithin{cor}{section}%
+  \counterwithin{lem}{section}%
+  \counterwithin{prop}{section}%
+  \counterwithin{conj}{section}%
+  \counterwithin{assume}{section}%
+  \counterwithin{dfn}{section}%
+  \counterwithin{exmp}{section}%
+  \counterwithin{rem}{section}%
   % 理工科：「A. 节名」；文科：「（A） 节名」（括号来自正文 section/name 延续，无点号）
   \iftongjithesis@humanities
     \ctexset{section/number={\thesection},section/aftername={\hspace{0.5em}}}%
