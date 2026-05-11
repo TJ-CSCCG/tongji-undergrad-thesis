@@ -1168,10 +1168,9 @@
     \par
   \end{spacing}
 
-  \vskip 5mm
-  \noindent{\songti\tjfontbody{%
-      \textbf{关键词：}#2
-    }}~\\
+  \songti\tjfontbody
+  \vspace{\baselineskip}
+  {\noindent\textbf{关键词：}#2}\par
 }
 
 % 设置英文摘要页
@@ -1196,11 +1195,9 @@
     \par
   \end{spacing}
 
-  \vspace{1em}
-  \noindent{\tjfontbody
-    \textbf{Key words: }#2
-  }
-  \par
+  \tjfontbody
+  \vspace{\baselineskip}
+  {\noindent\textbf{Key words: }#2}\par
 }
 
 % ==========================================
