@@ -203,23 +203,41 @@
 
 \section{算法}
 
-算法环境可由 \pkg{algorithm} + \pkg{algpseudocode}（本模板已加载）或较新的 \pkg{algorithm2e} 宏包实现。
-\cref{algo:algorithm} 是一个使用 \pkg{algpseudocode} 的示例。
+本模板默认使用 \pkg{algpseudocode} 排版算法，也可通过文档类选项 \texttt{algo=algorithm2e} 切换为 \pkg{algorithm2e}。
 
-\begin{algorithm}
-  \caption{计算斐波那契数列}\label{algo:algorithm}
-  \begin{algorithmic}[1]
-    \Require $n \geq 0$
-    \Ensure $fib(n)$
-    \Function{Fibonacci}{$n$}
-    \If{$n \leq 1$}
-    \State \Return $n$
-    \Else
-    \State \Return \Call{Fibonacci}{$n-1$} + \Call{Fibonacci}{$n-2$}
-    \EndIf
-    \EndFunction
-  \end{algorithmic}
-\end{algorithm}
+\iftjalgorithmtwoe
+  \cref{algo:algorithm} 是一个使用 \pkg{algorithm2e} 的示例。
+
+  \SetKw{Return}{return}
+  \begin{algorithm}[H]
+    \caption{计算斐波那契数列}\label{algo:algorithm}
+    \SetKwFunction{Fib}{Fibonacci}
+    \KwIn{$n \geq 0$}
+    \KwOut{$fib(n)$}
+    \Fib{$n$}\;
+    \If{$n \leq 1$}{\Return $n$\;}
+    \Return \Fib{$n-1$} + \Fib{$n-2$}\;
+  \end{algorithm}
+\else
+  \cref{algo:algorithm} 是一个使用 \pkg{algpseudocode} 的示例。
+
+  \begin{algorithm}
+    \caption{计算斐波那契数列}\label{algo:algorithm}
+    \begin{algorithmic}[1]
+      \Require $n \geq 0$
+      \Ensure $fib(n)$
+      \Function{Fibonacci}{$n$}
+      \If{$n \leq 1$}
+      \State \Return $n$
+      \Else
+      \State \Return \Call{Fibonacci}{$n-1$} + \Call{Fibonacci}{$n-2$}
+      \EndIf
+      \EndFunction
+    \end{algorithmic}
+  \end{algorithm}
+\fi
+
+无论使用 \pkg{algpseudocode} 还是 \pkg{algorithm2e}，都可以通过相应的命令来定义函数、条件语句和循环结构，以便于编写清晰易懂的算法描述。
 
 \section{代码}
 

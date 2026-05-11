@@ -42,6 +42,7 @@ env:
   # Packages needed for the thesis compilation
   TL_PACKAGES: |
     adjustbox
+    algorithm2e
     algorithmicx
     algorithms
     alphalph
@@ -189,6 +190,8 @@ jobs:
             pygments: false
           - variant: humanities
             pygments: false
+          - variant: algo-algorithm2e
+            pygments: false
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -240,6 +243,11 @@ jobs:
         run: |
           sed -i 's/field=science/field=humanities/' main.tex
 
+      - name: Configure algo=algorithm2e variant
+        if: matrix.variant == 'algo-algorithm2e'
+        run: |
+          sed -i 's/algo=algpseudocode/algo=algorithm2e/' main.tex
+
       - name: Verify variant configuration
         run: |
           git diff main.tex
@@ -257,6 +265,9 @@ jobs:
           fi
           if [ "${{ matrix.variant }}" = "humanities-minted" ]; then
             grep -q 'minted=true' main.tex || { echo "ERROR: minted=true not set"; exit 1; }
+          fi
+          if [ "${{ matrix.variant }}" = "algo-algorithm2e" ]; then
+            grep -q 'algo=algorithm2e' main.tex || { echo "ERROR: algo=algorithm2e not set"; exit 1; }
           fi
 
       - name: Compile LaTeX document

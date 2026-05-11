@@ -49,6 +49,9 @@
 % 经管类属社科：编号要求依理工，撰写依理工模版。26 届为过渡期，可选 science 或
 % humanities；自 27 届起统一使用 science。
 \DeclareStringOption[science]{field}
+% Define algo option: algpseudocode (default, algorithm + algorithmicx + algpseudocode),
+% algorithm2e (standalone algorithm2e package)
+\DeclareStringOption[algpseudocode]{algo}
 
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessKeyvalOptions*
@@ -70,6 +73,11 @@
     \ClassWarning{tongjithesis}{field=\tongjithesis@field\space is unknown. Falling back to science format}%
   }%
 }
+\newif\iftongjithesis@algorithmtwoe
+\expandafter\ifstrequal\expandafter{\tongjithesis@algo}{algorithm2e}{%
+  \tongjithesis@algorithmtwoetrue
+}{}{}
+\let\iftjalgorithmtwoe\iftongjithesis@algorithmtwoe
 
 % ==========================================
 % Class Loading
@@ -187,9 +195,15 @@
 \captionsetup[sub]{font={tj@caption,tj@songti}}
 
 % Algorithms and code listings
-\RequirePackage{algorithm}
-\RequirePackage{algorithmicx}
-\RequirePackage{algpseudocode}
+\iftongjithesis@algorithmtwoe
+  \RequirePackage[ruled,linesnumbered,algochapter]{algorithm2e}
+  \let\c@algorithm\c@algocf
+  \renewcommand{\thealgocf}{\thealgorithm}
+\else
+  \RequirePackage{algorithm}
+  \RequirePackage{algorithmicx}
+  \RequirePackage{algpseudocode}
+\fi
 
 % Always load listings package first (mandatory)
 \RequirePackage{listings}
@@ -823,26 +837,36 @@
 % ==========================================
 
 % 伪代码
-\renewcommand{\algorithmicrequire}{\textbf{输入: }}
-\renewcommand{\algorithmicensure}{\textbf{输出: }}
-\renewenvironment{algorithm}
-{
-  \vskip 20pt
-  \refstepcounter{algorithm}% New algorithm
-  \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
-  \renewcommand{\caption}[2][\relax]{% 使用中文 caption
-    {\raggedright\textbf{算法~\thealgorithm} ##2\par}%
-    \ifx\relax##1\relax % #1 is \relax
-      \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
-    \else % #1 is not \relax
-      \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
-    \fi
-    \kern2pt\hrule\kern2pt
-  }
-}{
-  \kern2pt\hrule\relax
-  \vskip 20pt
-}% \@fs@post for \@fs@ruled
+\iftongjithesis@algorithmtwoe
+  \SetAlgorithmName{算法}{算法}{算法列表}
+  \SetKwInput{KwIn}{输入}
+  \SetKwInput{KwOut}{输出}
+  \gdef\algocf@Vspace{\vskip\baselineskip\relax}
+  \AtBeginEnvironment{algorithm}{\linespread{1.0}\selectfont}
+  \AfterEndEnvironment{algorithm}{\vspace{\baselineskip}}
+\else
+  \renewcommand{\algorithmicrequire}{\textbf{输入: }}
+  \renewcommand{\algorithmicensure}{\textbf{输出: }}
+  \AtBeginEnvironment{algorithmic}{\linespread{1.0}\selectfont}
+  \renewenvironment{algorithm}
+  {
+    \vskip\baselineskip
+    \refstepcounter{algorithm}% New algorithm
+    \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+    \renewcommand{\caption}[2][\relax]{% 使用中文 caption
+      {\raggedright\textbf{算法~\thealgorithm} ##2\par}%
+      \ifx\relax##1\relax % #1 is \relax
+        \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+      \else % #1 is not \relax
+        \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+      \fi
+      \kern2pt\hrule\kern2pt
+    }
+  }{
+    \kern2pt\hrule\relax
+    \vskip\baselineskip
+  }% \@fs@post for \@fs@ruled
+\fi
 
 % ==========================================
 % Cross-Referencing Commands
@@ -905,6 +929,9 @@
 \crefformat{algorithm}{#2算法~#1#3}
 \crefmultiformat{algorithm}{#2算法~#1#3}{和#2算法~#1#3}{、#2算法~#1#3}{和#2算法~#1#3}
 \crefrangeformat{algorithm}{#3算法~#1#4~至#5算法~#2#6}
+\crefformat{algocf}{#2算法~#1#3}
+\crefmultiformat{algocf}{#2算法~#1#3}{和#2算法~#1#3}{、#2算法~#1#3}{和#2算法~#1#3}
+\crefrangeformat{algocf}{#3算法~#1#4~至#5算法~#2#6}
 \crefformat{FancyVerbLine}{#2第~#1~行#3}
 \crefmultiformat{FancyVerbLine}{#2第~#1~行#3}{和#2第~#1~行#3}{、#2第~#1~行#3}{和#2第~#1~行#3}
 \crefrangeformat{FancyVerbLine}{#3第~#1~行#4至#5第~#2~行#6}
