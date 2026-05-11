@@ -96,6 +96,7 @@ env:
     pict2e
     picture
     realscripts
+    relsize
     rsfs
     setspace
     siunitx
