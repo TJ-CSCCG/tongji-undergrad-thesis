@@ -170,6 +170,9 @@
 
 \RequirePackage{upgreek}
 
+% Circled number rendering (Unicode 0–50 + circledsteps 51+)
+\InputIfFileExists{tongji-circled.def}{}{\ClassError{tongjithesis}{Missing tongji-circled.def}{}}
+
 % Tables and figures
 \RequirePackage{float}
 \RequirePackage{multirow}
@@ -614,7 +617,7 @@
 
 \setlist[enumerate]{nosep,labelsep=0pt}
 \setlist[enumerate,1]{label=（\arabic*）,left=2em,nosep,labelsep=0pt,wide=\parindent}
-\setlist[enumerate,2]{label=\Circled{\arabic*},nosep,labelsep=0pt,labelwidth=1em,listparindent=0pt}
+\setlist[enumerate,2]{label=\TJCircled{\tj@cval{enumii}},nosep,labelsep=0pt,labelwidth=1em,listparindent=0pt}
 
 \setlist[itemize]{nosep}
 \setlist[itemize,1]{wide=\parindent}
@@ -758,7 +761,7 @@
     subsubsection/name     = {（,）},
     subsubsection/number   = {\arabic{subsubsection}},
     subsubsection/aftername = {\hspace{0.5em}},
-    paragraph/number    = {\Circled{\arabic{paragraph}}},
+    paragraph/number    = {\TJCircled{\value{paragraph}}},
     paragraph/aftername = {\hspace{0.5em}},
   }
   % TOC 目录列宽与分隔符
@@ -794,7 +797,7 @@
 \fi
 
 % 脚注编号使用①②③… (官方模板规范)
-\renewcommand{\thefootnote}{\Circled{\arabic{footnote}}}
+\renewcommand{\thefootnote}{\TJCircled{\value{footnote}}}
 
 
 % ==========================================

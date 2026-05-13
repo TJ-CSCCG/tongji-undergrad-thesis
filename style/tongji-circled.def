@@ -1,0 +1,66 @@
+%%
+%% tongji-circled.def — Circled number rendering for TongjiThesis
+%%
+%% Strategy:
+%%   0–50:  Unicode circled glyphs via a dedicated font (immune to package conflicts)
+%%   51+:   circledsteps fallback (extremely rare in practice)
+%%
+%% Copyright (C) TJ-CSCCG
+%% This work may be distributed under the LPPL 1.3c or later.
+%%
+\ProvidesFile{tongji-circled.def}[2026/05/13 v1.5.0 Circled number rendering (TongjiThesis)]
+
+% Protected helper: expands to a plain counter value at render time,
+% but is NOT expanded during enumitem's label normalization
+% (which uses \protected@xdef).  Needed because \arabic and \value
+% both fail inside \ifnum in enumitem labels: \arabic is robust and
+% carries a \protect prefix; \value is redefined by enumitem.
+\protected\def\tj@cval#1{\number\csname c@#1\endcsname}
+
+% ==========================================
+% Dedicated font for circled number glyphs
+% ==========================================
+% HaranoAjiMincho is bundled with TeX Live and has full coverage of
+% ⓪ (U+24EA), ①–⑳ (U+2460–U+2473), ㉑–㉟ (U+3251–U+325F), ㊱–㊿ (U+32B1–U+32BF).
+% Using a dedicated font decouples circled numbers from the user's CJK font,
+% avoiding "Missing character" tofu on platforms whose system fonts lack
+% these Unicode blocks (e.g., Windows SimSun only has ①–⑩).
+%
+% If haranoaji is not installed, install it via:
+%   tlmgr install haranoaji
+\newfontfamily\tongji@circledfont{HaranoAjiMincho}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+]
+% Auxiliary: switch BOTH main font and CJK font to HaranoAjiMincho.
+% Using \CJKfontspec ensures Han-script circled numbers (U+3251–U+32BF)
+% go through this font, not the user's CJK font.
+\newcommand{\tongji@circled@cs}[1]{%
+  {\tongji@circledfont\CJKfontspec[Extension=.otf,UprightFont=*-Regular,BoldFont=*-Bold]{HaranoAjiMincho}#1}%
+}
+
+% ==========================================
+% Unified circled number macro
+%  - 0–50:  Unicode glyphs via HaranoAjiMincho (no package dependencies)
+%  - 51+:   \Circled from circledsteps (keeps numbering unlimited)
+%
+% The argument must be a fully-expandable integer.
+% For footnote/paragraph counters use \value{<counter>}.
+% For enumitem labels use \tj@cval{<counter>} (bypasses \protected@xdef).
+% ==========================================
+\DeclareRobustCommand{\TJCircled}[1]{%
+  \ifnum#1=0
+    \tongji@circled@cs{\symbol{"24EA}}%
+  \else\ifnum#1<21
+    \tongji@circled@cs{\symbol{\numexpr"2460-1+#1\relax}}%
+  \else\ifnum#1<36
+    \tongji@circled@cs{\symbol{\numexpr"3251-21+#1\relax}}%
+  \else\ifnum#1<51
+    \tongji@circled@cs{\symbol{\numexpr"32B1-36+#1\relax}}%
+  \else
+    \Circled{#1}%
+  \fi\fi\fi\fi
+}
+
+\endinput
