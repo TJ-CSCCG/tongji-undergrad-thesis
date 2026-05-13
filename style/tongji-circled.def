@@ -2,31 +2,25 @@
 %% tongji-circled.def — Circled number rendering for TongjiThesis
 %%
 %% Strategy:
-%%   0–50:  Unicode circled glyphs via a dedicated font (immune to package conflicts)
-%%   51+:   TikZ circle (always round, always centered, handles arbitrary digit count)
+%%   0–50:  Unicode circled glyphs via HaranoAjiMincho (no package dependencies)
+%%   51+:   TikZ circle (always round, centered, handles arbitrary digit count)
 %%
 %% Copyright (C) TJ-CSCCG
 %% This work may be distributed under the LPPL 1.3c or later.
 %%
 \ProvidesFile{tongji-circled.def}[2026/05/13 v1.4.1 Circled number rendering (TongjiThesis)]
 
-% Protected helper: expands to a plain counter value at render time,
-% but is NOT expanded during enumitem's label normalization
-% (which uses \protected@xdef).  Needed because \arabic and \value
-% both fail inside \ifnum in enumitem labels: \arabic is robust and
-% carries a \protect prefix; \value is redefined by enumitem.
+% ==========================================
+% Counter-value helper for enumitem labels
+% ==========================================
+% Protected against expansion during enumitem's label normalization
+% (which uses \protected@xdef).  \arabic and \value both fail inside
+% \ifnum in this context: \arabic is robust and carries a \protect
+% prefix; \value is redefined by enumitem.
 \protected\def\tj@cval#1{\number\csname c@#1\endcsname}
 
 % ==========================================
-% Unified circled number macro
-%  - 0–50:  Unicode glyphs via HaranoAjiMincho (no package dependencies)
-%  - 51+:   TikZ circle with \resizebox scaling (always round, always centered)
-%
-% The argument must be a fully-expandable integer.
-% For footnote/paragraph counters use \the\c@<counter>.
-% For enumitem labels use \tj@cval{<counter>} (bypasses \protected@xdef).
-% Note: \value{<counter>} also works in normal contexts but may fail inside
-% \DeclareRobustCommand/\NewDocumentCommand argument chains in footnotes.
+% Font setup
 % ==========================================
 % HaranoAjiMincho is bundled with TeX Live and has full coverage of
 % ⓪ (U+24EA), ①–⑳ (U+2460–U+2473), ㉑–㉟ (U+3251–U+325F), ㊱–㊿ (U+32B1–U+32BF).
@@ -36,14 +30,23 @@
 %
 % If haranoaji is not installed, install it via:
 %   tlmgr install haranoaji
+%
+% The font is accessed by filename (HaranoAjiMincho-Regular.otf) rather than
+% family name, because fontspec's \IfFontExistsTF cannot find TeX Live OTF
+% fonts by family name alone.
 \newfontfamily\tongji@circledfont{HaranoAjiMincho}[
   Extension   = .otf,
   UprightFont = *-Regular,
   BoldFont    = *-Bold,
 ]
-% Auxiliary: switch BOTH main font and CJK font to HaranoAjiMincho.
-% Using \CJKfontspec ensures Han-script circled numbers (U+3251–U+32BF)
-% go through this font, not the user's CJK font.
+
+% ==========================================
+% Font-switching wrapper
+% ==========================================
+% Applies BOTH the Latin/Common-script font (\tongji@circledfont) and the
+% CJK/Han-script font (\CJKfontspec).  The CJK switch is necessary because
+% circled numbers ㉑–㊿ (U+3251–U+32BF) are in the Han script block and
+% would otherwise be rendered by the user's CJK font.
 \newcommand{\tongji@circled@cs}[1]{%
   {\tongji@circledfont\CJKfontspec[Extension=.otf,UprightFont=*-Regular,BoldFont=*-Bold]{HaranoAjiMincho}#1}%
 }
@@ -53,34 +56,44 @@
 % ==========================================
 % Uses TikZ (already loaded by the class) to draw a uniform circle with
 % proportionally scaled text.  Unlike circledsteps, this guarantees:
-%   - A perfect circle regardless of digit count
-%   - Proper vertical/horizontal centering via node anchors
-%   - Correct baseline alignment in both inline text and \textsuperscript
-%   - Dynamic scaling: narrower text per digit count (2/3/4+ digits)
+%   - A perfect circle regardless of digit count  (shape=circle)
+%   - Vertical centering on text baseline         (baseline=char.south)
+%   - Dynamic scaling by digit count              (2/3/4+ digits)
 % The font is set to \tongji@circledfont (HaranoAjiMincho) for visual
 % consistency with the 0–50 Unicode glyphs.
 \newcommand{\tongji@circled@tikz}[1]{%
   \ifnum#1<100
-    \def\tj@scale{0.60}%
+    \def\tj@scale{0.65}%
   \else\ifnum#1<1000
     \def\tj@scale{0.50}%
   \else
     \def\tj@scale{0.40}%
   \fi\fi
   {\tongji@circledfont
-   \tikz[baseline=(char.south)]{
+   \tikz[baseline={([yshift=0.1em]char.south)}]{
     \node[
       shape=circle,
       draw,
       inner sep=0.2pt,
-      minimum size=0.95em,
+      minimum size=0.93em,
     ] (char) {\scalebox{\tj@scale}{#1}};
    }%
   }%
 }
+
+% ==========================================
+% Unified circled number macro
+%  - 0–50:  Unicode glyphs via HaranoAjiMincho (font-based, no dependencies)
+%  - 51+:   TikZ circle with \scalebox scaling (always round, always centered)
+%
+% The argument must be a fully-expandable integer.
+% For footnote/paragraph counters use \the\c@<counter>.
+% For enumitem labels use \tj@cval{<counter>} (bypasses \protected@xdef).
+% Note: \value{<counter>} also works in normal contexts but may fail inside
+% \DeclareRobustCommand/\NewDocumentCommand argument chains in footnotes.
 % ==========================================
 \protected\def\TJCircled#1{%
-  \ifnum#1=0
+  \ifnum#1<1
     \tongji@circled@cs{\symbol{"24EA}}%
   \else\ifnum#1<21
     \tongji@circled@cs{\symbol{\numexpr"2460-1+#1\relax}}%
