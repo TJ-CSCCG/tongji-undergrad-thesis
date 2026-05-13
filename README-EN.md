@@ -111,6 +111,7 @@ Configure in `main.tex` via `\documentclass`:
   times=false,          % true: system Times New Roman; false: newtx (default)
   minted=false,         % true: minted highlighting (needs Python+Pygments); false: listings (default)
   biblatex=true,        % true: biblatex+biber (default); false: bibtex+gbt7714
+  algo=algpseudocode,   % algpseudocode (default): algorithm+algorithmicx; algorithm2e: standalone algorithm2e package
 ]{tongjithesis}
 
 \tjbibresource{bib/note.bib}  % Specify bib files (supports multiple, comma-separated)
@@ -128,10 +129,17 @@ Configure in `main.tex` via `\documentclass`:
 > [!NOTE]
 > Run `fc-cache -fv` after installing new fonts to refresh the font cache.
 
-### Code Highlighting
+### Code Highlighting & Algorithm Typesetting
+
+#### Code Highlighting
 
 1. **`listings`** (default): Pure LaTeX, no external dependencies. Suitable for most use cases.
 2. **`minted`**: Python-based (Pygments) with richer syntax highlighting. Set `minted=true` in `main.tex` to enable. Requires Python 3.11–3.13 with `pygments` installed (`pip install pygments`). If you have multiple Python versions installed, use `\renewcommand{\MintedPython}{/path/to/python}` to specify the Python interpreter for minted.
+
+#### Algorithm Typesetting
+
+1. **`algpseudocode`** (default): Uses `algorithm` + `algorithmicx` + `algpseudocode` packages with `\State`, `\If`, `\For` commands.
+2. **`algorithm2e`**: Standalone `algorithm2e` package with a different syntax. Set `algo=algorithm2e` in `main.tex` to switch.
 
 ## Contributing & Project History
 
