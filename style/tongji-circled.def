@@ -18,6 +18,9 @@
 % \ifnum in this context: \arabic is robust and carries a \protect
 % prefix; \value is redefined by enumitem.
 \protected\def\tj@cval#1{\number\csname c@#1\endcsname}
+% Counter-to-letter helper — bypasses \alph's \protect prefix, same
+% reason as \tj@cval.  \@alph is the unprotected LaTeX internal.
+\protected\def\tj@cval@letter#1{\expandafter\@alph\csname c@#1\endcsname}
 
 % ==========================================
 % Font setup
@@ -104,6 +107,79 @@
   \else
     \tongji@circled@tikz{#1}%
   \fi\fi\fi\fi
+}
+
+% ==========================================
+% Circled letter rendering
+% ==========================================
+% \TJCircledLetter{A}              — literal single letter → Ⓐ (Unicode)
+% \TJCircledCounterLetter{enumi}   — counter 1–26 → Ⓐ–Ⓩ, >26 → TikZ
+%
+% Multi-character strings from alphalph (e.g. "aa", "AA") use TikZ.
+% The same HaranoAjiMincho font and TikZ parameters as \TJCircled.
+
+% Letter-specific TikZ fallback — same visual parameters as \tongji@circled@tikz,
+% but uses width-based scaling instead of digit-count.
+\newcommand{\tongji@circled@letter@tikz}[1]{%
+  \setbox0=\hbox{\tongji@circledfont#1}%
+  \ifdim\wd0<1.2em
+    \def\tj@scale{0.60}%
+  \else\ifdim\wd0<2em
+    \def\tj@scale{0.50}%
+  \else
+    \def\tj@scale{0.40}%
+  \fi\fi
+  {\tongji@circledfont
+   \tikz[baseline={([yshift=0.1em]char.south)}]{
+    \node[
+      shape=circle,
+      draw,
+      inner sep=0.2pt,
+      minimum size=0.93em,
+    ] (char) {\scalebox{\tj@scale}{#1}};
+   }%
+  }%
+}
+
+% Internal: split argument into first character (#1) and rest (#2).
+% Single char → Unicode mapping.  Multi-char → TikZ.
+% Uses TeX's delimited-argument pattern, which always works regardless
+% of whether #1 is a literal or a \protected macro like \tj@cval@letter.
+\def\tongji@circled@letter@split#1#2\@nil{%
+  \ifx\@empty#2\@empty
+    % Single character → backtick works (it's a character token, not a macro)
+    \ifnum`#1>96 \ifnum`#1<123
+      \symbol{\numexpr"24D0-97+`#1\relax}%    a–z → ⓐ–ⓩ (U+24D0–U+24E9)
+    \fi\fi
+    \ifnum`#1>64 \ifnum`#1<91
+      \symbol{\numexpr"24B6-65+`#1\relax}%    A–Z → Ⓐ–Ⓩ (U+24B6–U+24CF)
+    \fi\fi
+  \else
+    % Multi-character (e.g. "aa" from alphalph) → TikZ
+    \tongji@circled@letter@tikz{#1#2}%
+  \fi
+}
+
+% Public: circled letter — auto-detects counter name vs literal.
+%   \TJCircledLetter{A}        → Ⓐ (literal, Unicode)
+%   \TJCircledLetter{enumi}    → ⓐ (counter via \@alph, Unicode/TikZ)
+%   \TJCircledLetter{aa}       → ⒜ⓐ (literal multi-char, TikZ)
+% Uses \ifcsname c@#1\endcsname to detect whether #1 is a counter;
+% falls through to literal split otherwise.
+\protected\def\TJCircledLetter#1{%
+  \ifcsname c@#1\endcsname
+    \edef\tj@lettertext{\expandafter\@alph\csname c@#1\endcsname}%
+    \tongji@circled@cs{\expandafter\tongji@circled@letter@split\tj@lettertext\@nil}%
+  \else
+    \tongji@circled@cs{\tongji@circled@letter@split#1\@nil}%
+  \fi
+}
+
+% Uppercase variant for counters: \TJCircledLetterUpper{enumi} → Ⓐ
+% For literals use \TJCircledLetter{A} directly.
+\protected\def\TJCircledLetterUpper#1{%
+  \edef\tj@lettertext{\expandafter\@Alph\csname c@#1\endcsname}%
+  \tongji@circled@cs{\expandafter\tongji@circled@letter@split\tj@lettertext\@nil}%
 }
 
 \endinput
