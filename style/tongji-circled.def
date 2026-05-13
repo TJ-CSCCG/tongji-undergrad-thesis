@@ -61,19 +61,19 @@
 % consistency with the 0–50 Unicode glyphs.
 \newcommand{\tongji@circled@tikz}[1]{%
   \ifnum#1<100
-    \def\tj@scale{0.55}%
+    \def\tj@scale{0.60}%
   \else\ifnum#1<1000
-    \def\tj@scale{0.45}%
+    \def\tj@scale{0.50}%
   \else
-    \def\tj@scale{0.35}%
+    \def\tj@scale{0.40}%
   \fi\fi
   {\tongji@circledfont
-   \tikz[baseline=(char.base)]{
+   \tikz[baseline=(char.south)]{
     \node[
       shape=circle,
       draw,
-      inner sep=0.3pt,
-      minimum size=1.15em,
+      inner sep=0.2pt,
+      minimum size=0.95em,
     ] (char) {\scalebox{\tj@scale}{#1}};
    }%
   }%
