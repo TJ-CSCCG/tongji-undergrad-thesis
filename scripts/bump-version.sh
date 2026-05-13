@@ -12,6 +12,7 @@
 #   - package.json              "version" field
 #   - style/tongjithesis.cls    \ProvidesClass date and version
 #   - style/tongjithesis.cfg    \ProvidesFile  date and version
+#   - style/tongji-circled.def  \ProvidesFile  date and version
 #   - style/font/*.def          \ProvidesFile  date and version
 
 set -euo pipefail
@@ -56,6 +57,10 @@ rm style/tongjithesis.cls.bak
 sed -i.bak -E 's#(\\ProvidesFile\{tongjithesis\.cfg\}\[)[0-9][0-9/]* v[0-9]+\.[0-9]+\.[0-9]+#\1'"${TODAY} v${NEW_VERSION}#" style/tongjithesis.cfg
 rm style/tongjithesis.cfg.bak
 
+# tongji-circled.def — update date and version in \ProvidesFile line
+sed -i.bak -E 's#(\\ProvidesFile\{tongji-circled\.def\}\[)[0-9][0-9/]* v[0-9]+\.[0-9]+\.[0-9]+#\1'"${TODAY} v${NEW_VERSION}#" style/tongji-circled.def
+rm style/tongji-circled.def.bak
+
 # style/font/*.def — update date and version in \ProvidesFile lines
 for def in style/font/tongji-cjk-font-*.def; do
   sed -i.bak -E 's#(\\ProvidesFile\{[^}]+\}\[)[0-9][0-9/]* v[0-9]+\.[0-9]+\.[0-9]+#\1'"${TODAY} v${NEW_VERSION}#" "$def"
@@ -64,13 +69,13 @@ done
 
 echo ""
 echo "Updated files:"
-grep -n "version\|Provides" package.json style/tongjithesis.cls style/tongjithesis.cfg \
+grep -n "version\|Provides" package.json style/tongjithesis.cls style/tongjithesis.cfg style/tongji-circled.def \
   | grep -E "version|Provides(Class|File)"
 
 echo ""
 git diff --stat
 
-git add package.json style/tongjithesis.cls style/tongjithesis.cfg style/font/*.def
+git add package.json style/tongjithesis.cls style/tongjithesis.cfg style/tongji-circled.def style/font/*.def
 git commit -m "chore: bump version to v${NEW_VERSION}"
 
 if [ "$CREATE_TAG" = true ]; then
