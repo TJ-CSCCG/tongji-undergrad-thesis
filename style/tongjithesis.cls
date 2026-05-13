@@ -761,7 +761,7 @@
     subsubsection/name     = {（,）},
     subsubsection/number   = {\arabic{subsubsection}},
     subsubsection/aftername = {\hspace{0.5em}},
-    paragraph/number    = {\TJCircled{\value{paragraph}}},
+    paragraph/number    = {\TJCircled{\the\c@paragraph}},
     paragraph/aftername = {\hspace{0.5em}},
   }
   % TOC 目录列宽与分隔符
@@ -797,7 +797,7 @@
 \fi
 
 % 脚注编号使用①②③… (官方模板规范)
-\renewcommand{\thefootnote}{\TJCircled{\value{footnote}}}
+\renewcommand{\thefootnote}{\TJCircled{\the\c@footnote}}
 
 
 % ==========================================
