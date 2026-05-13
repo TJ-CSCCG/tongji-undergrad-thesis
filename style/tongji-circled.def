@@ -59,7 +59,7 @@
   \else\ifnum#1<51
     \tongji@circled@cs{\symbol{\numexpr"32B1-36+#1\relax}}%
   \else
-    \Circled{#1}%
+    \tongji@circled@cs{\Circled{#1}}%
   \fi\fi\fi\fi
 }
 
