@@ -1,0 +1,185 @@
+%%
+%% tongji-circled.def — Circled number rendering for TongjiThesis
+%%
+%% Strategy:
+%%   0–50:  Unicode circled glyphs via HaranoAjiMincho (no package dependencies)
+%%   51+:   TikZ circle (always round, centered, handles arbitrary digit count)
+%%
+%% Copyright (C) TJ-CSCCG
+%% This work may be distributed under the LPPL 1.3c or later.
+%%
+\ProvidesFile{tongji-circled.def}[2026/05/13 v1.4.1 Circled number rendering (TongjiThesis)]
+
+% ==========================================
+% Counter-value helper for enumitem labels
+% ==========================================
+% Protected against expansion during enumitem's label normalization
+% (which uses \protected@xdef).  \arabic and \value both fail inside
+% \ifnum in this context: \arabic is robust and carries a \protect
+% prefix; \value is redefined by enumitem.
+\protected\def\tj@cval#1{\number\csname c@#1\endcsname}
+% Counter-to-letter helper — bypasses \alph's \protect prefix, same
+% reason as \tj@cval.  \@alph is the unprotected LaTeX internal.
+\protected\def\tj@cval@letter#1{\expandafter\@alph\csname c@#1\endcsname}
+
+% ==========================================
+% Font setup
+% ==========================================
+% HaranoAjiMincho is bundled with TeX Live and has full coverage of
+% ⓪ (U+24EA), ①–⑳ (U+2460–U+2473), ㉑–㉟ (U+3251–U+325F), ㊱–㊿ (U+32B1–U+32BF).
+% Using a dedicated font decouples circled numbers from the user's CJK font,
+% avoiding "Missing character" tofu on platforms whose system fonts lack
+% these Unicode blocks (e.g., Windows SimSun only has ①–⑩).
+%
+% If haranoaji is not installed, install it via:
+%   tlmgr install haranoaji
+%
+% The font is accessed by filename (HaranoAjiMincho-Regular.otf) rather than
+% family name, because fontspec's \IfFontExistsTF cannot find TeX Live OTF
+% fonts by family name alone.
+\newfontfamily\tongji@circledfont{HaranoAjiMincho}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+]
+
+% ==========================================
+% Font-switching wrapper
+% ==========================================
+% Applies BOTH the Latin/Common-script font (\tongji@circledfont) and the
+% CJK/Han-script font (\CJKfontspec).  The CJK switch is necessary because
+% circled numbers ㉑–㊿ (U+3251–U+32BF) are in the Han script block and
+% would otherwise be rendered by the user's CJK font.
+\newcommand{\tongji@circled@cs}[1]{%
+  {\tongji@circledfont\CJKfontspec[Extension=.otf,UprightFont=*-Regular,BoldFont=*-Bold]{HaranoAjiMincho}#1}%
+}
+
+% ==========================================
+% TikZ circled number for >50 fallback
+% ==========================================
+% Uses TikZ (already loaded by the class) to draw a uniform circle with
+% proportionally scaled text.  Unlike circledsteps, this guarantees:
+%   - A perfect circle regardless of digit count  (shape=circle)
+%   - Vertical centering on text baseline         (baseline=char.south)
+%   - Dynamic scaling by digit count              (2/3/4+ digits)
+% The font is set to \tongji@circledfont (HaranoAjiMincho) for visual
+% consistency with the 0–50 Unicode glyphs.
+\newcommand{\tongji@circled@tikz}[1]{%
+  \ifnum#1<100
+    \def\tj@scale{0.65}%
+  \else\ifnum#1<1000
+    \def\tj@scale{0.50}%
+  \else
+    \def\tj@scale{0.40}%
+  \fi\fi
+  {\tongji@circledfont
+   \tikz[baseline={([yshift=0.1em]char.south)}]{
+    \node[
+      shape=circle,
+      draw,
+      inner sep=0.2pt,
+      minimum size=0.93em,
+    ] (char) {\scalebox{\tj@scale}{#1}};
+   }%
+  }%
+}
+
+% ==========================================
+% Unified circled number macro
+%  - 0–50:  Unicode glyphs via HaranoAjiMincho (font-based, no dependencies)
+%  - 51+:   TikZ circle with \scalebox scaling (always round, always centered)
+%
+% The argument must be a fully-expandable integer.
+% For footnote/paragraph counters use \the\c@<counter>.
+% For enumitem labels use \tj@cval{<counter>} (bypasses \protected@xdef).
+% Note: \value{<counter>} also works in normal contexts but may fail inside
+% \DeclareRobustCommand/\NewDocumentCommand argument chains in footnotes.
+% ==========================================
+\protected\def\TJCircled#1{%
+  \ifnum#1<1
+    \tongji@circled@cs{\symbol{"24EA}}%
+  \else\ifnum#1<21
+    \tongji@circled@cs{\symbol{\numexpr"2460-1+#1\relax}}%
+  \else\ifnum#1<36
+    \tongji@circled@cs{\symbol{\numexpr"3251-21+#1\relax}}%
+  \else\ifnum#1<51
+    \tongji@circled@cs{\symbol{\numexpr"32B1-36+#1\relax}}%
+  \else
+    \tongji@circled@tikz{#1}%
+  \fi\fi\fi\fi
+}
+
+% ==========================================
+% Circled letter rendering
+% ==========================================
+% \TJCircledLetter{A}              — literal single letter → Ⓐ (Unicode)
+% \TJCircledCounterLetter{enumi}   — counter 1–26 → Ⓐ–Ⓩ, >26 → TikZ
+%
+% Multi-character strings from alphalph (e.g. "aa", "AA") use TikZ.
+% The same HaranoAjiMincho font and TikZ parameters as \TJCircled.
+
+% Letter-specific TikZ fallback — same visual parameters as \tongji@circled@tikz,
+% but uses width-based scaling instead of digit-count.
+\newcommand{\tongji@circled@letter@tikz}[1]{%
+  \setbox0=\hbox{\tongji@circledfont#1}%
+  \ifdim\wd0<1.2em
+    \def\tj@scale{0.60}%
+  \else\ifdim\wd0<2em
+    \def\tj@scale{0.50}%
+  \else
+    \def\tj@scale{0.40}%
+  \fi\fi
+  {\tongji@circledfont
+   \tikz[baseline={([yshift=0.1em]char.south)}]{
+    \node[
+      shape=circle,
+      draw,
+      inner sep=0.2pt,
+      minimum size=0.93em,
+    ] (char) {\scalebox{\tj@scale}{#1}};
+   }%
+  }%
+}
+
+% Internal: split argument into first character (#1) and rest (#2).
+% Single char → Unicode mapping.  Multi-char → TikZ.
+% Uses TeX's delimited-argument pattern, which always works regardless
+% of whether #1 is a literal or a \protected macro like \tj@cval@letter.
+\def\tongji@circled@letter@split#1#2\@nil{%
+  \ifx\@empty#2\@empty
+    % Single character → backtick works (it's a character token, not a macro)
+    \ifnum`#1>96 \ifnum`#1<123
+      \symbol{\numexpr"24D0-97+`#1\relax}%    a–z → ⓐ–ⓩ (U+24D0–U+24E9)
+    \fi\fi
+    \ifnum`#1>64 \ifnum`#1<91
+      \symbol{\numexpr"24B6-65+`#1\relax}%    A–Z → Ⓐ–Ⓩ (U+24B6–U+24CF)
+    \fi\fi
+  \else
+    % Multi-character (e.g. "aa" from alphalph) → TikZ
+    \tongji@circled@letter@tikz{#1#2}%
+  \fi
+}
+
+% Public: circled letter — auto-detects counter name vs literal.
+%   \TJCircledLetter{A}        → Ⓐ (literal, Unicode)
+%   \TJCircledLetter{enumi}    → ⓐ (counter via \@alph, Unicode/TikZ)
+%   \TJCircledLetter{aa}       → ⒜ⓐ (literal multi-char, TikZ)
+% Uses \ifcsname c@#1\endcsname to detect whether #1 is a counter;
+% falls through to literal split otherwise.
+\protected\def\TJCircledLetter#1{%
+  \ifcsname c@#1\endcsname
+    \edef\tj@lettertext{\expandafter\@alph\csname c@#1\endcsname}%
+    \tongji@circled@cs{\expandafter\tongji@circled@letter@split\tj@lettertext\@nil}%
+  \else
+    \tongji@circled@cs{\tongji@circled@letter@split#1\@nil}%
+  \fi
+}
+
+% Uppercase variant for counters: \TJCircledLetterUpper{enumi} → Ⓐ
+% For literals use \TJCircledLetter{A} directly.
+\protected\def\TJCircledLetterUpper#1{%
+  \edef\tj@lettertext{\expandafter\@Alph\csname c@#1\endcsname}%
+  \tongji@circled@cs{\expandafter\tongji@circled@letter@split\tj@lettertext\@nil}%
+}
+
+\endinput
