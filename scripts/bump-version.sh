@@ -80,9 +80,24 @@ git commit -m "chore: bump version to v${NEW_VERSION}"
 
 if [ "$CREATE_TAG" = true ]; then
   git tag "v${NEW_VERSION}"
+
+  SHORT_VERSION="v$(echo "$NEW_VERSION" | sed -E 's/\.[0-9]+$//')"
+  TAG_EXISTED=false
+  if git rev-parse "${SHORT_VERSION}" >/dev/null 2>&1; then
+    TAG_EXISTED=true
+    git tag -f "${SHORT_VERSION}"
+  else
+    git tag "${SHORT_VERSION}"
+  fi
+
   echo ""
-  echo "Tagged v${NEW_VERSION}. Push with:"
-  echo "  git push && git push origin v${NEW_VERSION}"
+  echo "Tagged v${NEW_VERSION} and ${SHORT_VERSION}. Push with:"
+  echo "  git push && git push origin v${NEW_VERSION} ${SHORT_VERSION}"
+  if [ "$TAG_EXISTED" = true ]; then
+    echo ""
+    echo "  If ${SHORT_VERSION} exists on remote and was moved, also run:"
+    echo "  git push --force origin ${SHORT_VERSION}"
+  fi
 else
   echo ""
   echo "Done. To also create a tag, run:"
