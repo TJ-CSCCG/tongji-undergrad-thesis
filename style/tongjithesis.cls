@@ -114,6 +114,7 @@
 \newcommand{\tjinfofieldspread}{1.6667}   % 四号宋体 28 磅：28÷(14×1.2)≈5/3
 \newcommand{\tjinfoabstractspread}{1.25}  % 摘要小四 18 磅：18÷(12×1.2)=5/4（精确）
 \newcommand{\tjinfotitlevspace}{0.8em}    % 多行课题名称后的间距补偿（在四号上下文中解析）
+\newcommand{\tjcoverlinestretch}{0.8}   % 封面字段 parbox 行距倍率（压缩行距以适配窄框）
 % Cover text：理工=毕业设计（论文）；文科=毕业论文（设计）
 \iftongjithesis@humanities
   \newcommand{\tjcovertext}{毕业论文（设计）}
@@ -998,7 +999,10 @@
 \newlength{\coverparwidth}
 
 \newcommand{\ulinecentered}[1]{
+  \bgroup
+  \let\\\relax
   \setlength{\covertextwidth}{\widthof{#1}}
+  \egroup
   \setlength{\covermaxwidth}{20em}
   \ifdim\covertextwidth > \covermaxwidth
     \ifdim\covertextwidth > 1.95\covermaxwidth
@@ -1008,7 +1012,7 @@
         \scalebox{\coverscale}[1]{%
           \parbox[b]{\coverparwidth}{%
             \centering
-            \renewcommand{\baselinestretch}{0.8}\selectfont
+            \renewcommand{\baselinestretch}{\tjcoverlinestretch}\selectfont
             #1%
           }%
         }%
@@ -1017,13 +1021,19 @@
       \uline{%
         \parbox[b]{\covermaxwidth}{%
           \centering
-          \renewcommand{\baselinestretch}{0.8}\selectfont
+          \renewcommand{\baselinestretch}{\tjcoverlinestretch}\selectfont
           #1%
         }%
       }
     \fi
   \else
-    \uline{\makebox[\covermaxwidth][c]{#1}}
+    \uline{%
+      \parbox[b]{\covermaxwidth}{%
+        \centering
+        \renewcommand{\baselinestretch}{\tjcoverlinestretch}\selectfont
+        #1%
+      }%
+    }
   \fi
 }
 
