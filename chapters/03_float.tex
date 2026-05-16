@@ -247,12 +247,13 @@
 
 \subsection{代码块示例}
 
-\pkg{listings} 包是 \LaTeX{} 最常用的代码高亮工具，无论 \texttt{minted} 选项如何设置，它始终可用。以下是一个基本示例：
+\pkg{listings} 包是 \LaTeX{} 最常用的代码高亮工具，无论 \texttt{minted} 选项如何设置，它始终可用。如\cref{lst:basic-example} 所示。
 
 \begin{lstlisting}[
   language=Python,         % 指定语法高亮的编程语言
   caption={使用listings包的Python示例},
-  label=lst:basic-example
+  label=lst:basic-example,
+  float
 ]
 # 这是一个简单的Python函数
 def hello_world(name: str = "World") -> str:
