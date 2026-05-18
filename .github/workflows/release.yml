@@ -409,7 +409,7 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'workflow_run' &&
        github.event.workflow_run.conclusion == 'success' &&
-       startsWith(github.event.workflow_run.head_branch, 'v'))
+       github.event.workflow_run.head_branch == format('v{0}', needs.package.outputs.version))
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
