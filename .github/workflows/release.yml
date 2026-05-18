@@ -473,11 +473,28 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get previous version
+        if: steps.check.outputs.exists == 'false'
+        id: prev
+        run: |
+          PREV=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName' 2>/dev/null || true)
+          echo "tag=$PREV" >> "$GITHUB_OUTPUT"
+          echo "version=${PREV#v}" >> "$GITHUB_OUTPUT"
+          echo "Previous release: ${PREV:-none}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Read release template
         if: steps.check.outputs.exists == 'false'
         id: template
         run: |
-          BODY=$(sed "s/VERSION_TOKEN/$PACKAGE_VERSION/g" .github/release_template.md)
+          BODY=$(sed \
+            -e "s/PREV_VERSION_TOKEN/${{ steps.prev.outputs.version }}/g" \
+            -e "s/VERSION_TOKEN/$PACKAGE_VERSION/g" \
+            .github/release_template.md)
+          if [ -z "${{ steps.prev.outputs.version }}" ]; then
+            BODY=$(echo "$BODY" | sed '/PREV_VERSION_TOKEN\|完整对比\|Full changelog/d')
+          fi
           {
             echo "body<<EOF"
             echo "$BODY"
