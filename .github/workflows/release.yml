@@ -14,7 +14,7 @@ on:
       - ".github/workflows/release.yml"
       - "package.json"
     tags:
-      - "v*"  # Also trigger on version tags (paths filter ignored for tags)
+      - "v[0-9]+.[0-9]+.[0-9]+"  # Full semver tags only (exclude floating vX.Y tags)
   pull_request:
     branches: [master, dev]
     paths:
@@ -417,6 +417,9 @@ jobs:
     env:
       PACKAGE_VERSION: ${{ needs.package.outputs.version }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       - name: Check if release already exists
         id: check
         run: |
