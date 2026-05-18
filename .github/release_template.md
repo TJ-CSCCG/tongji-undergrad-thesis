@@ -2,6 +2,8 @@
 
 [EDIT: 编写本版本的更新日志 | Write the changelog for this release]
 
+[完整对比 PREV_VERSION_TOKEN...VERSION_TOKEN | Full changelog PREV_VERSION_TOKEN...VERSION_TOKEN](https://github.com/TJ-CSCCG/TongjiThesis/compare/PREV_VERSION_TOKEN...VERSION_TOKEN)
+
 ### 新增 | New Features
 
 -
