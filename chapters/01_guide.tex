@@ -34,9 +34,11 @@
 论文的封面、信息说明页与中英文摘要的个人信息分散在 \verb|chapters/| 目录下的两个文件中。各文件均已提供带注释的示例，照搬并替换字段值即可；模板据此自动生成对应页面。
 
 \begin{itemize}
-  \item \textbf{封面与信息说明页} —— \verb|chapters/metadata.tex|：\cs{school}、\cs{major}、\cs{student}、\cs{thesistitle}、\cs{thesistitleeng}、\cs{thesisadvisor}、\cs{thesisdate}（封面），以及 \cs{infotype}（\texttt{thesis}、\texttt{design} 或 \texttt{engineering}）、\cs{infoabstract}、\cs{infothesiswords}（论文）或 \cs{infodrawings}+\cs{infowordcount}（设计）、\cs{infomaterials}（信息说明页）。封面与信息说明页由随后的 \cs{MakeCover}、\cs{MakeInfoPage} 命令自动生成。
-  \item \textbf{中英文摘要} —— \verb|chapters/00_abstract.tex|：\cs{MakeAbstract}\verb|{正文}{关键词}| 与 \cs{MakeAbstractEng}\verb|{Text}{Keywords}|。
+  \item \textbf{封面与信息说明页} —— \verb|chapters/metadata.tex|：\cs{school}、\cs{major}、\cs{student}、\cs{thesistitle}、\cs{thesistitleeng}、\cs{thesisadvisor}、\cs{thesisdate}（封面），以及 \cs{infotype}（\texttt{thesis}、\texttt{design} 或 \texttt{engineering}）、\cs{infoabstract}、\cs{infothesiswords}（毕业论文）或 \cs{infodrawings} + \cs{infowordcount}（毕业设计）、\cs{infomaterials}（信息说明页）。封面与信息说明页由随后的 \cs{MakeCover}、\cs{MakeInfoPage} 命令自动生成。
+  \item \textbf{中英文摘要} —— \verb|chapters/00_abstract.tex|：\cs{MakeAbstract}\verb|{正文}{关键词}| 与 \cs{MakeAbstractEng}\verb|{Text}{Keywords}|，以及可选的摘要标题 \cs{abstracttitle} 与 \cs{abstracttitleeng}。
 \end{itemize}
+
+可在 \cs{thesistitle} 与 \cs{thesistitleeng} 中使用 \verb|\\| 为封面标题手动添加换行，信息说明页标题会自动移除这些换行。若中英文摘要页标题需要使用独立换行位置，可在 \verb|chapters/metadata.tex| 中设置 \cs{abstracttitle}\verb|{摘要中文标题}{摘要中文副标题}| 与 \cs{abstracttitleeng}\verb|{Abstract English Title}{Abstract English Subtitle}|；未设置 \cs{abstracttitle} 与 \cs{abstracttitleeng} 时，中英文摘要页标题会沿用 \cs{thesistitle} 与 \cs{thesistitleeng}，并自动移除这些换行。
 
 \section{文档结构}
 

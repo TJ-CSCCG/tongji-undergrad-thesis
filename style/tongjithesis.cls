@@ -1073,11 +1073,25 @@
 }
 
 % 论文基本信息配置
+\newif\iftj@abstracttitle@set
+\newif\iftj@abstracttitleeng@set
 \newcommand{\school}[1]{\def\tongjischool{#1}}
 \newcommand{\major}[1]{\def\tongjimajor{#1}}
 \newcommand{\student}[2]{\def\tongjiauthornumber{#1}\def\tongjiauthor{#2}}
 \newcommand{\thesistitle}[2]{\def\tongjithesistitle{#1}\def\tongjithesissubtitle{#2}}
 \newcommand{\thesistitleeng}[2]{\def\tongjithesistitleeng{#1}\def\tongjithesissubtitleeng{#2}}
+\newcommand{\abstracttitle}[2]{%
+  \def\tongjiabstracttitle{#1}\def\tongjiabstractsubtitle{#2}%
+  \ifstrempty{#1}{%
+    \ifstrempty{#2}{\tj@abstracttitle@setfalse}{\tj@abstracttitle@settrue}%
+  }{\tj@abstracttitle@settrue}%
+}
+\newcommand{\abstracttitleeng}[2]{%
+  \def\tongjiabstracttitleeng{#1}\def\tongjiabstractsubtitleeng{#2}%
+  \ifstrempty{#1}{%
+    \ifstrempty{#2}{\tj@abstracttitleeng@setfalse}{\tj@abstracttitleeng@settrue}%
+  }{\tj@abstracttitleeng@settrue}%
+}
 \newcommand{\thesisadvisor}[1]{\def\tongjithesisadvisor{#1}}
 \newcommand{\thesisdate}[3]{\def\tongjithesisyear{#1}\def\tongjithesismonth{#2}\def\tongjithesisday{#3}}
 
@@ -1200,10 +1214,20 @@
   \begin{center}\bfseries\heiti\tjfonttitle
     \ \\
     \vspace{-0.5em}
-    \tjtitlecninline{\tongjithesistitle}
-    \ifx\tongjithesissubtitle\empty\else
-      \\[0.2em]{\zihao{3}\tjtitlecninline{\tongjithesissubtitle}}% 副标题：三号（官方模板规范）
-    \fi
+    \parbox[t]{\linewidth}{%
+      \centering
+      \iftj@abstracttitle@set
+        \tongjiabstracttitle
+        \ifx\tongjiabstractsubtitle\empty\else
+          \\[0.2em]{\zihao{3}\tongjiabstractsubtitle}% 副标题：三号（官方模板规范）
+        \fi
+      \else
+        \tjtitlecninline{\tongjithesistitle}%
+        \ifx\tongjithesissubtitle\empty\else
+          \\[0.2em]{\zihao{3}\tjtitlecninline{\tongjithesissubtitle}}% 副标题：三号（官方模板规范）
+        \fi
+      \fi
+    }%
   \end{center}
   \vspace{-0.8em}
   \begin{center}\heiti\tjfontheading
@@ -1227,10 +1251,20 @@
   \begin{center}\tjfonttitle
     \ \\
     \vspace{-0.5em}
-    \textbf{\tjtitleeninline{\tongjithesistitleeng}}
-    \ifx\tongjithesissubtitleeng\empty\else
-      \\[0.2em]{\zihao{3}\textbf{\tjtitleeninline{\tongjithesissubtitleeng}}}% 副标题：三号（官方模板规范）
-    \fi
+    \parbox[t]{\linewidth}{%
+      \centering
+      \iftj@abstracttitleeng@set
+        \textbf{\tongjiabstracttitleeng}%
+        \ifx\tongjiabstractsubtitleeng\empty\else
+          \\[0.2em]{\zihao{3}\textbf{\tongjiabstractsubtitleeng}}% 副标题：三号（官方模板规范）
+        \fi
+      \else
+        \textbf{\tjtitleeninline{\tongjithesistitleeng}}%
+        \ifx\tongjithesissubtitleeng\empty\else
+          \\[0.2em]{\zihao{3}\textbf{\tjtitleeninline{\tongjithesissubtitleeng}}}% 副标题：三号（官方模板规范）
+        \fi
+      \fi
+    }%
   \end{center}
   \vspace{-0.8em}
   \begin{center}\tjfontheading
