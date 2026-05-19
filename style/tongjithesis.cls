@@ -1028,10 +1028,12 @@
     \fi
   \else
     \uline{%
-      \parbox[b]{\covermaxwidth}{%
-        \centering
-        \renewcommand{\baselinestretch}{\tjcoverlinestretch}\selectfont
-        #1%
+      \makebox[\covermaxwidth][c]{%
+        \parbox[b]{\covermaxwidth}{%
+          \centering
+          \renewcommand{\baselinestretch}{\tjcoverlinestretch}\selectfont
+          #1%
+        }%
       }%
     }
   \fi
