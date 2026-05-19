@@ -1039,6 +1039,39 @@
   \fi
 }
 
+\def\tj@titlecnbreak@opt[#1]{\unskip\ignorespaces}
+\def\tj@titlecnbreak@star*{%
+  \@ifnextchar[{\tj@titlecnbreak@opt}{\unskip\ignorespaces}%
+}
+\newcommand{\tjtitlecninlinebreak}{%
+  \unskip
+  \@ifnextchar*{\tj@titlecnbreak@star}{%
+    \@ifnextchar[{\tj@titlecnbreak@opt}{\ignorespaces}%
+  }%
+}
+\newcommand{\tjtitlecninline}[1]{%
+  \begingroup
+    \let\\\tjtitlecninlinebreak
+    #1%
+  \endgroup
+}
+\def\tj@titleenbreak@opt[#1]{\unskip\space\ignorespaces}
+\def\tj@titleenbreak@star*{%
+  \@ifnextchar[{\tj@titleenbreak@opt}{\unskip\space\ignorespaces}%
+}
+\newcommand{\tjtitleeninlinebreak}{%
+  \unskip
+  \@ifnextchar*{\tj@titleenbreak@star}{%
+    \@ifnextchar[{\tj@titleenbreak@opt}{\space\ignorespaces}%
+  }%
+}
+\newcommand{\tjtitleeninline}[1]{%
+  \begingroup
+    \let\\\tjtitleeninlinebreak
+    #1%
+  \endgroup
+}
+
 % 论文基本信息配置
 \newcommand{\school}[1]{\def\tongjischool{#1}}
 \newcommand{\major}[1]{\def\tongjimajor{#1}}
@@ -1122,8 +1155,8 @@
     \setlength{\parindent}{0pt}
 
     \savebox{\tj@titlebox}{\parbox[t]{\dimexpr\linewidth-5em\relax}{%
-      \tongjithesistitle
-      \ifx\tongjithesissubtitle\empty\else ——\tongjithesissubtitle\fi
+      \tjtitlecninline{\tongjithesistitle}%
+      \ifx\tongjithesissubtitle\empty\else——\tjtitlecninline{\tongjithesissubtitle}\fi
     }}%
     \infoline{课题名称}{\usebox{\tj@titlebox}}%
     \settodepth{\tj@titledp}{\usebox{\tj@titlebox}}%
@@ -1167,9 +1200,9 @@
   \begin{center}\bfseries\heiti\tjfonttitle
     \ \\
     \vspace{-0.5em}
-    \tongjithesistitle
+    \tjtitlecninline{\tongjithesistitle}
     \ifx\tongjithesissubtitle\empty\else
-      \\[0.2em]{\zihao{3}\tongjithesissubtitle}% 副标题：三号（官方模板规范）
+      \\[0.2em]{\zihao{3}\tjtitlecninline{\tongjithesissubtitle}}% 副标题：三号（官方模板规范）
     \fi
   \end{center}
   \vspace{-0.8em}
@@ -1194,9 +1227,9 @@
   \begin{center}\tjfonttitle
     \ \\
     \vspace{-0.5em}
-    \textbf{\tongjithesistitleeng}
+    \textbf{\tjtitleeninline{\tongjithesistitleeng}}
     \ifx\tongjithesissubtitleeng\empty\else
-      \\[0.2em]{\zihao{3}\textbf{\tongjithesissubtitleeng}}% 副标题：三号（官方模板规范）
+      \\[0.2em]{\zihao{3}\textbf{\tjtitleeninline{\tongjithesissubtitleeng}}}% 副标题：三号（官方模板规范）
     \fi
   \end{center}
   \vspace{-0.8em}
